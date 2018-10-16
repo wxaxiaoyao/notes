@@ -64,12 +64,5 @@ vue.use(vueAuthenticate, {
 			redirectUri: window.location.origin + "/note/login",
 			url: baseUrl + "github",
 		},
-
-		facebook: {
-			clientId: config.oauths.facebook.clientId,
-			clientSecret: config.oauths.facebook.clientSecret,
-			redirectUri: config.oauths.facebook.redirectUri,
-			authorizationEndpoint: config.oauths.facebook.authorizationEndpoint,
-		},
 	}
 });

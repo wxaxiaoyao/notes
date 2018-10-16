@@ -5,8 +5,27 @@ const ENV = "local";
 const defaultConfig = {
 	apiUrlPrefix: "http://api.wxaxiaoyao.com/api/v0/",
 	origin: "http://wxaxiaoyao.cn",
+	domain: "wxaxiaoyao.cn",
 	urlPrefix: "note",
 	port: 3000,
+
+	oauths: {
+		note: {
+			clientId: "100000",
+		},
+		github: {
+			clientId: "5cc0cf681e677a56771b",
+		},
+		qq: {
+			clientId:"101403344",
+		},
+		weixin: {
+			clientId: "wxc97e44ce7c18725e",
+		},
+		xinlang: {
+			clientId: "2411934420",
+		},
+	}
 }
 
 const productionConfig = {
