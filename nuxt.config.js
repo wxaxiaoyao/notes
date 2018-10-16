@@ -80,9 +80,8 @@ module.exports = {
 	  {src:"~/plugins/init"},
 	  {src:"~/plugins/client", ssr: false},
 	  {src:"~/plugins/authenticate", ssr: false},
-	  {src:"~/plugins/persistedstate", ssr: false},
-	  {src:"~/plugins/vueImgInputer", ssr: false},
-	  '@/plugins/element-ui'
+	  //{src:"~/plugins/vueImgInputer", ssr: false},
+	  {src:"~/plugins/element-ui"},
 	],
 
 	/*

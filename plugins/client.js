@@ -1,4 +1,5 @@
 import vue from "vue";
+import createPersistedState from "vuex-persistedstate";
 import {app} from "./init.js";
 import storage from "@/lib/storage.js";
 import indexedDB from "@/lib/indexedDB.js";
@@ -49,4 +50,14 @@ window.addEventListener("message", function(e) {
 
 window.onresize = () => {
 	vue.set(app, "isSmallScreen", window.innerWidth < 768);
+}
+
+export default ({store}) => {
+	// store persisted
+	createPersistedState({
+		paths: ["user"],
+	})(store);
+	//createPersistedState({
+		//storage: window.sessionStorage,
+	//})(store);
 }
