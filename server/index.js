@@ -92,8 +92,8 @@ async function start () {
 		});
 	});
 	
-	const host = nuxtConfig.host || '127.0.0.1';
-	const port = nuxtConfig.port || 3000;
+	const host = config.host || '127.0.0.1';
+	const port = config.port || 3000;
 
 	app.listen(port, host);
 	console.log('Server listening on ' + host + ':' + port);
