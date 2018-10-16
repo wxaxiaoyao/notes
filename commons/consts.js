@@ -1,0 +1,135 @@
+
+// LOG_TYPE
+export const LOG_TYPE_REQUEST_ELAPSED = 1; // 请求耗时统计日志
+export const LOG_TYPE_SYSTEM = 2;      // 系统错误日志
+export const LOG_TYPE_FRAME = 3;       // 框架错误日志
+export const LOG_TYPE_APPLICATION = 4; // 应用错误日志
+export const LOG_TYPE_DEFAULT = 100;   // 默认类型
+export const LOG_TYPE = {
+	LOG_TYPE_REQUEST_ELAPSED,
+	LOG_TYPE_SYSTEM,
+	LOG_TYPE_APPLICATION,
+	LOG_TYPE_FRAME,
+	LOG_TYPE_DEFAULT,
+};
+
+// 模块类型
+export const BASE_MOD_TYPE_TEXT = 1;
+export const BASE_MOD_TYPE_LINK = 2;
+export const BASE_MOD_TYPE_MEDIA = 3;
+export const BASE_MOD_TYPE_LIST = 4;
+export const BASE_MOD_TYPE = {
+	BASE_MOD_TYPE_TEXT,
+	BASE_MOD_TYPE_LINK,
+	BASE_MOD_TYPE_MEDIA,
+	BASE_MOD_TYPE_LIST,
+}
+
+// 用户访问权限
+export const USER_ACCESS_LEVEL_NONE = 0;
+export const USER_ACCESS_LEVEL_READ = 32;
+export const USER_ACCESS_LEVEL_WRITE = 64;
+export const USER_ACCESS_LEVEL = {
+	USER_ACCESS_LEVEL_NONE,
+	USER_ACCESS_LEVEL_READ,
+	USER_ACCESS_LEVEL_WRITE,
+}
+
+// 文件审核状态
+export const QINIU_AUDIT_STATE_NO_AUDIT = 0;  // 未审核
+export const QINIU_AUDIT_STATE_PASS = 1;      // 审核通过
+export const QINIU_AUDIT_STATE_NOPASS = 2;    // 审核未通过
+export const QINIU_AUDIT_STATE_FAILED = 3;    // 审核失败
+export const QINIU_AUDIT_STATE = {
+	QINIU_AUDIT_STATE_NO_AUDIT,
+	QINIU_AUDIT_STATE_PASS,
+	QINIU_AUDIT_STATE_NOPASS,
+	QINIU_AUDIT_STATE_FAILED,
+}
+
+// 实体类型
+export const ENTITY_TYPE_USER = 0; // 用户类型
+export const ENTITY_TYPE_SITE = 1; // 站点类型
+export const ENTITY_TYPE_PAGE = 2; // 页面类型
+export const ENTITY_TYPE = {
+	ENTITY_TYPE_USER,
+	ENTITY_TYPE_SITE,
+	ENTITY_TYPE_PAGE,
+}
+
+// 站点可见性
+export const ENTITY_VISIBILITY_PUBLIC = 0; // 公开
+export const ENTITY_VISIBILITY_PRIVATE = 1; // 私有
+export const ENTITY_VISIBILITY = {
+	ENTITY_VISIBILITY_PUBLIC,
+	ENTITY_VISIBILITY_PRIVATE,
+}
+
+// OAUTH_SERVICE_TYPE
+export const OAUTH_SERVICE_TYPE_QQ = 0;
+export const OAUTH_SERVICE_TYPE_WEIXIN = 1;
+export const OAUTH_SERVICE_TYPE_GITHUB = 2;
+export const OAUTH_SERVICE_TYPE_XINLANG =3;
+export const OAUTH_SERVICE_TYPE = {
+	OAUTH_SERVICE_TYPE_QQ,
+	OAUTH_SERVICE_TYPE_WEIXIN,
+	OAUTH_SERVICE_TYPE_GITHUB,
+	OAUTH_SERVICE_TYPE_XINLANG,
+}
+
+// USER_ROLE
+export const USER_ROLE_EXCEPTION = 1;
+export const USER_ROLE_NORMAL = 2;
+export const USER_ROLE_VIP = 4;
+export const USER_ROLE_MANAGER = 64;
+export const USER_ROLE_ADMIN = 128;
+export const USER_ROLE = {
+	USER_ROLE_EXCEPTION,
+	USER_ROLE_NORMAL,
+	USER_ROLE_VIP,
+	USER_ROLE_MANAGER,
+	USER_ROLE_ADMIN,
+};
+
+// NOTIFICATIONS 
+export const NOTIFICATION_STATE_UNREAD = 0;
+export const NOTIFICATION_STATE_READ = 1;
+export const NOTIFICATION_STATE = {
+	NOTIFICATION_STATE_UNREAD,
+	NOTIFICATION_STATE_READ,
+}
+
+// TRADES
+export const TRADE_TYPE_CHARGE = 0; // 充值
+export const TRADE_TYPE_EXPENSE = 1; // 消费
+export const TRADE_TYPE = {
+	TRADE_TYPE_CHARGE,
+	TRADE_TYPE_EXPENSE,
+}
+
+export const TRADE_STATE_START = 0; // 交易开始
+export const TRADE_STATE_PAYING = 1; // 交易进行中
+export const TRADE_STATE_SUCCESS = 2; // 交易成功
+export const TRADE_STATE_FAILED = 4; // 交易失败
+export const TRADE_STATE_FINISH = 8;  // 交易完成
+export const TRADE_STATE = {
+	TRADE_STATE_START,
+	TRADE_STATE_PAYING,
+	TRADE_STATE_SUCCESS,
+	TRADE_STATE_FAILED,
+	TRADE_STATE_FINISH,
+}
+
+export const TAG_TYPE_COMPONENT = 0; // 组件tag
+export const TAG_TYPE_PAGE = 1; // 页面tag
+export const TAG_TYPE = {
+	TAG_TYPE_COMPONENT,
+	TAG_TYPE_PAGE,
+}
+
+export default {
+	USER_ACCESS_LEVEL,
+	QINIU_AUDIT_STATE,
+	ENTITY_TYPE,
+	ENTITY_VISIBILITY,
+}
