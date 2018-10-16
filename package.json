@@ -35,6 +35,7 @@
     "element-ui": "^2.4.6",
     "github-markdown-css": "^2.10.0",
     "js-base64": "^2.4.9",
+    "jshashes": "^1.0.7",
     "jwt-simple": "^0.5.5",
     "koa": "^2.5.2",
     "koa-jwt": "^3.5.1",

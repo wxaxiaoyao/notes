@@ -71,7 +71,8 @@ export default {
 
 	methods: {
 		formatMsg(msg) {
-			return {msg: msg, user:msg.extra.user};
+			msg.extra = msg.extra || {};
+			return {msg: msg, user:msg.extra.user || {}};
 		},
 		async handleMsg(data) {
 			const msg = this.formatMsg(data);

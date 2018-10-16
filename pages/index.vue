@@ -1,6 +1,5 @@
 <template>
 	<div class="index-container">
-		<messages></messages>
 	</div>
 </template>
 

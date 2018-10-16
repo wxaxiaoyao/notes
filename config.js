@@ -4,6 +4,7 @@ const ENV = process.env.NODE_ENV;
 console.log(ENV);
 const defaultConfig = {
 	apiUrlPrefix: "http://api.wxaxiaoyao.com/api/v0/",
+	urlPrefix: "note",
 	log: {
 		module: "note",
 		level: "info",

@@ -162,6 +162,13 @@ export default {
 			this.file = file;
 		},
 
+		getKeyByPath(path) {
+			const filetype = util.getFileType(path);
+			const paths = path.split("/");
+			paths.splice(1, 0, filetype);
+			return paths.join("/");
+		},
+
 		async fileUpload() {
 			this.fileUploadDialogVisible = false;
 			if (!this.uploadFilename){
@@ -171,6 +178,7 @@ export default {
 			const file = this.file;
 			const filename = this.uploadFilename;
 			const isImage = file.type.indexOf("image") == 0;
+			const filetype = util.getFileType(filename);
 			let username = this.user.username;
 			let sitename = undefined;
 			let path = undefined;
@@ -178,13 +186,12 @@ export default {
 				const paths = this.currentPage.url.split("/");
 				username = paths[0];
 				sitename = paths[1];
-				path = [username, sitename, filename].join("/");	
+				path = [username, filetype, sitename, filename].join("/");	
 			} else {
-				path = [username, filename].join("/");	
+				path = [username, filetype, filename].join("/");	
 			}
-			const key = util.getKeyByPath(path);
 			this.loading = true;
-			const ok = await qiniuUpload(key, file, null, {
+			const ok = await qiniuUpload(path, file, null, {
 				username,
 				sitename,
 				filename,
