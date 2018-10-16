@@ -1,6 +1,7 @@
 import _ from "lodash";
+import serverConfig from "./server/.config.js";
 
-const ENV = "local";
+const ENV = process.env.NODE_ENV;
 
 const defaultConfig = {
 	apiUrlPrefix: "http://api.wxaxiaoyao.com/api/v0/",
@@ -32,6 +33,8 @@ const productionConfig = {
 }
 
 const developmentConfig = {
+	apiUrlPrefix: "http://xiaoyao.com:3001/api/v0/",
+	origin: "http://xiaoyao.com:3000",
 }
 
 const localConfig = {

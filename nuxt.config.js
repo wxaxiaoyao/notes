@@ -16,7 +16,6 @@ module.exports = {
 
 	env: {
 		ENV:config.ENV || process.env.NODE_ENV,
-		baseDir: baseDir,
 	},
 
 	router: {

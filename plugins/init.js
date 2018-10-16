@@ -95,7 +95,7 @@ function initSocket(token) {
 	app.socket = socket;
 }
 
-export default ({store, req}) => {
+export default ({store, req, env}) => {
 	app.store = store;
 
 	if (req && req.ctx && req.ctx.state && req.ctx.state.token) {
