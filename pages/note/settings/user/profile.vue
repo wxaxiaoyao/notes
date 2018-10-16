@@ -1,7 +1,7 @@
 <template>
 	<el-form ref="form" :model="userinfo" label-width="80px">
 		<el-form-item label="头像" v-if="isClient">
-			<VueImgInputer v-model="portrait" :imgSrc="userinfo.portrait" theme="light" size="large"></VueImgInputer>
+			<medias __style__="image" :__default_data__="mediasImageData"></medias>
 		</el-form-item>
 		<el-form-item label="昵称">
 			<el-input v-model="userinfo.nickname" placeholder="昵称"></el-input>
@@ -49,16 +49,18 @@ export default {
 		return {
 			userinfo:{},
 			isClient: false,
-			portrait:null,
+			mediasImageData:{},
 		}
 	},
 
 	methods: {
 		async clickSubmitBtn() {
-			if (this.portrait) {
-				const name = this.portrait.name;
+			const portrait = this.mediasImageData.file;
+			this.mediasImageData.file = null;
+			if (portrait) {
+				const name = portrait.name;
 				const key= this.user.username +"/iamges/portrait" + (new Date()).getTime() + name.substring(name.lastIndexOf("."));
-				const data = await g_app.upload(key, this.portrait);
+				const data = await g_app.upload(key, portrait);
 				this.userinfo.portrait = data && ("/" + key);
 			}
 
@@ -76,6 +78,8 @@ export default {
 	mounted() {
 		this.isClient = true;
 		this.userinfo = {...this.user};
+		this.mediasImageData.url = this.userinfo.portrait;
+		this.mediasImageData.editable = true;
 	}
 
 }

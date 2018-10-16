@@ -17,6 +17,7 @@ import texts from "./texts/index.js";
 import tocs from "./tocs/index.js";
 import richtexts from "./richtexts/index.js";
 import breadcrumbs from "./breadcrumbs/index.js";
+import medias from "./medias/index.js";
 
 import logins from "./logins/index.js";
 import menus from "./menus/index.js";
@@ -79,6 +80,7 @@ const components = {
 	tocs,
 	richtexts,
 	breadcrumbs,
+	medias,
 }
 
 _.each(components, (val, key) => {
