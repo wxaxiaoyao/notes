@@ -3,7 +3,7 @@ const jwt = require("koa-jwt");
 const { Nuxt, Builder } = require('nuxt');
 const axios = require("axios");
 const _ = require("lodash");
-import shell from "shelljs";
+const shell = require("shelljs");
 
 const nuxtConfig = require('../nuxt.config.js');
 const config = require("./.config.js");
