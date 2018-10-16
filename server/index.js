@@ -28,7 +28,7 @@ async function urlRedirect(ctx) {
 }
 
 async function pushCode() {
-	const cmd_str = "cd " + this.config.rootdir + "; git reset --hard HEAD; git pull origin master; npm run build;";
+	const cmd_str = "git reset --hard HEAD; git pull origin master";
 	shell.exec(cmd_str);
 }
 
