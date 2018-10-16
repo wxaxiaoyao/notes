@@ -3,6 +3,7 @@ const jwt = require("koa-jwt");
 const { Nuxt, Builder } = require('nuxt');
 const axios = require("axios");
 const _ = require("lodash");
+import shell from "shelljs";
 
 const nuxtConfig = require('../nuxt.config.js');
 const config = require("./.config.js");
@@ -24,6 +25,11 @@ async function urlRedirect(ctx) {
 	else url += "&" + querystring;
 
 	ctx.redirect(url);
+}
+
+async function pushCode() {
+	const cmd_str = "cd " + this.config.rootdir + "; git reset --hard HEAD; git pull origin master; npm run build;";
+	shell.exec(cmd_str);
 }
 
 async function start () {
@@ -52,6 +58,12 @@ async function start () {
 		const path = ctx.request.path;
 		const method = ctx.request.method;
 
+		if (path == "/note/push_code") {
+			ctx.status = 200;
+			ctx.body = "OK";
+			pushCode();
+			return;
+		}
 		if (method.toUpperCase() != "GET" || _.startsWith(path, "/api/")) {
 			ctx.status = 404;
 			ctx.body = "Not Found";
