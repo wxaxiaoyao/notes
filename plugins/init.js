@@ -69,7 +69,7 @@ app.getData = function(key, defaultValue) {
 }
 
 function initSocket(token) {
-	const socket = new SockJS(config.apiUrlPrefix + "socket?token=" + token);
+	const socket = new SockJS(config.socketUrl + "?token=" + token);
 
 	socket.onopen = function(e) {
 		console.log("success open websocket", e);

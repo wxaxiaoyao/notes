@@ -6,6 +6,7 @@ const ENV = process.env.ENV || process.env.NODE_ENV;
 console.log(process.env.ENV, "-------client-----");
 
 const defaultConfig = {
+	socketUrl:"http://39.106.11.114:3001/api/v0/socket",
 	apiUrlPrefix: "http://api.wxaxiaoyao.cn/api/v0/",
 	origin: "http://wxaxiaoyao.cn",
 	domain: "wxaxiaoyao.cn",
