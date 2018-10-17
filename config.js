@@ -4,7 +4,7 @@ import serverConfig from "./server/.config.js";
 const ENV = process.env.NODE_ENV;
 
 const defaultConfig = {
-	apiUrlPrefix: "http://api.wxaxiaoyao.com/api/v0/",
+	apiUrlPrefix: "http://api.wxaxiaoyao.cn/api/v0/",
 	origin: "http://wxaxiaoyao.cn",
 	domain: "wxaxiaoyao.cn",
 	urlPrefix: "note",
@@ -54,7 +54,7 @@ const configs = {
 	"test": _.merge({}, defaultConfig, testConfig),
 }
 
-
+console.log(ENV);
 const config =  configs[ENV];
 
 export default config;
