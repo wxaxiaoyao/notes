@@ -11,6 +11,7 @@ export default {
 	data: function() {
 		const self = this;
 		return {
+			pagelist:[],
 			pageSettingData:{
 				tags:[], 
 				visible: false,
@@ -66,6 +67,8 @@ export default {
 			vue.set(page, "isRefresh", false);
 			vue.set(page, "isModify", file.isModify || false);
 
+			if (!this.pages[url]) this.pagelist.push(page);
+
 			this.pages[page.url] = page;
 
 			return page;
@@ -81,7 +84,7 @@ export default {
 			const trees = [rootnode];
 			rootnode.children = [];
 			rootnode.label = "我的站点";
-			self.pages[rootnode.path] = rootnode;
+			self.pages[rootnode.url] = rootnode;
 			_.each(files, file => {
 				let urls = file.url.split("/");
 				let nodes = trees;
@@ -93,7 +96,6 @@ export default {
 					const index	= _.findIndex(nodes, o => o.url == url);
 					if (index < 0) {
 						const page = self.pageToNode(url == file.url ? file : {url});
-						self.pages[page.path] = page;
 						page.children = [];
 						nodes.push(page);
 						nodes = page.children;
