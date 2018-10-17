@@ -29,7 +29,7 @@ async function urlRedirect(ctx) {
 }
 
 async function pushCode() {
-	const cmd_str = "git reset --hard HEAD; git pull origin master; npm run build; pm2 restart dev-note";
+	const cmd_str = "git reset --hard HEAD; git pull origin master; npm run build; pm2 restart note";
 	shell.exec(cmd_str);
 }
 
