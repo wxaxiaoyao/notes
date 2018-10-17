@@ -1,7 +1,6 @@
 <template>
 	<div class="index-container">
 		<div class="index-body-container">
-			<editors __style__="codemirror"></editors>
 		</div>
 	</div>
 </template>
@@ -24,14 +23,12 @@ export default {
 	head() {
 		return {
 			script: [
-				//{src:"https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"},
 			],
 		}
 	},
 
 	data: function() {
 		return {
-			message: "",
 		}
 	},
 
