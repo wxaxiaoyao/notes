@@ -38,6 +38,8 @@ import files from "./files/index.js";
 import inputs from "./inputs/index.js";
 import modules from "./modules/index.js";
 import messages from "./messages/index.js";
+import views from "./views/index.js";
+import editors from "./editors/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -66,6 +68,8 @@ const components = {
 	inputs,
 	modules,
 	messages,
+	views,
+	editors,
 
 	// UI组件
 	templates,

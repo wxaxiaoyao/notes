@@ -1,3 +1,4 @@
+
 <template>
 	<div>
 		<i @click="clickOauthLoginBtn('qq')" class="oauth-login-icon iconfont icon-qq"></i>
@@ -8,7 +9,11 @@
 </template>
 
 <script>
+import mod from "@/components/mods/common/mod.js";
+
 export default {
+	mixins:[mod],
+
 	methods: {
 		async clickOauthLoginBtn(type) {
 			const data = await this.$auth.authenticate(type, {state:"login"}).then(res => res.data);

@@ -31,7 +31,7 @@
 				</el-tab-pane>
 			</el-tabs>
 		</div>
-		<notfound v-if="isNotFound"></notfound>
+		<views __style__="notfound" v-if="isNotFound"></views>
 	</div>
 </template>
 
@@ -45,7 +45,6 @@ import {
 
 import api from "@/api/notes.js";
 import component from "@/components/component.js";
-import notfound from "@/components/views/notfound.vue";
 
 const loadDatas = async ({path}) => {
 	const paths = path.split("/");
@@ -102,7 +101,6 @@ export default {
 	components: {
 		[Tabs.name]: Tabs,
 		[TabPane.name]: TabPane,
-		notfound,
 	},
 
 	computed: {

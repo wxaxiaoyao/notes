@@ -12,7 +12,6 @@
 			</div>
 		</el-tab-pane>	
 		<el-tab-pane label="模块" name="mods">
-			<modsTree></modsTree>
 		</el-tab-pane>
 		<el-tab-pane label="数据" name="baseCompEditor">
 			<modDataEditor></modDataEditor>
@@ -29,19 +28,14 @@ import {
 	Message,
 } from "element-ui";
 import component from "@/components/component.js";
-import modsTree from "./modsTree.vue";
-import filetree from "./filetree.vue";
 import modDataEditor from "./modDataEditor.vue";
-//import modEditor from "./modEditor.vue";
 
 export default {
 	mixins: [component],
 	components: {
 		[Tabs.name]: Tabs,
 		[TabPane.name]: TabPane,
-		filetree,
 		//modEditor,
-		modsTree,
 		modDataEditor,
 	},
 

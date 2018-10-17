@@ -1,7 +1,7 @@
 <template>
 	<div style="display:flex; height:100%; flex-direction:column;">
-		<div style="height:60px;">
-			<Header></Header>
+		<div>
+			<headers __style__="system"></headers>
 		</div>
 		<div style="flex:1; display:flex">
 			<div class="left-container">
@@ -15,10 +15,8 @@
 </template>
 
 <script>
-import Header from "@/components/views/header.vue";
 export default {
 	components: {
-		Header:Header,
 	},
 
 	data: function() {

@@ -1,5 +1,8 @@
 <template>
 	<div class="index-container">
+		<div class="index-body-container">
+			<editors __style__="codemirror"></editors>
+		</div>
 	</div>
 </template>
 
@@ -55,7 +58,15 @@ export default {
 
 <style scoped>
 .index-container {
+	position:relative;
 	height:100%;
 	width:100%;
+}
+.index-body-container {
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
 }
 </style>

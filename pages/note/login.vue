@@ -15,10 +15,9 @@
 				</el-form>
 			</el-col>
 		</el-row>
-		<el-row>
+		<el-row v-if="false">
 			<el-col :span="8" :offset="8" :xs="{span:22, offset:1}">
 				<div style="display:flex; justify-content:center">
-					<OauthLogin></OauthLogin>
 				</div>
 			</el-col>
 		</el-row>
@@ -36,7 +35,6 @@ import {
 	Message,
 } from "element-ui";
 import {mapActions, mapGetters} from "vuex";
-import OauthLogin from "@/components/views/oauthLogin.vue";
 import component from "@/components/component.js";
 
 export default {
@@ -48,7 +46,6 @@ export default {
 		[Form.name]: Form,
 		[FormItem.name]: FormItem,
 		[Input.name]: Input,
-		OauthLogin,
 	},
 
 	data:function(){

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<mods v-if="!isNotFound" :text="content"></mods>
-		<notfound v-if="isNotFound"></notfound>
+		<views __style__="notfound" v-if="isNotFound"></views>
 	</div>
 </template>
 
@@ -13,7 +13,6 @@ import {
 
 import config from "@/config.js";
 import wurl from "wurl";
-import notfound from "@/components/views/notfound.vue";
 import component from "@/components/component.js";
 
 
@@ -50,7 +49,6 @@ export default {
 	mixins:[component],
 
 	components: {
-		notfound,
 	},
 
 	data: function() {
