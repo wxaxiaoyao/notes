@@ -3,8 +3,9 @@
 		<div class="container full-height flex-col">
 			<div class="flex-row">
 				<div>
-					<a class="iconfont icon-home" href="/"></a>
-					<a class="iconfont icon-edit" :href="editorUrl"></a>
+					<a class="iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
+					<a class="iconfont icon-edit" :href="editorUrl" data-toggle="tooltip" title="编辑器"></a>
+					<a class="iconfont icon-pencil" href="/note/draft" data-toggle="tooltip" title="草稿页"></a>
 				</div>
 				<userlinks __style__="system"></userlinks>
 			</div>
@@ -50,7 +51,7 @@ export default {
 	align-items: center;
 	padding-right: 10px;
 }
-.icon-home, .icon-edit {
+.icon-home, .icon-edit, .icon-pencil {
 	font-size:30px;
 	text-decoration: none;
 }
