@@ -1,7 +1,9 @@
 import _ from "lodash";
 import serverConfig from "./server/.config.js";
 
-const ENV = process.env.NODE_ENV;
+const ENV = process.env.ENV || process.env.NODE_ENV;
+
+console.log(process.env.ENV, "-------client-----");
 
 const defaultConfig = {
 	apiUrlPrefix: "http://api.wxaxiaoyao.cn/api/v0/",
@@ -54,7 +56,6 @@ const configs = {
 	"test": _.merge({}, defaultConfig, testConfig),
 }
 
-console.log(ENV);
 const config =  configs[ENV];
 
 export default config;

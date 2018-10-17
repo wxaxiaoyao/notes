@@ -8,6 +8,7 @@ const shell = require("shelljs");
 const nuxtConfig = require('../nuxt.config.js');
 const config = require("./.config.js");
 
+console.log(process.env.ENV, "-------server-----");
 
 // 文件资源重定向
 async function urlRedirect(ctx) {
@@ -28,7 +29,7 @@ async function urlRedirect(ctx) {
 }
 
 async function pushCode() {
-	const cmd_str = "git reset --hard HEAD; git pull origin master; npm run build; pm2 --name dev-note start npm -- run start";
+	const cmd_str = "git reset --hard HEAD; git pull origin master; npm run build; pm2 restart dev-note";
 	shell.exec(cmd_str);
 }
 
