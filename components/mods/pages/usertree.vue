@@ -81,10 +81,6 @@ export default {
 		isPrivacyMode() {
 			return this.mode == "privacy";
 		},
-		currentPage() {
-			if (!this.currentUrl) return {};
-			return this.pages[this.currentUrl] || {};
-		},
 	},
 
 	watch: {

@@ -1,16 +1,15 @@
 
 <template>
-	<div>
-		<el-select v-model="url" 
-			style="width:400px"
-			@change="switchPage"
-			filterable 
-			allow-create 
-			default-first-option
-			placeholder="页面url 如: username/dirname/filename">
-			<el-option v-for="(page, i) in pagelist" :key="i" :value="page.url"></el-option>
-		</el-select>
-	</div>
+	<el-select v-loading="loading" v-model="__data__.url" 
+		@change="switchPage"
+		size="small"
+		clearable
+		filterable 
+		allow-create 
+		default-first-option
+		placeholder="页面url 如: username/dirname/filename">
+		<el-option v-for="(page, i) in pagelist" :key="i" :value="page.url"></el-option>
+	</el-select>
 </template>
 
 <script>
@@ -32,7 +31,7 @@ export default {
 
 	data: function() {
 		return {
-			url:"",
+			loading:false,
 		}
 	},
 
@@ -41,19 +40,29 @@ export default {
 			type: Object,
 			default: function() {
 				return {
+					url:"",
 				}
 			}
 		}
 	},
 
 	methods:{
-		switchPage() {
-		}
+		async switchPage() {
+			if (!this.isAuthenticated) return;
+			let url = this.__data__.url;
+			const username = this.user.username;
+			if (!_.startsWith(url, username + "/")) url = username + "/" + url;
+			const urls = url.split("/").filter(o => o);
+			if (urls.length < 3) url = "";
+			else url = urls.join("/");
+
+			this.loading = true;
+			await this.clickSelectPage({url}, () => this.loading = false);
+		},
 	},
 
 	async mounted() {
 		await this.loadPageTrees();
-		console.log(this.pages);
 	},
 }
 </script>

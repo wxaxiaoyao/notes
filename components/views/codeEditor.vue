@@ -34,7 +34,7 @@ import codemirror from "@/components/common/codemirror.vue";
 import qiniuUpload from "@/api/qiniu.js";
 import api from "@/api/notes.js";
 import util from "@/lib/util.js";
-const tempContentKey = "cmeditor_temp_content";
+const tempContentKey = "__page__";
 
 export default {
 	mixins: [component],

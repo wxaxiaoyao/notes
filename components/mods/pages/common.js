@@ -38,6 +38,10 @@ export default {
 		pages() {
 			return g_app.getData("pages", {});
 		},
+		currentPage() {
+			if (!this.currentUrl) return {};
+			return this.pages[this.currentUrl] || {};
+		},
 	},
 
 	methods: {
@@ -182,19 +186,35 @@ export default {
 			})
 		},
 
-		clickSelectPage(data) {
+		clickSelectPage(data, finishCB) {
 			console.log("click select page: ", data.url, data);
 			const self = this;
 
-			if (!data.url || this.isFolder(data.url) || !g_app.pageDB) return;
+			if (!data.url) {
+				this.setCurrentUrl("");
+				finishCB && finishCB();
+				return;
+			}
+			if (this.isFolder(data.url) || !g_app.pageDB) {
+				finishCB && finishCB();
+				return;
+			}
 
 			// 添加打开列表
 			let page = self.pages[data.url];
 			if (!page && data.url) {
 				page = self.pageToNode({url: data.url});
+				if (data.content) {
+					page.content = data.content;
+					page.loaded = true;
+				}
 			}
 
-			if (page.loading) return console.log("页面加载中...", page.url);
+			if (page.loading) {
+				console.log("页面加载中...", page.url);
+				finishCB && finishCB();
+				return;
+			} 
 
 			console.log("开始加载页面:", page.url);
 
@@ -202,6 +222,8 @@ export default {
 				page.isRefresh = false;
 				page.loading = false;
 				page.loaded = true; // 已加载
+
+				finishCB && finishCB();
 				if (!succes) {
 					self.setCurrentUrl("");
 					self.$message("页面加载失败");
@@ -227,6 +249,25 @@ export default {
 				console.log("页面内容已存在:", page.url);
 				finish(true);
 			}
+		},
+
+		async savePage() {
+			if (!this.currentPage || !this.currentPage.url || !this.currentPage.isModify){
+				g_app.storage.localStorageSetItem("__page__", this.currentContent);
+				return;
+			}
+
+			this.currentPage.hash = util.hash(this.currentPage.content);
+			this.currentPage.isRefresh = true;
+			const oper = this.currentPage.id ? "update" : "create";
+			const result = await this.api.pages[oper](this.currentPage);
+			if (!result) {
+				Message("文件保存失败");
+				return;
+			}
+			this.currentPage.isRefresh = false;
+			this.currentPage.isModify = false;
+			g_app.pageDB.setItem(this.currentPage);
 		},
 
 		clickOpenBtn(data) {

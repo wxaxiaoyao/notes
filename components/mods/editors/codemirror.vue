@@ -149,10 +149,8 @@ export default {
 			isClient: false,
 			keyMap:{
 				"Ctrl-S": function(cm) {
-					self.$emit("save", {
-						filename: self.currentFilename,
-						text:self.codemirror.getValue()
-					});
+					console.log("-------------ctrl-s-------------");
+					self.__data__.CtrlS && self.__data__.CtrlS();
 				},
 				"Ctrl-Enter": function(cm) {
 					cm.replaceSelection("\n");	
@@ -263,6 +261,8 @@ export default {
 			} else {
 				this.CodeMirror && this.CodeMirror.signal(this.codemirror, "change", this.codemirror);
 			}
+
+			this.codemirror.focus();
 		},
 		insertContent(content, lineNo) {
 			line_keyword_nofocus(this.codemirror, lineNo, content);
