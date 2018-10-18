@@ -2,7 +2,7 @@
 <template>
 	<div class="simple-editor-container">
 		<div class="header-container">
-			<div>
+			<div class="header-left-container">
 				<i @click="savePage" v-if="currentPage.url" :class='currentPage.isRefresh ? "el-icon-loading" : currentPage.isModify ? "iconfont icon-edit" : "iconfont icon-save"'></i>
 			</div>
 			<div class="header-middle-container">
@@ -44,6 +44,9 @@ export default {
 	},
 
 	computed: {
+		pages() {
+			return g_app.getData("pages", {});
+		},
 		currentPage() {
 			if (!this.currentUrl) return {};
 			return this.pages[this.currentUrl] || {};
@@ -98,6 +101,9 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	background-color: rgb(248,248,248);
+}
+.header-left-container {
+	margin-left:20px;
 }
 .body-container {
 	position: absolute;

@@ -11,9 +11,9 @@ import {
 	TableColumn,
 } from "element-ui";
 
-import tables from "@/components/common/tables.vue";
 import component from "@/components/component.js";
 import resources from "./resources.js";
+import tables from "./tables.vue";
 
 export default {
 	mixins: [component],
