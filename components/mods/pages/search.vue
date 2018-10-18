@@ -53,7 +53,7 @@ export default {
 			const username = this.user.username;
 			if (!_.startsWith(url, username + "/")) url = username + "/" + url;
 			const urls = url.split("/").filter(o => o);
-			if (urls.length < 3) url = "";
+			if (urls.length < 3 || _.endsWith(url, "/")) url = "";
 			else url = urls.join("/");
 
 			this.loading = true;

@@ -152,9 +152,13 @@ export default {
 			const self = this;
 			let _loadPageFromServer = async function() {
 				console.log("服务器最新");
-				const result = await self.api.pages.getById({id:page.id || page.url});
-				const file = result.data;
-				if (result.isErr()) return errcb && errcb();
+				let result = await self.api.pages.getById({id:page.id || page.url});
+				let file = result.data;
+				if (result.isErr()) {
+					result = await self.api.pages.create(page);
+					if (result.isErr()) return errcb && errcb();
+					file = result.data;
+				};
 				page.id = file.id;
 				page.hash = file.hash;
 				page.folder = file.folder;
@@ -204,10 +208,10 @@ export default {
 			let page = self.pages[data.url];
 			if (!page && data.url) {
 				page = self.pageToNode({url: data.url});
-				if (data.content) {
-					page.content = data.content;
-					page.loaded = true;
-				}
+				//if (data.content) {
+					//page.content = data.content;
+					//page.loaded = true;
+				//}
 			}
 
 			if (page.loading) {

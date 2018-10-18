@@ -7,10 +7,9 @@
 
 <script>
 export default {
-
 	head() {
 		return {
-			title:"storage",
+			title:"网盘 /note/storage",
 		}
 	}
 }

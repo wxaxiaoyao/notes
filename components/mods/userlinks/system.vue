@@ -5,7 +5,9 @@
 				<el-button type="text" icon="iconfont icon-actions" class="el-dropdown-link"></el-button>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item command="new">新建站点</el-dropdown-item>
-					<el-dropdown-item command="editor">页面编辑</el-dropdown-item>
+					<el-dropdown-item command="editor">编辑器</el-dropdown-item>
+					<el-dropdown-item command="simple-editor">简易编辑器</el-dropdown-item>
+					<el-dropdown-item command="draft">草稿页</el-dropdown-item>
 				</el-dropdown-menu>
 			</el-dropdown>
 			<el-dropdown @command="handleCommand" trigger="hover" placement="bottom">

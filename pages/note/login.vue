@@ -48,6 +48,12 @@ export default {
 		[Input.name]: Input,
 	},
 
+	head() {
+		return {
+			title: "登录",
+		}
+	},
+
 	data:function(){
 		return {
 			loginForm:{

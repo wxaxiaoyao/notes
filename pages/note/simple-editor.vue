@@ -7,7 +7,7 @@
 			</div>
 			<div class="header-middle-container">
 				<pages __style__="search" class="pages-search"></pages>
-				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}"></i>
+				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}" data-toggle="tooltip" title="预览"></i>
 			</div>
 			<userlinks __style__="system"></userlinks>
 		</div>
@@ -26,6 +26,14 @@ export default {
 	mixins: [component],
 
 	layout: "editor",
+
+	middleware: "authenticated",
+
+	head() {
+		return {
+			title: "简易编辑器",
+		}
+	},
 
 	data: function() {
 		return {
@@ -132,7 +140,7 @@ export default {
 			this.timer && clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
 				this.savePageToDB();
-			}, 10000);
+			}, 3000);
 		},
 
 		editorInited(ref) {

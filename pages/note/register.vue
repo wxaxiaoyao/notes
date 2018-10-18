@@ -41,6 +41,12 @@ export default {
 		[Input.name]: Input,
 	},
 
+	head() {
+		return {
+			title: "注册",
+		}
+	},
+
 	data:function(){
 		return {
 			registerForm:{

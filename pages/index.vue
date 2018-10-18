@@ -1,7 +1,6 @@
 <template>
 	<div class="index-container">
 		<div class="index-body-container">
-			<pages __style__="search"></pages>
 		</div>
 	</div>
 </template>

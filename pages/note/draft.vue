@@ -2,7 +2,11 @@
 <template>
 	<div class="draft-page-container">
 		<div class="header-container">
-			<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}"></i>
+			<div class=header-left-container>
+				<a class="iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
+				<a class="iconfont icon-edit" href="/note/simple-editor" data-toggle="tooltip" title="简易编辑器"></a>
+				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}" data-toggle="tooltip" title="预览"></i>
+			</div>
 			<userlinks __style__="system"></userlinks>
 		</div>
 		<div class="body-container">
@@ -20,6 +24,12 @@ export default {
 	mixins: [component],
 
 	layout: "blank",
+
+	head() {
+		return {
+			title:"草稿页",
+		}
+	},
 
 	data: function() {
 		return {
@@ -72,6 +82,9 @@ export default {
 	justify-content: space-between;
 	background-color: rgb(248,248,248);
 }
+.header-left-container {
+	margin-left:20px;
+}
 .body-container {
 	position: absolute;
 	top: 60px;
@@ -80,7 +93,6 @@ export default {
 	bottom: 0px;
 }
 .icon-preview {
-	margin-left:20px;
 	color: gray;
 }
 .preview-active {
