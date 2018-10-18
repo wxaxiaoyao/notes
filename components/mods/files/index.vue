@@ -49,9 +49,11 @@
 					</el-table-column>
 					<el-table-column label="操作">
 						<template slot-scope="{row}">
-							<i @click="clickCopyLinkBtn(row)" data-toggle="tooltip" title="复制链接" class="file-oper-icon iconfont icon-copy"></i>
-							<i @click="clickDownloadBtn(row)" data-toggle="tooltip" title="下载文件" class="file-oper-icon iconfont icon-download"></i>
-							<i @click="clickDeleteOperBtn(row)" data-toggle="tooltip" title="删除文件" class="file-oper-icon iconfont icon-delete"></i>
+							<div class="oper-container">
+								<i @click="clickCopyLinkBtn(row)" data-toggle="tooltip" title="复制链接" class="file-oper-icon iconfont icon-copy"></i>
+								<i @click="clickDownloadBtn(row)" data-toggle="tooltip" title="下载文件" class="file-oper-icon iconfont icon-download"></i>
+								<i @click="clickDeleteOperBtn(row)" data-toggle="tooltip" title="删除文件" class="file-oper-icon iconfont icon-delete"></i>
+							</div>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -174,6 +176,9 @@ export default {
 }
 .upload-container> span {
 	margin-right: 5px;
+}
+.oper-container {
+	min-width:80px;
 }
 .file-search {
 	/*width: 300px;*/

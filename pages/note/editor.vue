@@ -2,26 +2,36 @@
 	<div class="editor-container">
 		<headers __style__="editor" :__default_data__="headersData"></headers>
 		<div class="editor-main-container">
-			<div class="editor-main-content-container" v-if="isSmallScreen">
-				<left v-show="viewMode == 'files' || viewMode == 'code-preview'"></left>
-				<code-editor v-show="viewMode == 'code'" ref="codemirror"></code-editor>
-				<div v-show="viewMode== 'preview'" class="preview-container">
-					<mods :text="text" mode="editor"></mods>
-				</div>
-			</div>
-			<div v-else 
-				class="editor-main-content-container"
+			<div class="editor-main-content-container"
 				@mouseup="splitStripMouseup"
 				@mousemove="splitStripMousemove"
 				@mouseleave="splitStripMouseup">
 				<div ref="splitStrip1" :style="leftContainerStyle" class="editor-left-content-container">
-					<left></left>
+					<el-tabs v-model="activeTab" class="left-el-tabs" type="border-card">
+						<el-tab-pane label="文件" name="files">
+							<div class="kp_forbit_copy" style="margin-bottom:60px">
+								<pages __style__="recent"></pages>
+								<div v-show="!isPrivacyMode">
+									<pages :__default_data__="{mode:'normal'}" __style__="usertree"></pages>
+								</div>
+								<div v-show="isPrivacyMode">
+									<pages :__default_data__="{mode:'privacy'}"  __style__="usertree"></pages>
+								</div>
+							</div>
+						</el-tab-pane>	
+						<el-tab-pane label="模块" name="mods">
+						</el-tab-pane>
+						<el-tab-pane label="数据" name="baseCompEditor">
+						</el-tab-pane>
+						<el-tab-pane label="教程" name="tutorials">
+						</el-tab-pane>
+					</el-tabs>
 					<div v-if="headersData.isShowWorkspace" class="split-strip kp_forbit_copy" @mousedown="splitStripMousedown('splitStrip1')"></div>
 				</div>
 				<div class="editor-right-content-container" :style="rightContainerStyle">
 					<div ref="splitStrip2" class="code-container" :style="codeContainerStyle" v-show="viewMode != 'preview'">
 						<div class="code-content-container" >
-							<code-editor ref="codemirror"></code-editor>
+							<editors __style__="editor" :__default_data__="editorsEditorData"></editors>
 						</div>
 					</div>
 					<div v-if="viewMode== 'code-preview'" class="split-strip kp_forbit_copy" @mousedown="splitStripMousedown('splitStrip2')"></div>
@@ -46,14 +56,13 @@ import {
 	Dialog,
 	Form,
 	FormItem,
+	Tabs,
+	TabPane,
 } from "element-ui";
 import vue from "vue";
-import lodash from "lodash";
+import _ from "lodash";
 
 import component from "@/components/component.js";
-import {tags} from "@/lib/tags";
-import left from "@/components/views/left.vue";
-//import codeEditor from "@/components/views/codeEditor.vue";
 
 export default {
 	mixins: [component],
@@ -66,15 +75,17 @@ export default {
 		[Dialog.name]: Dialog,
 		[Form.name]: Form,
 		[FormItem.name]: FormItem,
-		left,
-		codeEditor: () => import("@/components/views/codeEditor.vue"),
+		[Tabs.name]: Tabs,
+		[TabPane.name]: TabPane,
 	},
 	middleware: "authenticated",
 	layout: "editor",
 	data: function() {
 		const self = this;
 		return {
+			activeTab: "files",
 			modulesRenderData:{text:"", mode:"editor"},
+			editorsEditorData: {},
 			viewMode:"code-preview",
 			splitStrip1_width:"350px",
 			splitStrip2_width:"50%",
@@ -96,6 +107,14 @@ export default {
 	},
 
 	computed: {
+		editorActiveTab() {
+			return this.getData("editorActiveTab") || "files";
+		},
+
+		isPrivacyMode() {
+			return this.editorMode == "privacy";
+		},
+
 		text() {
 			return this.getData("__currentContent__") || "";
 		},
@@ -106,9 +125,12 @@ export default {
 	},
 
 	watch:{
+		editorActiveTab: function(val) {
+			this.activeTab = val;
+		},
 		text(val) {
 			this.modulesRenderData.text = val;
-		}
+		},
 	},
 
 	methods: {
@@ -134,7 +156,7 @@ export default {
 					this.rightContainerStyle.width = isShowWorkspace ? "85%" : "100%";
 				}
 			} else if(cmd == "save") {
-				this.clickSaveBtn();
+				this.editorsEditorData.save && this.editorsEditorData.save();
 			}
 		},
 
@@ -227,15 +249,40 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 html, body {
 	height:100%;
 	margin: 0px;
 	overflow-y: hidden;
 	overflow-x: hidden;
 }
+.editor-container {
+	.el-tabs, .el-tab-pane {
+		height:100%;
+		width: 100%;
+		border: 0px;
+	}
+	.left-el-tabs {
+		height:100%;
+		padding:0px;
+	}
+	.left-el-tabs .el-tabs__content  {
+		height:100%;
+		padding:0px;
+	}
+	.left-el-tabs .el-tabs__header.is-left {
+		margin-right:0px;
+	}
+	.left-el-tabs .el-tab-pane {
+		overflow-y:auto;
+	}
+	.left-el-tabs .el-tab-pane::-webkit-scrollbar {
+		display: none;
+	}
+}
 </style>
 <style scoped>
+
 .active-btn {
 	background-color: blue;
 }

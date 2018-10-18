@@ -35,12 +35,23 @@ export default {
 		return {
 			modulesRenderData:{text:""},
 			preview: false,
-			storageKey: "__draft_page__",
+			storageKey: "__page__",
 			editorsCodemirrorData: {
 				change: val => this.change(val),
 				inited: ref => this.editorInited(ref),
+				CtrlS: () => this.savePage(),
 			}
 		}
+	},
+
+	computed: {
+		pages() {
+			return g_app.getData("pages", {});
+		},
+		currentPage() {
+			if (!this.currentUrl) return {};
+			return this.pages[this.currentUrl] || {};
+		},
 	},
 
 	methods: {
@@ -48,19 +59,31 @@ export default {
 			this.preview = !this.preview;
 		},
 
-		change(value) {
-			this.modulesRenderData.text = value.text;
+		savePage() {
+			const {text, cursor} = this.editor.getValue();
+			this.currentPage.content = text;
+			this.currentPage.cursor = cursor;
+			g_app.storage.localStorageSetItem(this.storageKey, this.currentPage);
+			console.log("保存临时页");
+		},
+
+		change({text, cursor}) {
+			this.modulesRenderData.text = text;
+			this.currentPage.content = text;
+			this.currentPage.cursor = cursor;
+			this.setCurrentContent(text);
+
 			this.timer && clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
-				g_app.storage.localStorageSetItem(this.storageKey, value);
+				g_app.storage.localStorageSetItem(this.storageKey, this.currentPage);
 			}, 3000);
 		},
 
 		editorInited(ref) {
 			this.editor = ref;
 			this.editorsCodemirrorData.ref = ref;
-			const value = g_app.storage.localStorageGetItem(this.storageKey) || {};
-			ref.setValue(value);
+			const page = g_app.storage.localStorageGetItem(this.storageKey) || {};
+			ref.setValue({filename: page.url, text: page.content, cursor: page.cursor});
 		}
 	}, 
 

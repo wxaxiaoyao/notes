@@ -13,7 +13,7 @@
 		</div>
 		<div class="body-container">
 			<modules v-if="preview" __style__="render" :__default_data__="modulesRenderData" ></modules>
-			<editors v-show="!preview" __style__="codemirror" :__default_data__="editorsCodemirrorData"></editors>
+			<editors v-show="!preview" __style__="editor" :__default_data__="editorsEditorData"></editors>
 		</div>
 	</div>
 </template>
@@ -38,20 +38,12 @@ export default {
 	data: function() {
 		return {
 			modulesRenderData:{text:""},
+			editorsEditorData:{},
 			preview: false,
-			storageKey: "__page__",
-			editorsCodemirrorData: {
-				change: val => this.change(val),
-				inited: ref => this.editorInited(ref),
-				CtrlS: () => this.savePage(),
-			}
 		}
 	},
 
 	computed: {
-		pages() {
-			return g_app.getData("pages", {});
-		},
 		currentPage() {
 			if (!this.currentUrl) return {};
 			return this.pages[this.currentUrl] || {};
@@ -59,11 +51,8 @@ export default {
 	},
 
 	watch: {
-		currentUrl: function(url) {
-			this.switchPage();
-		},
 		currentContent: function(content) {
-			this.switchPage();
+			this.modulesRenderData.text = content || "";
 		},
 	},
 
@@ -72,85 +61,9 @@ export default {
 			this.preview = !this.preview;
 		},
 
-		getTempPage() {
-			return g_app.storage.localStorageGetItem(this.storageKey) || {};
-		},
-
-		savePageToDB(page){
-			page = _.cloneDeep(page || this.currentPage);
-			console.log("保存页面到本地存贮", page);
-			if (!page.isModify) return ;
-
-			if (page.url) {
-				g_app.pageDB.setItem(page);
-			} else {
-				return g_app.storage.localStorageSetItem(this.storageKey, this.currentPage);
-			}
-		},
-
 		async savePage() {
-			this.savePageToDB();
-
-			if (!this.currentPage.url) return;
-
-			this.currentPage.hash = g_app.util.hash(this.currentPage.content);
-			this.currentPage.isRefresh = true;
-			const oper = this.currentPage.id ? "update" : "create";
-			const result = await this.api.pages[oper](this.currentPage);
-
-			this.currentPage.isRefresh = false;
-
-			if (result.isErr()) return Message("文件保存失败");
-
-			this.currentPage.isModify = false;
+			this.editorsEditorData.save && this.editorsEditorData.save();
 		},
-
-		switchPage() {
-			const url = this.currentUrl;
-			if (_.endsWith(url, "/")) return console.log("url 为目录:", url);
-			const page = url ? this.pages[url] : {...this.currentPage, loaded:true};
-			if (!page || (page.url && !page.loaded) || !this.editor) return console.log("页面不存在或未加载:", page);
-
-			const value = this.editor.getValue();
-			if ((value.filename || "") == (page.url || "") && value.text == page.content) return console.log("正在编辑中...");
-			//console.log(value, page);
-
-			if (this.lastUrl && this.lastUrl != url) {
-				console.log("保存旧页面到本地存贮");
-				this.lastUrl = url;
-				this.savePageToDB(this.pages[this.lastUrl]);
-			}
-
-			console.log("切换页面:", page.url);
-			const newValue =  {
-				filename: page.url,
-				text: page.content,
-				cursor: page.cursor,
-			}
-
-			this.editor.setValue(newValue);
-		},
-
-		change({filename, text, cursor}) {
-			const url = this.currentUrl;
-			this.modulesRenderData.text = text;
-			if (this.currentPage.content != text) this.currentPage.isModify = true;
-			this.currentPage.content = text;
-			this.currentPage.cursor = cursor;
-			this.setCurrentContent(text);
-
-			this.timer && clearTimeout(this.timer);
-			this.timer = setTimeout(() => {
-				this.savePageToDB();
-			}, 3000);
-		},
-
-		editorInited(ref) {
-			this.editor = ref;
-			this.editorsCodemirrorData.ref = ref;
-			const page = this.getTempPage();
-			ref.setValue({filename: page.url, text: page.content, cursor: page.cursor});
-		}
 	}, 
 
 	mounted() {

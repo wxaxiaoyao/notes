@@ -3,8 +3,8 @@
 		<div class="container full-height flex-col">
 			<div class="flex-row">
 				<div>
-					<a class="iconfont icon-home" href="/"></a>
-					<a class="iconfont icon-edit" :href="editorUrl" target="_blank"></a>
+					<a class="iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
+					<a class="iconfont icon-edit" href="/note/simple-editor" data-toggle="tooltip" title="简易编辑器"></a>
 				</div>
 				<pagenavs __style__="index"></pagenavs>
 				<userlinks __style__="system"></userlinks>
