@@ -68,8 +68,8 @@ export const actions = {
 	nuxtServerInit({commit, state}, {req}) {
 		let token = state.token;
 		if (process.server && req && req.ctx) {
-			commit("setToken", req.ctx.state.token);
 			token = req.ctx.state.token;
+			state.token = token;
 		}
 
 		api.options.headers = _.merge({}, api.options.headers, {
