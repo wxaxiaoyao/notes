@@ -12,7 +12,7 @@
 			<userlinks __style__="system"></userlinks>
 		</div>
 		<div class="body-container">
-			<mods :text="text" v-if="preview"></mods>
+			<modules v-if="preview" __style__="render" :__default_data__="modulesRenderData" ></modules>
 			<editors v-show="!preview" __style__="codemirror" :__default_data__="editorsCodemirrorData"></editors>
 		</div>
 	</div>
@@ -37,8 +37,8 @@ export default {
 
 	data: function() {
 		return {
+			modulesRenderData:{text:""},
 			preview: false,
-			text:"",
 			storageKey: "__page__",
 			editorsCodemirrorData: {
 				change: val => this.change(val),
@@ -108,11 +108,12 @@ export default {
 		switchPage() {
 			const url = this.currentUrl;
 			if (_.endsWith(url, "/")) return console.log("url 为目录:", url);
-			const page = url ? this.pages[url] : {url:""};
+			const page = url ? this.pages[url] : {...this.currentPage, loaded:true};
 			if (!page || (page.url && !page.loaded) || !this.editor) return console.log("页面不存在或未加载:", page);
 
 			const value = this.editor.getValue();
-			if (value.filename == page.url && value.text == page.content) return console.log("正在编辑中...");
+			if ((value.filename || "") == (page.url || "") && value.text == page.content) return console.log("正在编辑中...");
+			//console.log(value, page);
 
 			if (this.lastUrl && this.lastUrl != url) {
 				console.log("保存旧页面到本地存贮");
@@ -132,10 +133,11 @@ export default {
 
 		change({filename, text, cursor}) {
 			const url = this.currentUrl;
-			this.text = text;
+			this.modulesRenderData.text = text;
 			if (this.currentPage.content != text) this.currentPage.isModify = true;
 			this.currentPage.content = text;
 			this.currentPage.cursor = cursor;
+			this.setCurrentContent(text);
 
 			this.timer && clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
@@ -157,10 +159,19 @@ export default {
 
 </script>
 
+<style>
+</style>
+
 <style scoped>
-@media (min-width: 768px) {
+@media screen and (max-width: 768px) {
 	.pages-search {
 		width:200px;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.pages-search {
+		width:400px;
 	}
 }
 .simple-editor-container {
@@ -174,9 +185,6 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	background-color: rgb(248,248,248);
-}
-.pages-search {
-	width: 400px;
 }
 .body-container {
 	position: absolute;

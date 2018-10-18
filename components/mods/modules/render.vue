@@ -1,3 +1,4 @@
+
 <template>
 	<templates class="markdown-body">
 		<div v-for="(block, index) in blocks" :key="index" :ref="index">
@@ -22,42 +23,48 @@
 <script>
 import _ from "lodash";
 import vue from "vue";
-import {mapGetters, mapActions, mapMutations} from "vuex";
 
-import component from "@/components/component.js";
 import tag from "@/components/common/tag.js";
 import {tags} from "@/lib/tags";
 import {markdownEx} from "@/lib/markdown";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins:[mod],
 	data: function() {
 		return {
 			showQuickToTop: false,
 			blocks: [],
-			templateBlock: {},
 			md: markdownEx(),
 		}
 	},
 
 	props: {
-		text: {
-			type:String,
-		},
-		mode: {
-			type: String,
-			default: "normal",
-		},
-		template: {
-			type: Boolean,
-			default: false,
-		},
+		__default_data__: {
+			type: Object,
+			default: function() {
+				return {
+					text: "",
+					template: false,
+					mode: "normal",
+				}
+			}
+		}
 	},
 
 	computed: {
 		currentLine() {
 			return this.getData("__current_line__") || 0;
-		}
+		},
+		mode() {
+			return this.__data__.mode || "normal";
+		},
+		text() {
+			return this.__data__.text || "";
+		},
+		template() {
+			return this.__data__.template || false;
+		},
 	},
 
 	watch: {
@@ -70,10 +77,6 @@ export default {
 	},
 
 	methods: {
-		...mapMutations({
-			setModsData: "setModsData",
-		}),
-
 		scrollToView(line) {
 			let index = _.findIndex(this.blocks, o => line < o.end);
 			index = index < 0 ? this.blocks.length -1 : index;
@@ -143,9 +146,7 @@ export default {
 		currentPageYOffset(){
 			this.showQuickToTop = window.pageYOffset > 2160 ? true : false;
 		}
-	},
-
-	created(){
+		
 	},
 
 	beforeDestroy(){

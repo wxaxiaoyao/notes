@@ -10,7 +10,7 @@
 			<userlinks __style__="system"></userlinks>
 		</div>
 		<div class="body-container">
-			<mods :text="text" v-if="preview"></mods>
+			<modules v-if="preview" __style__="render" :__default_data__="modulesRenderData" ></modules>
 			<editors v-show="!preview" __style__="codemirror" :__default_data__="editorsCodemirrorData"></editors>
 		</div>
 	</div>
@@ -33,8 +33,8 @@ export default {
 
 	data: function() {
 		return {
+			modulesRenderData:{text:""},
 			preview: false,
-			text:"",
 			storageKey: "__draft_page__",
 			editorsCodemirrorData: {
 				change: val => this.change(val),
@@ -49,7 +49,7 @@ export default {
 		},
 
 		change(value) {
-			this.text = value.text;
+			this.modulesRenderData.text = value.text;
 			this.timer && clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
 				g_app.storage.localStorageSetItem(this.storageKey, value);

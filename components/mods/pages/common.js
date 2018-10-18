@@ -190,17 +190,17 @@ export default {
 			})
 		},
 
-		clickSelectPage(data, finishCB) {
+		clickSelectPage(data) {
 			console.log("click select page: ", data.url, data);
 			const self = this;
 
 			if (!data.url) {
 				this.setCurrentUrl("");
-				finishCB && finishCB();
+				data.finish && data.finish();
 				return;
 			}
 			if (this.isFolder(data.url) || !g_app.pageDB) {
-				finishCB && finishCB();
+				data.finish && data.finish();
 				return;
 			}
 
@@ -216,7 +216,8 @@ export default {
 
 			if (page.loading) {
 				console.log("页面加载中...", page.url);
-				finishCB && finishCB();
+				console.log(finishCB);
+				data.finish && data.finish();
 				return;
 			} 
 
@@ -227,7 +228,7 @@ export default {
 				page.loading = false;
 				page.loaded = true; // 已加载
 
-				finishCB && finishCB();
+				data.finish && data.finish();
 				if (!succes) {
 					self.setCurrentUrl("");
 					self.$message("页面加载失败");

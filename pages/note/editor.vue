@@ -27,7 +27,7 @@
 					<div v-if="viewMode== 'code-preview'" class="split-strip kp_forbit_copy" @mousedown="splitStripMousedown('splitStrip2')"></div>
 					<div class="preview-container" v-show="viewMode != 'code'">
 						<div class="preview-content-container">
-							<mods :text="text" mode="editor"></mods>
+							<modules __style__="render" :__default_data__="modulesRenderData" ></modules>
 						</div>
 					</div>
 				</div>
@@ -74,6 +74,7 @@ export default {
 	data: function() {
 		const self = this;
 		return {
+			modulesRenderData:{text:"", mode:"editor"},
 			viewMode:"code-preview",
 			splitStrip1_width:"350px",
 			splitStrip2_width:"50%",
@@ -105,6 +106,9 @@ export default {
 	},
 
 	watch:{
+		text(val) {
+			this.modulesRenderData.text = val;
+		}
 	},
 
 	methods: {

@@ -57,7 +57,7 @@ export default {
 			else url = urls.join("/");
 
 			this.loading = true;
-			await this.clickSelectPage({url}, () => this.loading = false);
+			await this.clickSelectPage({url, finish: () => this.loading = false});
 		},
 	},
 
