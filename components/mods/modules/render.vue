@@ -24,8 +24,6 @@
 import _ from "lodash";
 import vue from "vue";
 
-import tag from "@/components/common/tag.js";
-import {tags} from "@/lib/tags";
 import {markdownEx} from "@/lib/markdown";
 import mod from "@/components/mods/common/mod.js";
 

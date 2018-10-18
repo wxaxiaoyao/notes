@@ -2,9 +2,9 @@ import vue from "vue";
 import _ from "lodash";
 
 import component from "@/components/component.js";
+import mod from "./common/mod.vue";
 import {tags} from "@/lib/tags";
 import common from "./common";
-import mod from "@/components/mods/common/mod.vue";
 import templates from "./templates";
 import markdowns from "./markdowns";
 import headers from "./headers/index.js";
@@ -89,7 +89,6 @@ const components = {
 
 _.each(components, (val, key) => {
 	vue.component(key, {
-		mixins: [component],
 		extends: mod,
 
 		data: function() {

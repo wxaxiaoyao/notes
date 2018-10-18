@@ -1,7 +1,7 @@
 import vue from "vue";
 import _ from "lodash";
 
-import modBaseMixin from "@/components/mods/common/modBase.js";
+import modBaseMixin from "./modBase.js";
 import modBase from "./modBase.vue";
 import modText from "./modText.vue";
 import modLink from "./modLink.vue";

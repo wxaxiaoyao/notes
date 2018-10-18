@@ -8,13 +8,6 @@ export default {
 	mixins:[component],
 
 	props: {
-		//__components__: {
-			//type: Object,
-			//default: function() {
-				//return {
-				//}
-			//}
-		//},
 		__data_type__: {
 			type: Object,
 		},
@@ -115,17 +108,6 @@ export default {
 	},
 
 	mounted() {
-		//let self = this;
-		//let parent = self.$parent;
-
-		//if (!self.__key__) return;
-		//while (parent) {
-			//if (parent.__components__) {
-				//parent.__components__[self.__key__] = self;
-				//break;
-			//}
-			//parent = parent.$parent;
-		//}
 	},
 }
 

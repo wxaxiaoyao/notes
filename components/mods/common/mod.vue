@@ -28,8 +28,6 @@
 import _ from "lodash";
 import mod from "@/components/mods/common/mod.js";
 
-//const async = () => import("@/components/async.vue");
-
 export default {
 	inheritAttrs: false,
 	mixins: [mod],
