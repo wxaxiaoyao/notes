@@ -53,20 +53,24 @@ export default {
 	methods: {
 		savePageToDB(page){
 			page = _.cloneDeep(page || this.currentPage);
-			console.log("保存页面到本地存贮", page);
-			if (!page.isModify) return ;
 
+			console.log("保存页面到本地存贮", page);
+
+			page.hash = g_app.util.hash(page.content);
 			if (page.url) {
+				page.isModify = false;
 				g_app.pageDB.setItem(page);
 			} else {
 				return g_app.storage.localStorageSetItem(this.storageKey, this.currentPage);
 			}
+
+			this.timer && clearTimeout(this.timer);
 		},
 
 		async savePage() {
-			this.savePageToDB();
+			if (!this.currentPage.isModify) return;
 
-			if (!this.currentPage.url) return;
+			if (!this.currentPage.url) return this.savePageToDB(this.currentPage);
 
 			this.currentPage.hash = g_app.util.hash(this.currentPage.content);
 			this.currentPage.isRefresh = true;
@@ -74,10 +78,10 @@ export default {
 			const result = await this.api.pages[oper](this.currentPage);
 
 			this.currentPage.isRefresh = false;
-
 			if (result.isErr()) return Message("文件保存失败");
-
 			this.currentPage.isModify = false;
+
+			this.savePageToDB(this.currentPage);
 		},
 
 		switchPage() {
@@ -107,23 +111,28 @@ export default {
 		},
 
 		change({filename, text, cursor}) {
+			this.setCurrentContent(text);
+
 			const url = this.currentUrl;
+			if ((url||"") != (filename||"")) return console.log(`更新:${filename} 当前:${url}`);
 			if (this.currentPage.content != text) this.currentPage.isModify = true;
 			this.currentPage.content = text;
 			this.currentPage.cursor = cursor;
-			this.setCurrentContent(text);
 
+			const page = _.cloneDeep(this.currentPage);
 			this.timer && clearTimeout(this.timer);
 			this.timer = setTimeout(() => {
-				this.savePageToDB();
+				this.savePageToDB(page);
 			}, 3000);
 		},
 
 		editorInited(ref) {
 			this.editor = ref;
 			this.editorsCodemirrorData.ref = ref;
-			const page = g_app.storage.localStorageGetItem(this.storageKey) || {};
-			ref.setValue({filename: page.url, text: page.content, cursor: page.cursor});
+			if (!this.currentUrl) {
+				const page = g_app.storage.localStorageGetItem(this.storageKey) || {};
+				ref.setValue({filename: page.url, text: page.content, cursor: page.cursor});
+			}
 		}
 	}, 
 

@@ -42,7 +42,7 @@ class Cache {
 		// 模拟虚拟请求
 		if (self.state == 1) {
 			console.log("共用请求数据:", config.url);
-			return await (new Promise((resolve, reject) => cache.cblist.push({resolve, reject})));	
+			return await (new Promise((resolve, reject) => self.cblist.push({resolve, reject})));	
 		}
 
 		// 初始状态, 则请求并置请求中状态

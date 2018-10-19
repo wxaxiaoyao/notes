@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<mods v-if="!isNotFound" :text="content"></mods>
+		<modules v-if="!isNotFound" __style__="render" :__default_data__="content"></modules>
 		<views __style__="notfound" v-if="isNotFound"></views>
 	</div>
 </template>
@@ -53,9 +53,10 @@ export default {
 
 	data: function() {
 		return {
+			modulesRenderData:{text:""},
+			content:"",
 			isNotFound: false,
 			url: null,
-			content: "",
 			page: {},
 		}
 	},
@@ -129,6 +130,7 @@ export default {
 
 		this.visitPage();
 
+		this.modulesRenderData.text = this.content;
 		this.setData("__currentUrl__", this.url);
 		this.setData("__currentContent__", this.content);
 	}

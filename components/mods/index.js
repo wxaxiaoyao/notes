@@ -40,6 +40,7 @@ import modules from "./modules/index.js";
 import messages from "./messages/index.js";
 import views from "./views/index.js";
 import editors from "./editors/index.js";
+import tasks from "./tasks/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -70,6 +71,7 @@ const components = {
 	messages,
 	views,
 	editors,
+	tasks,
 
 	// UI组件
 	templates,

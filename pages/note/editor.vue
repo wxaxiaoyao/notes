@@ -237,14 +237,16 @@ export default {
 			}, 5 * 60 * 1000);
 		}
 	},
+
+	created() {
+		if (this.isSmallScreen) {
+			return this.pushName("simple-editor");
+		}
+	},
+
 	mounted() {
 		const self = this;
 		self.unhandle();
-
-		setTimeout(() => {
-			const hash = decodeURIComponent(window.location.hash || "");
-			self.setCurrentUrl(hash.substring(1));
-		}, 100);
 	},
 }
 </script>

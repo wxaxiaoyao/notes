@@ -71,7 +71,8 @@ export default {
 			vue.set(page, "isRefresh", false);
 			vue.set(page, "isModify", file.isModify || false);
 
-			if (!this.pages[url]) this.pagelist.push(page);
+			const index = _.findIndex(this.pagelist, o => o.url == url);
+			index == -1 && this.pagelist.push(page);
 
 			this.pages[page.url] = page;
 
@@ -184,6 +185,7 @@ export default {
 					return;
 				} 
 
+				console.log(`本地hash:${data.hash}, 服务器hash:${page.hash}`, page.url);
 				_loadPageFromServer();
 			}, function() {
 				_loadPageFromServer();
@@ -216,7 +218,6 @@ export default {
 
 			if (page.loading) {
 				console.log("页面加载中...", page.url);
-				console.log(finishCB);
 				data.finish && data.finish();
 				return;
 			} 
@@ -256,25 +257,6 @@ export default {
 			}
 		},
 
-		async savePage() {
-			if (!this.currentPage || !this.currentPage.url || !this.currentPage.isModify){
-				g_app.storage.localStorageSetItem("__page__", this.currentContent);
-				return;
-			}
-
-			this.currentPage.hash = util.hash(this.currentPage.content);
-			this.currentPage.isRefresh = true;
-			const oper = this.currentPage.id ? "update" : "create";
-			const result = await this.api.pages[oper](this.currentPage);
-			if (!result) {
-				Message("文件保存失败");
-				return;
-			}
-			this.currentPage.isRefresh = false;
-			this.currentPage.isModify = false;
-			g_app.pageDB.setItem(this.currentPage);
-		},
-
 		clickOpenBtn(data) {
 			window.open(window.location.origin + "/" + data.url.replace(/\/$/, ""));
 		},
@@ -294,5 +276,11 @@ export default {
 				node && self.$refs.tree.append(page, folder);
 			}
 		});
+
+		setTimeout(() => {
+			const hash = decodeURIComponent(window.location.hash || "");
+			const url = hash.substring(1);
+			self.clickSelectPage({url});
+		}, 100);
 	}
 }

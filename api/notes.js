@@ -187,7 +187,7 @@ export function Messages(options) {
 	initHttpOptions(self, options, "messages");
 }
 
-export function Sessions(option) {
+export function Sessions(options) {
 	const self = this;
 
 	initHttpOptions(self, options, "sessions");
@@ -195,6 +195,12 @@ export function Sessions(option) {
 	self.sendMsg = self.apiRequest("post", ":id/msgs");
 	self.getMsgs = self.apiRequest("get", ":id/msgs");
 	self.current = self.apiRequest("post", ":id/current");
+}
+
+export function Tasks(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "tasks");
 }
 
 export function Notes(options = {}){
@@ -221,6 +227,7 @@ export function Notes(options = {}){
 	self.notifications = new Notifications(self.options);
 	self.messages = new Messages(self.options);
 	self.sessions = new Sessions(self.options);
+	self.tasks = new Tasks(self.options);
 }
 
 export const options = {

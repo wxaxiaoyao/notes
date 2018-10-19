@@ -1,6 +1,6 @@
 
 <template>
-	<templates class="markdown-body">
+	<templates class="markdown-body" :__style__="__data__.templateStyle" :__default_data__="__data__.templateData">
 		<div v-for="(block, index) in blocks" :key="index" :ref="index">
 			<component 
 				:is="block.name" 
@@ -34,6 +34,14 @@ export default {
 			showQuickToTop: false,
 			blocks: [],
 			md: markdownEx(),
+
+			defaultData: {
+				text: "",
+				template: false,
+				templateStyle:"index",
+				templateData:{},
+				mode: "normal",
+			}
 		}
 	},
 
@@ -42,9 +50,6 @@ export default {
 			type: Object,
 			default: function() {
 				return {
-					text: "",
-					template: false,
-					mode: "normal",
 				}
 			}
 		}

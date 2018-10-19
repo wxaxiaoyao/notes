@@ -303,7 +303,7 @@ export default {
 			self.codemirror = self.$refs.cm.codemirror;
 			self.CodeMirror = this.CodeMirror || require("codemirror");
 			self.initCodeMirror();
-			self.swapDoc();	
+			self.swapDoc(self.__data__.filename, self.__data__.text);	
 
 			self.__data__.inited && self.__data__.inited(self);
 		}, 100);

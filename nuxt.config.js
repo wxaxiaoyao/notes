@@ -78,8 +78,6 @@ module.exports = {
 	plugins: [
 	  {src:"~/plugins/init"},
 	  {src:"~/plugins/client", ssr: false},
-	  {src:"~/plugins/authenticate", ssr: false},
-	  {src:"~/plugins/element-ui"},
 	],
 
 	/*

@@ -1,6 +1,7 @@
 import axios from "axios";
 import _ from "lodash";
 import vue from "vue";
+import elementUI from 'element-ui';
 import SockJS from "sockjs-client";
 
 import util from "@/lib/util.js";
@@ -12,6 +13,8 @@ import admins from "@/api/admins.js";
 import mdconf from "@/lib/markdown/mdconf.js";
 
 const {mods} = components;
+
+vue.use(elementUI);
 
 api.options.baseURL = config.apiUrlPrefix;
 api.options.withCredentials = true;

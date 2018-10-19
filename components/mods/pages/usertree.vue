@@ -90,6 +90,7 @@ export default {
 			const self = this;
 
 			const page = self.pages[url] || {url};
+
 			self.clickSelectPage(page);
 
 			setTimeout(function(){

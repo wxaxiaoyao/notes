@@ -7,12 +7,20 @@ import component from '@/components/component.js';
 export default {
 	mixins:[component],
 
+	data: function() {
+		return {
+			defaultData:{},
+		}
+	},
+
 	props: {
 		__data_type__: {
 			type: Object,
+			//default: function() {return {}},
 		},
 		__default_data__: {
 			type: Object,
+			//default: function() {return {}},
 		},
 		__mode__: {
 			type: String,
@@ -42,9 +50,14 @@ export default {
 			return currentMod.__key__ == this.__key__;
 		},
 		__data__() {
+		   	// 设置默认数据
 			const defaultValue = this.__default_data__ || {};
+			_.merge(defaultValue, this.defaultData, _.cloneDeep(defaultValue)); 
 			if (!this.__key__) return defaultValue;
-			return _.merge(defaultValue, this.getModData(this.__key__));
+
+			// 设置传入数据
+			_.merge(defaultValue,  this.getModData(this.__key__));
+			return defaultValue;
 		},
 	},
 
