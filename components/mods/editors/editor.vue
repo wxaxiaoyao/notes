@@ -4,7 +4,6 @@
 </template>
 
 <script>
-
 import mod from "@/components/mods/common/mod.js";
 
 export default {
@@ -17,6 +16,7 @@ export default {
 				change: val => this.change(val),
 				inited: ref => this.editorInited(ref),
 				CtrlS: () => this.savePage(),
+				AltP: cm => this.__data__.AltP && this.__data__.AltP(cm),
 			}
 		}
 	},

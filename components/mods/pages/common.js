@@ -276,11 +276,5 @@ export default {
 				node && self.$refs.tree.append(page, folder);
 			}
 		});
-
-		setTimeout(() => {
-			const hash = decodeURIComponent(window.location.hash || "");
-			const url = hash.substring(1);
-			self.clickSelectPage({url});
-		}, 100);
 	}
 }

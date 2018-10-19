@@ -7,7 +7,7 @@
 			</div>
 			<div class="header-middle-container">
 				<pages __style__="search" class="pages-search"></pages>
-				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}" data-toggle="tooltip" title="预览"></i>
+				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}" data-toggle="tooltip" title="预览 Alt+P"></i>
 			</div>
 			<userlinks __style__="system"></userlinks>
 		</div>
@@ -20,6 +20,7 @@
 
 <script>
 
+import mousetrap from 'mousetrap';
 import component from "@/components/component.js";
 
 export default {
@@ -38,7 +39,9 @@ export default {
 	data: function() {
 		return {
 			modulesRenderData:{text:""},
-			editorsEditorData:{},
+			editorsEditorData:{
+				AltP: () => this.clickPreviewBtn(),
+			},
 			preview: false,
 		}
 	},
@@ -70,6 +73,9 @@ export default {
 	}, 
 
 	mounted() {
+		mousetrap.bind("alt+p", () => {
+			this.clickPreviewBtn();
+		});
 	}
 }
 

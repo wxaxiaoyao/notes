@@ -159,6 +159,9 @@ export default {
 				"Enter": function(cm) {
 					cm.replaceSelection("\n");	
 					//console.log("------enter-------");
+				},
+				"Alt-P": function(cm) {
+					self.__data__.AltP && self.__data__.AltP(cm);
 				}
 			},
 		};

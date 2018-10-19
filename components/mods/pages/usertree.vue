@@ -147,6 +147,12 @@ export default {
 
 	mounted() {
 		this.loadPageTrees();
+
+		setTimeout(() => {
+			const hash = decodeURIComponent(window.location.hash || "");
+			const url = hash.substring(1);
+			this.clickSelectPage({url});
+		}, 100);
 	}
 }
 </script>
