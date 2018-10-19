@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<modules v-if="!isNotFound" __style__="render" :__default_data__="content"></modules>
+		<modules v-if="!isNotFound" __style__="render" :__default_data__="modulesRenderData"></modules>
 		<views __style__="notfound" v-if="isNotFound"></views>
 	</div>
 </template>
