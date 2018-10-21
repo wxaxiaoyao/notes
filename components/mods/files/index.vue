@@ -1,6 +1,6 @@
 
 <template>
-	<div class="files-index-container">
+	<div class="files-index-container container">
 		<dialogs __style__="confirm" :__default_data__="dialogConfirmData"></dialogs>
 		<dialogs __style__="rename" :__default_data__="dialogRenameData"></dialogs>
 		<div class="files-header-container">
@@ -76,13 +76,6 @@
 <script>
 import vue from "vue";
 import _ from "lodash";
-import {
-	Upload,
-	Progress,
-	Table,
-	TableColumn,
-	Popover,
-} from "element-ui";
 
 import common from "./common.js";
 
@@ -90,15 +83,13 @@ export default {
 	mixins: [common],
 
 	components: {
-		[Upload.name]: Upload,
-		[Progress.name]: Progress,
-		[Table.name]: Table,
-		[TableColumn.name]: TableColumn,
-		[Popover.name]: Popover,
 	},
 	
 	data: function() {
 		return {
+			head: {
+				title:"网盘",
+			},
 			fileSize:0,
 			fileCount:0,
 			filename:"",

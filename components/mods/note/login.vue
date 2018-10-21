@@ -25,37 +25,17 @@
 </template>
 
 <script>
-import {
-	Row,
-	Col,
-	Form,
-	FormItem,
-	Input,
-	Button,
-	Message,
-} from "element-ui";
-import {mapActions, mapGetters} from "vuex";
-import component from "@/components/component.js";
+
+import mod from "@/components/mods/common/mod.vue";
 
 export default {
-	mixins: [component],
-	components: {
-		[Button.name]: Button,
-		[Row.name]: Row,
-		[Col.name]: Col,
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Input.name]: Input,
-	},
-
-	head() {
-		return {
-			title: "登录",
-		}
-	},
+	mixins: [mod],
 
 	data:function(){
 		return {
+			head: {
+				title: "登录",
+			},
 			loginForm:{
 				username:"",
 				password:"",
@@ -95,5 +75,9 @@ export default {
 			self.$router.push({name:"user", params:{user:user.username}});
 		}
 	},
+
+	created() {
+		this.__data__.setHead && this.__data__.setHead(this.head);
+	}
 }
 </script>

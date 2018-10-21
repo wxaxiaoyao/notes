@@ -26,32 +26,17 @@
 </template>
 
 <script>
-import {
-	Form,
-	FormItem,
-	Button,
-	Input,
-	Select,
-	Option,
-	Switch,
-	Message,
-} from "element-ui";
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.vue";
 
 export default {
-	mixins: [component],
-	components: {
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Button.name]: Button,
-		[Input.name]: Input,
-		[Select.name]: Select,
-		[Option.name]: Option,
-		[Switch.name]: Switch,
-	},
+	mixins: [mod],
 
 	data: function() {
 		return {
+			head: {
+				title:"站点-创建",
+			},
+
 			site: {},
 		}
 	},
@@ -65,7 +50,7 @@ export default {
 
 			this.$router.push({path: "/" + this.user.username + "/" + this.site.sitename});
 		}
-	}
+	},
 }
 </script>
 

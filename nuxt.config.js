@@ -23,12 +23,7 @@ module.exports = {
 			routes.push({
 				name: "notfound",
 				path:"/note/:path*",
-				component: path.resolve(__dirname, pagepath + "note/notfound.vue"),
-			});
-			routes.push({
-				name: "tagpage",
-				path:"/tag/:username/:tagname*",
-				component: path.resolve(__dirname, pagepath + "note/tagpage.vue"),
+				component: path.resolve(__dirname, pagepath + "note/page.vue"),
 			});
 			routes.push({
 				name: "userpage",

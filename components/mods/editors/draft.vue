@@ -17,19 +17,12 @@
 </template>
 
 <script>
+import mousetrap from 'mousetrap';
 
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
-
-	layout: "blank",
-
-	head() {
-		return {
-			title:"草稿页",
-		}
-	},
+	mixins: [mod],
 
 	data: function() {
 		return {
@@ -40,7 +33,12 @@ export default {
 				change: val => this.change(val),
 				inited: ref => this.editorInited(ref),
 				CtrlS: () => this.savePage(),
-			}
+				AltP: () => this.clickPreviewBtn(),
+			},
+			head: {
+				title:"草稿页",
+			},
+			isExistHeader: false,
 		}
 	},
 
@@ -57,6 +55,11 @@ export default {
 	methods: {
 		clickPreviewBtn() {
 			this.preview = !this.preview;
+			if (!this.preview) {
+				setTimeout(() => {
+					this.editor && this.editor.codemirror && this.editor.codemirror.focus();
+				}, 1000);
+			}
 		},
 
 		savePage() {
@@ -88,6 +91,9 @@ export default {
 	}, 
 
 	mounted() {
+		mousetrap.bind("alt+p", () => {
+			this.clickPreviewBtn();
+		});
 	}
 }
 

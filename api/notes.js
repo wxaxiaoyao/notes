@@ -203,6 +203,12 @@ export function Tasks(options) {
 	initHttpOptions(self, options, "tasks");
 }
 
+export function Teams(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "teams");
+}
+
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -228,6 +234,7 @@ export function Notes(options = {}){
 	self.messages = new Messages(self.options);
 	self.sessions = new Sessions(self.options);
 	self.tasks = new Tasks(self.options);
+	self.teams = new Teams(self.options);
 }
 
 export const options = {

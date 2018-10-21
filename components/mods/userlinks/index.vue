@@ -8,7 +8,7 @@
 				</el-button>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item command="user-profile">主页</el-dropdown-item>
-					<el-dropdown-item command="storage">网盘</el-dropdown-item>
+					<el-dropdown-item command="files">网盘</el-dropdown-item>
 					<el-dropdown-item command="settings">设置</el-dropdown-item>
 					<el-dropdown-item command="editor">编辑器</el-dropdown-item>
 					<!--<el-dropdown-item command="uieditor">UI编辑器</el-dropdown-item>-->
@@ -25,22 +25,10 @@
 </template>
 
 <script>
-import {
-	Button, 
-	Dropdown, 
-	DropdownMenu, 
-	DropdownItem
-} from "element-ui";
+import common from "./common.js";
 
-import mod from "@/components/mods/common/mod.vue";
 export default {
-	mixins: [mod],
-	components: {
-		[Button.name]: Button,
-		[Dropdown.name]: Dropdown,
-		[DropdownMenu.name]: DropdownMenu,
-		[DropdownItem.name]: DropdownItem,
-	},
+	mixins: [common],
 
 	data: function() {
 		return {
@@ -48,31 +36,6 @@ export default {
 	},
 
 	methods: {
-		handleCommand(cmd){
-			if (cmd == "logout") {
-				this.setUser()
-				this.pushName("login");
-				this.api.users.logout();
-				return;
-			}
-			
-			if (cmd == "user-profile") {
-				this.$router.push({path:"/" + this.user.username});
-				return ;
-			}
-
-			if (cmd == "admins") {
-				window.open("/admin");
-				return;
-			}
-			this.pushName(cmd);
-		},
-		clickLoginBtn() {
-			this.pushName("login");
-		},
-		clickRegisterBtn() {
-			this.pushName("register");
-		},
 	},
 
 	mounted() {

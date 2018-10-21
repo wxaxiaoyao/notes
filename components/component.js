@@ -57,6 +57,11 @@ export default {
 			setUser: "setUser",
 			setMsg: "setMsg",
 		}),
+		authenticated() {
+			if (this.isAuthenticated) return {...this.user, userId:this.user.id};
+
+			this.$router.push({path:"/note/login"});
+		},
 		setShareData(key, data) {
 			g_app.setData(key, data);
 		},
@@ -90,5 +95,6 @@ export default {
 
 	beforeMount() {
 	},
+
 }
 

@@ -21,20 +21,12 @@
 <script>
 
 import mousetrap from 'mousetrap';
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins:[mod],
 
 	layout: "editor",
-
-	middleware: "authenticated",
-
-	head() {
-		return {
-			title: "简易编辑器",
-		}
-	},
 
 	data: function() {
 		return {
@@ -43,6 +35,10 @@ export default {
 				AltP: () => this.clickPreviewBtn(),
 			},
 			preview: false,
+			head: {
+				title: "简易编辑器",
+			},
+			isExistHeader: false,
 		}
 	},
 
@@ -65,6 +61,11 @@ export default {
 	methods: {
 		clickPreviewBtn() {
 			this.preview = !this.preview;
+			if (!this.preview) {
+				setTimeout(() => {
+					this.editor && this.editor.codemirror && this.editor.codemirror.focus();
+				}, 1000);
+			}
 		},
 
 		async savePage() {

@@ -20,6 +20,7 @@ import breadcrumbs from "./breadcrumbs/index.js";
 import medias from "./medias/index.js";
 
 import logins from "./logins/index.js";
+import registers from "./registers/index.js";
 import menus from "./menus/index.js";
 import pagenavs from "./pagenavs/index.js";
 import helpers from "./helpers/index.js";
@@ -41,6 +42,8 @@ import messages from "./messages/index.js";
 import views from "./views/index.js";
 import editors from "./editors/index.js";
 import tasks from "./tasks/index.js";
+import teams from "./teams/index.js";
+import note from "./note/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -48,6 +51,9 @@ import examples from "./examples/index.js";
 const components = {
 	tests,
 	examples,
+
+	// 系统模块
+	note,
 
 	// 功能组件
 	logins, 
@@ -72,6 +78,7 @@ const components = {
 	views,
 	editors,
 	tasks,
+	teams,
 
 	// UI组件
 	templates,
