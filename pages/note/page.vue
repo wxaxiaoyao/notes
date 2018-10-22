@@ -39,13 +39,15 @@ export default {
 	},
 
 	created() {
-		const paths = this.$route.fullPath.split("/").filter(o => o);
+		//console.log(this.$route);
+		const paths = this.$route.path.split("/").filter(o => o);
 		const modName = paths[1];
 		const styleName = paths[2] || "index";
 
 		this.modname = modName;
 		this.stylename = styleName;
 
+		//console.log(this.modname, this.stylename);
 		if (g_app.mods[modName]) {
 			this.modData = {
 				setPageAttr: ref => {
