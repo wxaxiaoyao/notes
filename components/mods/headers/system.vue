@@ -4,7 +4,7 @@
 			<div class="flex-row">
 				<div>
 					<a class="iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
-					<a class="iconfont icon-edit" href="/note/simple-editor" data-toggle="tooltip" title="简易编辑器"></a>
+					<a class="iconfont icon-edit" href="/note/editors/simple" data-toggle="tooltip" title="简易编辑器"></a>
 				</div>
 				<userlinks __style__="system"></userlinks>
 			</div>
