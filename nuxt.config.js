@@ -48,7 +48,7 @@ module.exports = {
 			
 		],
   	  	link: [
-			{ rel: "stylesheet", href: "http://at.alicdn.com/t/font_654450_4rz6pt7eje6.css"},
+			{ rel: "stylesheet", href: "http://at.alicdn.com/t/font_654450_a1dz8seebxm.css"},
 			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
   	  	],
   	},

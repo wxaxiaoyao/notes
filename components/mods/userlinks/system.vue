@@ -2,7 +2,7 @@
 	<div>
 		<div v-show="user.id">
 			<el-dropdown @command="handleCommand" trigger="hover" placement="bottom">
-				<el-button type="text" icon="iconfont icon-actions" class="el-dropdown-link"></el-button>
+				<el-button type="text" icon="el-icon-more" class="el-dropdown-link"></el-button>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item command="sites/create">新建站点</el-dropdown-item>
 					<el-dropdown-item command="editors">编辑器</el-dropdown-item>

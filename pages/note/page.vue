@@ -51,7 +51,7 @@ export default {
 		if (g_app.mods[modName]) {
 			this.modData = {
 				setPageAttr: ref => {
-					this.head = ref.head;
+					this.head = ref.head || {title:"note"};
 					this.isExistHeader = ref.isExistHeader != undefined ? ref.isExistHeader : this.isExistHeader;
 					this.isExistFooter = ref.isExistFooter != undefined ? ref.isExistFooter : this.isExistFooter;
 				}

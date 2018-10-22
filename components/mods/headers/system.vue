@@ -3,8 +3,8 @@
 		<div class="container full-height flex-col">
 			<div class="flex-row">
 				<div>
-					<a class="iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
-					<a v-if="isAuthenticated" class="iconfont icon-edit" href="/note/editors/simple" data-toggle="tooltip" title="简易编辑器"></a>
+					<a class="header-icon iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
+					<a v-if="isAuthenticated" class="header-icon iconfont icon-edit" href="/note/editors/simple" data-toggle="tooltip" title="简易编辑器"></a>
 				</div>
 				<div>
 					<userlinks __style__="system"></userlinks>
@@ -52,7 +52,7 @@ export default {
 	align-items: center;
 	padding-right: 10px;
 }
-.icon-home, .icon-edit, .icon-pencil {
+.header-icon {
 	font-size:30px;
 	text-decoration: none;
 }

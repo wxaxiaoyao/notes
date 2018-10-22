@@ -33,6 +33,7 @@ export default {
 			modulesRenderData:{text:""},
 			editorsEditorData:{
 				AltP: () => this.clickPreviewBtn(),
+				inited: ref => this.editor = ref,
 			},
 			preview: false,
 			head: {
@@ -63,8 +64,9 @@ export default {
 			this.preview = !this.preview;
 			if (!this.preview) {
 				setTimeout(() => {
+					//console.log(this.editor.codemirror);
 					this.editor && this.editor.codemirror && this.editor.codemirror.focus();
-				}, 1000);
+				}, 100);
 			}
 		},
 

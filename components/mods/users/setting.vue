@@ -22,7 +22,9 @@ export default {
 
 	data: function() {
 		return {
-
+			head: {
+				title: "用户-设置",
+			},
 		}
 	}
 }
