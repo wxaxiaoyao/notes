@@ -5,7 +5,7 @@
 			<img :src="x.portrait" class="user-portrait-img" @click="clickRemoveBtn(i)">
 		</div>
 		<el-popover v-if="__data__.editable" v-model="isShowUserInput" @show="showUserInput" trigger="click">
-			<el-autocomplete ref="userinput" v-model="username" :fetch-suggestions="queryUserList" @select="handleUserSelect" @blur="addUser">
+			<el-autocomplete ref="userinput" v-model="user_name" :fetch-suggestions="queryUserList" @select="handleUserSelect" @blur="addUser">
 				<template slot-scope="{item}">
 					<div class="user-select-item-container">
 						<img :src="item.portrait" class="user-select-portrait-img">
@@ -42,7 +42,7 @@ export default {
 	data: function() {
 		return {
 			isShowUserInput: false,
-			username:"",
+			user_name:"",
 		}
 	},
 
@@ -72,7 +72,7 @@ export default {
 		},
 
 		addUser() {
-			const index = _.findIndex(this.userlist, u => u.username == this.username);
+			const index = _.findIndex(this.userlist, u => u.username == this.user_name);
 
 			if (index < 0) return;
 
@@ -108,7 +108,7 @@ export default {
 				});
 			}
 
-			this.username = "";
+			this.user_name = "";
 			this.isShowUserInput = false;
 		},
 

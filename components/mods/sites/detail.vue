@@ -38,27 +38,10 @@
 <script>
 import _ from "lodash";
 import wurl from "wurl";
-import {
-	Tabs,
-	TabPane,
-} from "element-ui";
-
-import api from "@/api/notes.js";
-import component from "@/components/component.js";
-
-const loadDatas = async ({path}) => {
-	const paths = path.split("/");
-	const username = paths[1];
-	const sitename = paths[2];
-	let result = await api.sites.getByName({username, sitename});
-	if (result.isErr()) return {isNotFound: true};
-
-	const data = result.getData();
-	return {userinfo:data.user, siteinfo:data.site};
-}
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins: [mod],
 
 	data: function() {
 		const self = this;
@@ -99,8 +82,6 @@ export default {
 	},
 
 	components: {
-		[Tabs.name]: Tabs,
-		[TabPane.name]: TabPane,
 	},
 
 	computed: {
@@ -131,20 +112,18 @@ export default {
 		}
 	},
 
-	async asyncData({req, redirect}) {
-		//if (!req) return;
-		//const url = req.ctx.href;
-		//const path = wurl("path", url);
-
-		//return loadDatas({path});
-	},
-
 	async mounted() {
-		const path = this.$route.path;
-		const data = await loadDatas({path}) || {};
+		console.log(this.__data__);
+		const siteId = _.toNumber(this.__data__.siteId) || 0;
+		const result = await this.api.sites.detail({id:siteId});
+		if (result.isErr()) {
+			this.isNotFound = true;
+			return;
+		}
+		const data = result.data;
 		this.isNotFound = data.isNotFound;
-		this.siteinfo = data.siteinfo;
-		this.userinfo = data.userinfo;
+		this.siteinfo = data.site;
+		this.userinfo = data.user;
 		this.isSelf = this.user.username == this.userinfo.username;
 		this.fansData.objectId = this.siteinfo.id;
 		this.issuesData.objectId = this.siteinfo.id;
@@ -161,6 +140,9 @@ export default {
 	justify-content: space-between;
 	font-size:20px;
 	margin:15px 0px;
+}
+.site-actions {
+	margin-right:10px;
 }
 .site-actions>i {
 	margin-left:4px;

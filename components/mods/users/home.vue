@@ -30,22 +30,17 @@
 </template>
 
 <script>
-import axios from "axios";
-import {
-	Tabs,
-	TabPane,
-} from "element-ui";
-import component from "@/components/component.js";
+import _ from "lodash";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
-	components: {
-		[Tabs.name]: Tabs,
-		[TabPane.name]: TabPane,
-	},
+	mixins: [mod],
 
 	data: function() {
 		return {
+			head: {
+				title:"用户主页",
+			},
 			activeItem: "overview",
 			sitesListData:{userId:null},
 			// 粉丝数据
@@ -64,19 +59,16 @@ export default {
 	},
 
 	watch: {
-		userinfo() {
-		}
 	},
 
 	methods: {
-		parseData() {
-		
-		}
 	},
 
 	async mounted() {
 		// 获取访问用户信息
-		const username = this.$route.params.user;
+		const username = this.__data__.username;
+		if (!username) return;
+
 		const result = await this.api.users.detail({username});
 		if (result.isErr()) return 	this.pushName("notfound");
 		const userinfo = result.data;

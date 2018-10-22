@@ -1,8 +1,8 @@
 
 <template>
-	<div class="site-list-container">
+	<div class="site-list-container container">
 		<div v-for="(x,i) in __data__.sites" :key="i" class="site-container">
-			<a class="sitename" :href="__data__.username + '/' + x.sitename">{{x.sitename}}</a>
+			<a class="sitename" :href="'/note/sites/detail?siteId='+x.id">{{x.sitename}}</a>
 			<div class="site-description">{{x.description}}</div>
 		</div>
 	</div>
@@ -15,36 +15,17 @@ export default {
 
 	data: function() {
 		return {
-
-		}
-	},
-
-	props: {
-		__default_data__: {
-			type: Object,
-			default: function() {
-				return {
-					userId:null,
-					username:"",
-					sites:[],
-				}
-			}
-		}
-	},
-
-	watch: {
-		"__data__.userId": function() {
-			this.parseData();
 		}
 	},
 
 	methods: {
 		async parseData() {
+			
 			await this.getSites();
 		},
 
 		async getSites(cache = true) {
-			const userId = this.__data__.userId;
+			const userId = this.__data__.userId || this.userId;
 			if (!userId) return ;
 			const result = await this.api.sites.search({userId}, {cache});
 			const list = result.data || [];

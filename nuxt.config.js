@@ -21,15 +21,15 @@ module.exports = {
 	router: {
 		extendRoutes(routes) {
 			routes.push({
-				name: "notfound",
-				path:"/note/:path*",
-				component: path.resolve(__dirname, pagepath + "note/page.vue"),
+				name: "page",
+				path:"/:path*",
+				component: path.resolve(__dirname, "components/router.vue"),
 			});
-			routes.push({
-				name: "userpage",
-				path:"/:username/:sitename/:pagepath+",
-				component: path.resolve(__dirname, pagepath + "_user/userpage.vue"),
-			});
+			//routes.push({
+				//name: "userpage",
+				//path:"/:username/:sitename/:pagepath+",
+				//component: path.resolve(__dirname, pagepath + "userpage.vue"),
+			//});
 		},
 	},
 

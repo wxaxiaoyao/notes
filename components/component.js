@@ -34,6 +34,14 @@ export default {
 			isAuthenticated: "isAuthenticated",
 			getData: "getData",
 		}),
+		userId() {
+			if (this.user && this.user.id) return this.user.id;
+			return 0;
+		},
+		username() {
+			if (this.user && this.user.username) return this.user.username;
+			return "";
+		},
 		systemPortrait() {
 			const index = _.random(0, portraits.length - 1);
 			return portraits[index];

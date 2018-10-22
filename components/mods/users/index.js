@@ -3,6 +3,7 @@
 const index = () => import("./index.vue");
 const show = () => import("./show.vue");
 const system = () => import("./system.vue");
+const home = () => import("./home.vue");
 const login = () => import("./login.vue");
 const register = () => import("./register.vue");
 const setting = () => import("./setting.vue");
@@ -18,4 +19,5 @@ export default {
 	setting,
 	profile,
 	account,
+	home,
 };

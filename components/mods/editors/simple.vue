@@ -3,6 +3,7 @@
 	<div class="simple-editor-container">
 		<div class="header-container">
 			<div class="header-left-container">
+				<a v-if="!isSmallScreen" href="/" class="iconfont icon-home" data-toggle="tooltip" title="首页"></a>
 				<i @click="savePage" v-if="currentPage.url" :class='currentPage.isRefresh ? "el-icon-loading" : currentPage.isModify ? "iconfont icon-edit" : "iconfont icon-save"'></i>
 			</div>
 			<div class="header-middle-container">

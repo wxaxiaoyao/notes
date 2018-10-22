@@ -47,6 +47,7 @@ export function Sites(options) {
 
 	initHttpOptions(self, options, "sites");
 
+	self.detail = self.apiRequest("GET", ":id/detail");
 	self.getByName = self.apiRequest("GET", "get_by_name");
 	self.createGroup = self.apiRequest("POST", ":id/groups");
 	self.updateGroup = self.apiRequest("PUT", ":id/groups");
