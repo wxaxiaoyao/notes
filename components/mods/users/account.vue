@@ -107,40 +107,18 @@
 
 <script>
 
-import {
-	Dialog,
-	Form,
-	FormItem,
-	Tabs,
-	TabPane,
-	Button,
-	Input,
-	RadioGroup,
-	Radio,
-	Message,
-} from "element-ui";
 import _ from "lodash";
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
-//import {
-	//OAUTH_SERVICE_TYPE_QQ,
-	//OAUTH_SERVICE_TYPE_WEIXIN,
-	//OAUTH_SERVICE_TYPE_GITHUB,
-	//OAUTH_SERVICE_TYPE_XINLANG,
-//} from "@@/common/consts.js";
+	// 服务类型
+const OAUTH_SERVICE_TYPE_QQ=0;      // QQ
+const OAUTH_SERVICE_TYPE_WEIXIN=1;  // 微信
+const OAUTH_SERVICE_TYPE_GITHUB=2;  // GITHUB
+const OAUTH_SERVICE_TYPE_XINLANG=3; // 新浪
 
 export default {
-	mixins: [component],
+	mixins: [mod],
 	components: {
-		[Dialog.name]: Dialog,
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Button.name]: Button,
-		[Input.name]: Input,
-		[RadioGroup.name]: RadioGroup,
-		[Radio.name]: Radio,
-		[Tabs.name]: Tabs,
-		[TabPane.name]: TabPane,
 	},
 
 	data: function() {

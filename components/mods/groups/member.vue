@@ -1,3 +1,4 @@
+
 <template>
 	<div>
 		<el-dialog :visible.sync="isShowNewMember" title="新增组成员" width="500px">
@@ -46,34 +47,13 @@
 </template>
 
 <script>
-import {
-	Dialog,
-	Form,
-	FormItem,
-	Select,
-	Option,
-	Input,
-	Button,
-	Table,
-	TableColumn,
-	Message,
-} from "element-ui";
 
 import _ from "lodash";
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins: [mod],
 	components: {
-		[Dialog.name]: Dialog,
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Input.name]: Input,
-		[Button.name]: Button,
-		[Table.name]: Table,
-		[TableColumn.name]: TableColumn,
-		[Select.name]: Select,
-		[Option.name]: Option,
 	},
 
 	data: function() {

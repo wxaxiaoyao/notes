@@ -1,12 +1,14 @@
 <template>
-	<div class="headerContainer">
+	<div class="headers-container">
 		<div class="container full-height flex-col">
 			<div class="flex-row">
 				<div>
 					<a class="iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
-					<a class="iconfont icon-edit" href="/note/editors/simple" data-toggle="tooltip" title="简易编辑器"></a>
+					<a v-if="isAuthenticated" class="iconfont icon-edit" href="/note/editors/simple" data-toggle="tooltip" title="简易编辑器"></a>
 				</div>
-				<userlinks __style__="system"></userlinks>
+				<div>
+					<userlinks __style__="system"></userlinks>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -34,8 +36,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.headerContainer {
+<style lang="less" scoped>
+.headers-container {
 	border-bottom: 1px solid rgb(221,221,221);
 	height:60px;
 }

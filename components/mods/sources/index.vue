@@ -1,3 +1,4 @@
+
 <template>
 	<el-table :data="dataSources">
 		<el-table-column fixed prop="name" label="名称"></el-table-column>
@@ -14,24 +15,11 @@
 
 <script>
 
-import {mapActions, mapGetters} from "vuex";
-import component from "@/components/component.js";
-
-import api from "@/api/notes.js";
-
-import {
-	Button,
-	Table,
-	TableColumn,
-	Message,
-} from "element-ui";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins: [mod],
 	components: {
-		[Button.name]: Button,
-		[Table.name]: Table,
-		[TableColumn.name]: TableColumn,
 	},
 
 	data: function() {

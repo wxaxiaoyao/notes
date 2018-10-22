@@ -26,7 +26,7 @@ import {
 	Form,
 	FormItem,
 } from "element-ui";
-import mod from "@/components/mods/common/mod.vue";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
 	mixins: [mod],

@@ -23,28 +23,11 @@
 </template>
 
 <script>
-import {
-	Form,
-	FormItem,
-	Button,
-	Input,
-	Select,
-	Option,
-	Message,
-} from "element-ui";
-
-import api from "@/api/notes.js";
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins: [mod],
 	components: {
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Button.name]: Button,
-		[Input.name]: Input,
-		[Select.name]: Select,
-		[Option.name]: Option,
 	},
 
 	data: function() {

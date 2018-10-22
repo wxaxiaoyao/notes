@@ -1,3 +1,4 @@
+
 <template>
 	<div>
 		<el-dialog :visible.sync="isShowNewGroup" title="新增组" width="500px">
@@ -47,29 +48,11 @@
 </template>
 
 <script>
-import {
-	Dialog,
-	Form,
-	FormItem,
-	Input,
-	Button,
-	Table,
-	TableColumn,
-	Message,
-} from "element-ui";
-
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
+	mixins: [mod],
 	components: {
-		[Dialog.name]: Dialog,
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Input.name]: Input,
-		[Button.name]: Button,
-		[Table.name]: Table,
-		[TableColumn.name]: TableColumn,
 	},
 
 	data: function() {

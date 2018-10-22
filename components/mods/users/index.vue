@@ -24,7 +24,7 @@ import {
 	Autocomplete,
 } from "element-ui";
 
-import mod from "@/components/mods/common/mod.vue";
+import mod from "@/components/mods/common/mod.js";
 import _ from "lodash";
 
 /*

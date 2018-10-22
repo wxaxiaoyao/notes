@@ -1,10 +1,10 @@
 <template>
-	<el-form ref="form" :model="userinfo" label-width="80px">
+	<el-form label-width="80px">
 		<el-form-item label="头像" v-if="isClient">
 			<medias __style__="image" :__default_data__="mediasImageData"></medias>
 		</el-form-item>
 		<el-form-item label="昵称">
-			<el-input v-model="userinfo.nickname" placeholder="昵称"></el-input>
+			<el-input v-model="userinfo.username" placeholder="昵称"></el-input>
 		</el-form-item>
 		<el-form-item label="类型">
 			<el-radio-group v-model="userinfo.sex">
@@ -22,32 +22,14 @@
 </template>
 
 <script>
-import {
-	Form,
-	FormItem,
-	Button,
-	Input,
-	RadioGroup,
-	Radio,
-	Message,
-} from "element-ui";
-
-import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.js";
 
 export default {
-	mixins: [component],
-	components: {
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Button.name]: Button,
-		[Input.name]: Input,
-		[RadioGroup.name]: RadioGroup,
-		[Radio.name]: Radio,
-	},
+	mixins: [mod],
 
 	data: function() {
 		return {
-			userinfo:{},
+			userinfo:{nickname:""},
 			isClient: false,
 			mediasImageData:{},
 		}
@@ -76,11 +58,11 @@ export default {
 	},
 
 	mounted() {
+		this.authenticated();
 		this.isClient = true;
 		this.userinfo = {...this.user};
 		this.mediasImageData.url = this.userinfo.portrait;
 		this.mediasImageData.editable = true;
 	}
-
 }
 </script>
