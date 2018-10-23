@@ -34,7 +34,7 @@ export default {
 			modulesRenderData:{text:""},
 			editorsEditorData:{
 				AltP: () => this.clickPreviewBtn(),
-				inited: ref => this.editor = ref,
+				inited: ref => this.editorInited(ref),
 			},
 			preview: false,
 			head: {
@@ -61,6 +61,11 @@ export default {
 	},
 
 	methods: {
+		editorInited(ref) {
+			this.editor = ref;
+			const {text} = ref.getValue();
+			this.modulesRenderData.text = text;
+		},
 		clickPreviewBtn() {
 			this.preview = !this.preview;
 			if (!this.preview) {

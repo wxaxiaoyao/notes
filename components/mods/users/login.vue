@@ -72,7 +72,7 @@ export default {
 			}
 
 			self.setUser(user);
-			self.$router.push({name:"user", params:{user:user.username}});
+			self.$router.push({path:"/" + user.username});
 		}
 	},
 

@@ -1,8 +1,8 @@
 
-const create = () => import("./create.vue");
+const _new = () => import("./new.vue");
 const list = () => import("./list.vue");
 
 export default {
-	create,
+	new:_new,
 	list,
 };

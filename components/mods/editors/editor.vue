@@ -130,12 +130,12 @@ export default {
 			this.editor = ref;
 			this.editorsCodemirrorData.ref = ref;
 
-			this.__data__.inited && this.__data__.inited(ref);
-
 			if (!this.currentUrl) {
 				const page = g_app.storage.localStorageGetItem(this.storageKey) || {};
 				ref.setValue({filename: page.url, text: page.content, cursor: page.cursor});
 			}
+
+			this.__data__.inited && this.__data__.inited(ref);
 		}
 	}, 
 

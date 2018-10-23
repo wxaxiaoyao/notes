@@ -4,9 +4,9 @@
 			<headers __style__="system"></headers>
 		</div>
 		<div class="page-body-container">
-			<div v-if="isNotFound">not found</div>
-			<users v-else-if="isPersonalPage"  __style__="home" :__default_data__="modData"></users>
-			<modules v-else-if="isUserPage" __style__="render" :__default_data__="modData"></modules>
+			<div v-if="pageType == 'notfound-page'">not found</div>
+			<users v-else-if="pageType == 'user-profile-page'"  __style__="home" :__default_data__="modData"></users>
+			<modules v-else-if="pageType == 'user-page'" __style__="render" :__default_data__="modData"></modules>
 			<component v-else :is="modname" :__style__="stylename" :__default_data__="modData"></component>
 		</div>
 		<div v-if="isExistFooter" class="page-footer-container">
@@ -51,11 +51,11 @@ const loadData = async function(full_url) {
 	const url = await getUrl(full_url);
 	console.log("当前URL:", url);
 
-	if (_.startsWith(url, "note/")) return {url, loaded:true, isUserPage: false};
-	if (url.indexOf("/") < 0) return {url, loaded: true, isPersonalPage:true, modData:{username:url}};
+	if (_.startsWith(url, "note/")) return {url, loaded:true, pageType: "system-page"};
+	if (url.indexOf("/") < 0) return {url, loaded: true, pageType:"user-profile-page", modData:{username:url}};
 
 	const result = await g_app.api.pages.visit({url});
-	if (result.isErr()) return {url, loaded: true, 	isUserPage: true, isNotFound: true,	};
+	if (result.isErr()) return {url, loaded: true, pageType:"notfound-page"};
 	const data = result.data || {};
 	const page = data.page;
 	const head =  {
@@ -74,7 +74,7 @@ const loadData = async function(full_url) {
 	return {
 		url,
 		loaded: true,
-		isUserPage: true,
+		pageType: "user-page",
 		modData:{text: content},
 		head,
 		page,
@@ -93,9 +93,8 @@ export default {
 	data: function() {
 		return {
 			loaded: false,
-			isUserPage: false,
-			isPersonalPage: false,
 			isNotFound: false,
+			pageType: "system-page",
 			url:"",
 			page:{},
 			modname: null,
@@ -142,13 +141,13 @@ export default {
 		this.stylename = paths[2] || "index";
 
 		// 设置当前页
-		if (this.isUserPage && !this.isNotFound && this.page) {
+		if (this.pageType == "user-page" && this.page) {
 			this.setData("__currentUrl__", this.page.url);
 			this.setData("__currentContent__", this.page.content);
 		}
 
 		console.log(this.modname, this.stylename);
-		if (!this.isUserPage && !g_app.mods[this.modname]) this.isNotFound = true; 
+		if (this.pageType == "system-page" && !g_app.mods[this.modname]) this.pageType = "notfound-page"; 
 	}
 }
 </script>

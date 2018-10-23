@@ -20,12 +20,11 @@ export default {
 
 	methods: {
 		async parseData() {
-			
 			await this.getSites();
 		},
 
 		async getSites(cache = true) {
-			const userId = this.__data__.userId || this.userId;
+			const userId = this.__data__.userId || this.authUserId;
 			if (!userId) return ;
 			const result = await this.api.sites.search({userId}, {cache});
 			const list = result.data || [];
@@ -34,6 +33,7 @@ export default {
 	},
 
 	async mounted() {
+		this.authenticated();
 		await this.parseData();
 	}
 }

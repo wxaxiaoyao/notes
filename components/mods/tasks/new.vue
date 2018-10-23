@@ -1,11 +1,12 @@
 
 <template>
-	<div class="tasks-create-container">
+	<div class="tasks-new-container container">
 		<div class="title-container">{{__data__.title}}</div>
 		<div class="form-container">
 			<el-form ref="form" :model="task" label-width="80px">
 				<el-form-item label="日期">
 					<el-date-picker 
+						style="width:100%"
 						v-model="task.date" 
 						type="daterange" 
 						range-separator="至" 
@@ -102,6 +103,6 @@ export default {
 	font-size:25px;
 }
 .form-container {
-	max-width:600px;
+	/*width:100%;*/
 }
 </style>

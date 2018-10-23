@@ -34,11 +34,11 @@ export default {
 			isAuthenticated: "isAuthenticated",
 			getData: "getData",
 		}),
-		userId() {
+		authUserId() {
 			if (this.user && this.user.id) return this.user.id;
 			return 0;
 		},
-		username() {
+		authUsername() {
 			if (this.user && this.user.username) return this.user.username;
 			return "";
 		},

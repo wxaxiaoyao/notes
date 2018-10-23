@@ -6,11 +6,6 @@
 </template>
 
 <script>
-import {
-	Table,
-	TableColumn,
-} from "element-ui";
-
 import component from "@/components/component.js";
 import resources from "./resources.js";
 import tables from "./tables.vue";
@@ -19,8 +14,6 @@ export default {
 	mixins: [component],
 
 	components: {
-		[Table.name]:Table,
-		[TableColumn.name]: TableColumn,
 		tables,
 	},
 
