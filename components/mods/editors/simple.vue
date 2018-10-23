@@ -3,8 +3,8 @@
 	<div class="simple-editor-container">
 		<div class="header-container">
 			<div class="header-left-container">
-				<a v-if="!isSmallScreen" href="/" class="iconfont icon-home" data-toggle="tooltip" title="首页"></a>
-				<i @click="savePage" v-if="currentPage.url" :class='currentPage.isRefresh ? "el-icon-loading" : currentPage.isModify ? "iconfont icon-edit" : "iconfont icon-save"'></i>
+				<a v-if="!isSmallScreen" href="/" class="header-icon iconfont icon-home" data-toggle="tooltip" title="首页"></a>
+				<i @click="savePage" v-if="currentPage.url" class="header-icon" :class='currentPage.isRefresh ? "el-icon-loading" : currentPage.isModify ? "iconfont icon-edit" : "iconfont icon-save"'></i>
 			</div>
 			<div class="header-middle-container">
 				<pages __style__="search" class="pages-search"></pages>
@@ -66,6 +66,7 @@ export default {
 			const {text} = ref.getValue();
 			this.modulesRenderData.text = text;
 		},
+
 		clickPreviewBtn() {
 			this.preview = !this.preview;
 			if (!this.preview) {
@@ -126,6 +127,10 @@ export default {
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
+}
+.header-icon {
+	/*font-size:20px;*/
+	text-decoration: none;
 }
 .icon-preview {
 	color: gray;
