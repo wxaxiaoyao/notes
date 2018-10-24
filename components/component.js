@@ -68,7 +68,7 @@ export default {
 		authenticated() {
 			if (this.isAuthenticated) return {...this.user, userId:this.user.id};
 
-			this.$router.push({path:"/note/login"});
+			this.$router.push({path:"/note/users/login"});
 		},
 		setShareData(key, data) {
 			g_app.setData(key, data);
