@@ -12,14 +12,26 @@
 						placeholder="选择日期">
 					</el-date-picker>
 				</el-form-item>
-				<el-form-item label="内容">
-					<el-input v-model="daily.content"type="textarea" :autosize="{minRows:4, maxRows:10}"></el-input>
+				<el-form-item label="标签">
+					<tags :__default_data__="tagsData"></tags>
 				</el-form-item>
-				<el-form-item label="后续内容">
-					<el-input v-model="daily.todo"type="textarea" :autosize="{minRows:2, maxRows:10}"></el-input>
+				<el-form-item label="内容">
+					<el-input v-model="daily.content" 
+						type="textarea" 
+						:autosize="{minRows:4, maxRows:10}"
+						placeholder="记录生活, 记住美好, 用一段文字记录今日工作与生活吧 ^-^"
+						>
+					</el-input>
+				</el-form-item>
+				<el-form-item label="后续">
+					<el-input v-model="daily.todo" 
+						type="textarea" 
+						:autosize="{minRows:2, maxRows:10}"
+						placeholder="明日内容">
+					</el-input>
 				</el-form-item>
 				<el-form-item label="">
-					<el-button @click="clickDailyCreateBtn">创建</el-button>
+					<el-button @click="clickDailyCreateBtn">提交</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -40,6 +52,7 @@ export default {
 			daily: {
 				date,
 			},
+			tagsData: {editable: true, tags:[]},
 		}
 	},
 
@@ -64,8 +77,10 @@ export default {
 		async clickDailyCreateBtn() {
 			const {year, month, day} = g_app.util.getDate(this.daily.date);
 			this.daily.date = `${year}-${month}-${day}`;
-
-			const result = await this.api.dailies.create(this.daily);
+			this.daily.tags = "|" + this.tagsData.tags.join("|") + "|";
+			//console.log(this.tagsData, this.daily);
+			
+			const result = await this.api.dailies.upsert(this.daily);
 			if (result.isErr()) {
 				this.$message({message:"创建失败", type:'error'});
 				this.__data__.fail && this.__data__.fail();
@@ -79,7 +94,15 @@ export default {
 		},
 	},
 
-	mounted() {
+	async mounted() {
+		console.log(this.__data__);
+		if (this.__data__.id) {
+			const result = await this.api.dailies.getById({id:this.__data__.id});
+			if (result.isErr()) return;
+			const daily = result.data;
+			this.tagsData.tags = (daily.tags || "|").split("|").filter(o => o);
+			this.daily = daily;
+		}
 	},
 }
 

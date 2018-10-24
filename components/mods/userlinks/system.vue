@@ -4,7 +4,9 @@
 			<el-dropdown @command="handleCommand" trigger="hover" placement="bottom">
 				<el-button type="text" icon="el-icon-more" class="el-dropdown-link"></el-button>
 				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item command="sites/create">新建站点</el-dropdown-item>
+					<el-dropdown-item command="dailies/upsert">写日报</el-dropdown-item>
+					<el-dropdown-item command="teams/create">建团队</el-dropdown-item>
+					<el-dropdown-item command="sites/create">建站点</el-dropdown-item>
 					<el-dropdown-item command="editors">编辑器</el-dropdown-item>
 					<el-dropdown-item command="editors/simple">简易编辑器</el-dropdown-item>
 					<el-dropdown-item command="editors/draft">草稿页</el-dropdown-item>
@@ -19,7 +21,9 @@
 					<el-dropdown-item command="user-profile">主页</el-dropdown-item>
 					<el-dropdown-item command="users/setting">设置</el-dropdown-item>
 					<el-dropdown-item command="sites">站点</el-dropdown-item>
+					<el-dropdown-item command="teams">团队</el-dropdown-item>
 					<el-dropdown-item command="files">网盘</el-dropdown-item>
+					<el-dropdown-item command="dailies">日报</el-dropdown-item>
 					<!--<el-dropdown-item command="uieditor">UI编辑器</el-dropdown-item>-->
 					<el-dropdown-item v-show="user && user.roleId == 10" command="admins">后台</el-dropdown-item>
 					<el-dropdown-item divided command="logout">退出</el-dropdown-item>

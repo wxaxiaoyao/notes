@@ -59,6 +59,7 @@ class Cache {
 		}).catch(e => {
 			let result = {};
 			if (e.response) {
+				if (e.response.status == 401) window.location.href="/note/users/login";
 				result = new Error(e.response.data, e.response.status, e.response.headers);
 			} else if (e.request) {
 				result = new Error("网络异常, 请稍后尝试!!!", 500);
@@ -102,6 +103,7 @@ export function httpRequest(method, url, data, config) {
 		return result;
 	}).catch(e => {
 		if (e.response) {
+			if (e.response.status == 401) window.location.href="/note/users/login";
 			return new Error(e.response.data, e.response.status, e.response.headers);
 		} else if (e.request) {
 			return new Error("网络异常, 请稍后尝试!!!", 500);

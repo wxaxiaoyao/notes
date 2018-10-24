@@ -21,7 +21,9 @@ a, a:hover, a:focus, a:visited
 {
   color: #41B883;
 }
-
+i:hover {
+	cursor: pointer;
+}
 .logo {
   width: 243px;
   height: 218px;

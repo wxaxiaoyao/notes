@@ -208,6 +208,13 @@ export function Teams(options) {
 	const self = this;
 
 	initHttpOptions(self, options, "teams");
+
+	self.addMember = self.apiRequest("POST", ":id/members");
+	self.removeMember = self.apiRequest("DELETE", ":id/members");
+	self.members = self.apiRequest("GET", ":id/members");
+	self.dailies = self.apiRequest("GET", ":id/dailies");
+	self.exit = self.apiRequest("POST", ":id/exit");
+	self.all = self.apiRequest("GET", "all");
 }
 
 export function Dailies(options) {

@@ -1,10 +1,12 @@
 
 const index = () => import("./index.vue");
-const _new = () => import("./new.vue");
+const upsert = () => import("./upsert.vue");
 const _import = () => import("./import.vue");
+const team = () => import("./team.vue");
 
 export default {
 	index,
-	new:_new,
+	upsert,
 	import:_import,
+	team,
 };
