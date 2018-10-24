@@ -214,6 +214,7 @@ export function Dailies(options) {
 	const self = this;
 
 	initHttpOptions(self, options, "dailies");
+	self.import = self.apiRequest("post", "import");
 }
 
 export function Notes(options = {}){
