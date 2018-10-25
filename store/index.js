@@ -32,8 +32,10 @@ export const getters = {
 	mode: (state) => state.mode,
 
 	isAuthenticated: (state) => {
-		if (!state.token) return false;
-		const payload = jwt.decode(state.token, null, true);
+		const token = state.token || state.user.token;
+
+		if (!token) return false;
+		const payload = jwt.decode(token, null, true);
 
 		if (payload.nbf && Date.now() < payload.nbf*1000) {
 			return false;
