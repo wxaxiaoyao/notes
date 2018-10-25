@@ -14,7 +14,6 @@
 					<i @click="clickEditBtn(row)" class="oper-icon el-icon-edit" data-toggle="tooltip" title="编辑"></i>
 					<!--i disabled @click="clickDeleteBtn(row, $index)" class="oper-icon el-icon-delete"></i-->
 				</template>
-
 			</el-table-column>
 		</el-table>
 	</div>

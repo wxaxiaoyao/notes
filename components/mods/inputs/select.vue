@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import _ from "lodash";
 
 import mod from "@/components/mods/common/mod.js";
 
@@ -17,21 +16,8 @@ export default {
 
 		}
 	},
-
-	props: {
-	},
-
-	computed: {
-	},
-
-	mounted() {
-
-	},
 }
 </script>
 
 <style>
-</style>
-
-<style scoped>
 </style>

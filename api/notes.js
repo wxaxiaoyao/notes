@@ -224,6 +224,18 @@ export function Dailies(options) {
 	self.import = self.apiRequest("post", "import");
 }
 
+export function Suggestions(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "suggestions");
+}
+
+export function Links(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "links");
+}
+
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -251,6 +263,8 @@ export function Notes(options = {}){
 	self.tasks = new Tasks(self.options);
 	self.teams = new Teams(self.options);
 	self.dailies = new Dailies(self.options);
+	self.suggestions = new Suggestions(self.options);
+	self.links = new Links(self.options);
 }
 
 export const options = {

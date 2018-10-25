@@ -95,7 +95,7 @@ export default {
 	},
 
 	async mounted() {
-		console.log(this.__data__);
+		//console.log(this.__data__);
 		if (this.__data__.id) {
 			const result = await this.api.dailies.getById({id:this.__data__.id});
 			if (result.isErr()) return;

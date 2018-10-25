@@ -15,7 +15,7 @@
           <a href="/xiaoyao/note/version">更新信息</a>
         </li>
         <li>
-          <a href="https://github.com/wxaxiaoyao/note/issues">问题反馈</a>
+          <a href="/note/suggestions/create">意见反馈</a>
         </li>
       </ul>
 	  <p><a href="http://www.miitbeian.gov.cn/">粤ICP备18012006号-1</a></p>

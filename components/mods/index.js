@@ -45,6 +45,8 @@ import tasks from "./tasks/index.js";
 import teams from "./teams/index.js";
 import note from "./note/index.js";
 import dailies from "./dailies/index.js";
+import suggestions from "./suggestions/index.js";
+import links from "./links/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -81,6 +83,8 @@ const components = {
 	tasks,
 	teams,
 	dailies,
+	suggestions,
+	links,
 
 	// UI组件
 	templates,

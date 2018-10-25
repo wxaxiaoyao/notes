@@ -8,9 +8,7 @@
 				</el-button>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item command="user-profile">主页</el-dropdown-item>
-					<el-dropdown-item command="files">网盘</el-dropdown-item>
 					<el-dropdown-item command="users/setting">设置</el-dropdown-item>
-					<!--<el-dropdown-item command="uieditor">UI编辑器</el-dropdown-item>-->
 					<el-dropdown-item v-show="user && user.roleId == 10" command="admins">后台</el-dropdown-item>
 					<el-dropdown-item divided command="logout">退出</el-dropdown-item>
 				</el-dropdown-menu>
