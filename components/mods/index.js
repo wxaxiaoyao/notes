@@ -47,6 +47,7 @@ import note from "./note/index.js";
 import dailies from "./dailies/index.js";
 import suggestions from "./suggestions/index.js";
 import links from "./links/index.js";
+import demands from "./demands/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -85,6 +86,7 @@ const components = {
 	dailies,
 	suggestions,
 	links,
+	demands,
 
 	// UI组件
 	templates,

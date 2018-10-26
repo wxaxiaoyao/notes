@@ -236,6 +236,12 @@ export function Links(options) {
 	initHttpOptions(self, options, "links");
 }
 
+export function Demands(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "demands");
+}
+
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -265,6 +271,7 @@ export function Notes(options = {}){
 	self.dailies = new Dailies(self.options);
 	self.suggestions = new Suggestions(self.options);
 	self.links = new Links(self.options);
+	self.demands = new Demands(self.options);
 }
 
 export const options = {

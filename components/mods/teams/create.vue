@@ -21,7 +21,7 @@
 						<el-input v-model="team.name" placeholder="请求团队名"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button @click.prevent="clickJoinTeamBtn">创建</el-button>
+						<el-button @click.prevent="clickJoinTeamBtn">加入</el-button>
 					</el-form-item>
 				</el-form>
 			</el-tab-pane>
@@ -43,6 +43,7 @@ export default {
 			activeItem: "create",
 		}
 	},
+
 	props:{
 		__default_data__: {
 			type: Object,
@@ -52,6 +53,7 @@ export default {
 			}
 		}
 	},
+
 	methods: {
 		async getTeamByName(name) {
 			const result = await this.api.teams.getById({id:name});

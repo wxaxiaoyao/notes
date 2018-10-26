@@ -1,6 +1,7 @@
 <template>
 	<div class="index-container">
 		<div class="index-body-container">
+			<tags __style__="input" :__default_data__="data"></tags>
 		</div>
 	</div>
 </template>
@@ -29,6 +30,7 @@ export default {
 
 	data: function() {
 		return {
+			data:{tags:[]},
 		}
 	},
 

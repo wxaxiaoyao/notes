@@ -200,6 +200,7 @@ export default {
 				var text = self.codemirror.getValue();
 				var cursor = self.codemirror.getCursor();
 
+				self.__data__.text = text;
 				self.__data__.change && self.__data__.change({filename:self.currentFilename, text:text, cursor});
 			});
 

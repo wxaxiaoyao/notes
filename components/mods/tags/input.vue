@@ -1,11 +1,12 @@
+
 <template>
 	<div class="tags-index-container">
-		<el-tag v-for="(tag, index) in __data__.tags" :key="index" :closable="__data__.editable" :disable-transitions="false" @close="handleCloseTag(index)">
+		<el-tag v-for="(tag, index) in __data__.tags" :key="index" closable :color="__data__.color" :disable-transitions="false" @close="handleCloseTag(index)">
 			{{tag}}
 		</el-tag>
 		<el-input  class="input-new-tag" v-if="isShowInputTag" v-model="tag" ref="tagInputRef"  size="small" 
 				 @keyup.enter.native="handleInputTagConfirm" @blur="handleInputTagConfirm"></el-input>
-		<el-button v-if="!isShowInputTag && __data__.editable" class="button-new-tag" size="small" @click="showInputTag">+ New Tag</el-button>
+		<el-button v-if="!isShowInputTag" class="button-new-tag" size="small" @click="showInputTag">+ New Tag</el-button>
 	</div>
 </template>
 
@@ -28,6 +29,7 @@ export default {
 			defaultData: {
 				tags:[],
 				editable: false,
+				color:"white",
 			}
 		}
 	},
@@ -64,14 +66,17 @@ export default {
 	},
 
 	mounted() {
-
 	}
 }
 
 </script>
 
-<style lang="scss">
+<style lang="less">
 .tags-index-container {
+	.el-tag {
+		color: black;
+	}
+
 	.el-tag + .el-tag {
 		margin-left: 10px;
 	}

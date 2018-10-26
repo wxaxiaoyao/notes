@@ -4,7 +4,7 @@
 		<el-table :data="dailies">
 			<el-table-column prop="date" label="日期" width="100px">
 			</el-table-column>
-			<el-table-column prop="username" label="日期" width="150px">
+			<el-table-column prop="username" label="用户名" width="150px">
 				<template slot-scope="{row}">{{row.username + " " + (row.nickname ? `(${row.nickname})`: "")}}</template>
 			</el-table-column>
 			<el-table-column prop="content" label="内容">

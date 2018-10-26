@@ -21,7 +21,7 @@
 					</el-select>
 				</div>
 				<div>
-					<userlinks __style__="system"></userlinks>
+					<userlinks __style__="index"></userlinks>
 				</div>
 			</div>
 		</div>
@@ -101,6 +101,18 @@ export default {
 				url:"/note/tasks/new",
 			},
 			{
+				label:"需求",
+				url:"/note/demands",
+			},
+			{
+				label:"任务录入",
+				url:"/note/demands/upsert",
+			},
+			{
+				label:"设置",
+				url:"/note/users/setting",
+			},
+			{
 				label:"草稿页",
 				url:"/note/editors/draft",
 			},
@@ -115,15 +127,15 @@ export default {
 	},
 
 	created() {
+	},
+
+	mounted() {
 		if (this.authUsername) {
 			this.features.splice(1, 0, {
 				label:"个人主页",
 				url:"/" + this.authUsername,
 			});
 		}
-	},
-
-	mounted() {
 	}
 }
 </script>

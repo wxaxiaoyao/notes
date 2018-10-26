@@ -12,6 +12,9 @@
 			<el-form-item label="地址">
 				<el-input v-model="link.href" placeholder="链接地址"></el-input>
 			</el-form-item>
+			<el-form-item label="标签">
+				<tags __style__="input" :__default_data__="tagsData"></tags>
+			</el-form-item>
 			<el-form-item label="备注">
 				<el-input v-model="link.description" type="textarea" :autosize="{minRows:2, maxRows:4}"
 					placeholder="链接内容备注 ^-^">
@@ -35,10 +38,11 @@ export default {
 	data: function() {
 		return {
 			link: {},
+			tagsData:{tags:[]},
 
 			head: {
 				title:"链接录入",
-			}
+			},
 		}
 	},
 
@@ -56,6 +60,7 @@ export default {
 		async clickSubmitLinkBtn() {
 			if (!this.link.href) return this.$message({message:"链接地址不能为空"});
 
+			this.link.tags = "|" + this.tagsData.tags.join("|") + "|";
 			const result = await this.api.links.upsert(this.link);
 			if (result.isErr()) return this.$message({message:"提交失败, 请稍后重试!!!"});
 
@@ -67,6 +72,7 @@ export default {
 		if (this.__data__.id) {
 			const result = await this.api.links.getById({id:this.__data__.id});
 			this.link = result.data || {};
+			this.tagsData.tags = this.link.tags.split("|").filter(o => o);
 		}
 	},
 }
