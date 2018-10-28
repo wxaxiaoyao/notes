@@ -123,9 +123,11 @@ export default {
 			_.merge(this, data);
 		}
 
+		const params = g_app.storage.sessionStorageGetItem("/" + this.url) || {};
 		const query = this.$route.query || {};
 		this.modData = {
 			...this.modData,
+			...params,
 			...query,
 			setPageAttr: ref => {
 				this.head = ref.head || {title:"note"};

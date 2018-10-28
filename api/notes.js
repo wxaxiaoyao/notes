@@ -242,6 +242,21 @@ export function Demands(options) {
 	initHttpOptions(self, options, "demands");
 }
 
+export function Fields(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "fields");
+}
+
+export function Apis(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "apis");
+
+	self.getConfig = self.apiRequest("get", "configs");
+	self.setConfig = self.apiRequest("post", "configs");
+}
+
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -272,6 +287,8 @@ export function Notes(options = {}){
 	self.suggestions = new Suggestions(self.options);
 	self.links = new Links(self.options);
 	self.demands = new Demands(self.options);
+	self.fields = new Fields(self.options);
+	self.apis = new Apis(self.options);
 }
 
 export const options = {

@@ -87,8 +87,9 @@ export default {
 		emit(eventName, ...args) {
 			events.$emit(eventName, ...args);
 		},
-		pushName(name) {
-			this.$router.push({name:config.urlPrefix + '-' + name});
+		push(path, data = {}) {
+			g_app.storage.sessionStorageSetItem(path, _.cloneDeep(data));
+			this.$router.push({path});
 		},
 		setEditorMode(mode) {
 			this.setData("__editor_mode__", mode);

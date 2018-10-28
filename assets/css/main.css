@@ -24,6 +24,18 @@ a, a:hover, a:focus, a:visited
 i:hover {
 	cursor: pointer;
 }
+
+blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: .25em solid #dfe2e5;
+	margin:0px 0px 16px 0px;
+}
+
+pre {
+	background-color:#f6f8fa;
+}
+
 .logo {
   width: 243px;
   height: 218px;
