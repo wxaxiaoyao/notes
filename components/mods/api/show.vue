@@ -2,12 +2,12 @@
 <template>
 	<div class="apis-show-container container markdown-body">
 		<div class="demo-data">
-			<el-popover trigger="hover" width="500">
-				<pre>{{response}}</pre>
+			<el-popover trigger="hover" placement="left">
+				<pre class="request-data">{{response}}</pre>
 				<b slot="reference">请求示例</b>
 			</el-popover>
 		</div>
-		<h3 style="margin-top:0px;">{{__data__.title}}</h3>
+		<h3 :id="__data__.title">{{__data__.title}}</h3>
 		<blockquote>{{__data__.description}}</blockquote>
 		<pre>{{__data__.method.toUpperCase() + " " + __data__.url}}</pre>
 		<b class="input-output">参数: {{__data__.params && __data__.params.length == 0 ? "无" : ""}}</b>
@@ -57,7 +57,8 @@ export default {
 	methods: {
 	},
 
-	mounted() {
+	async mounted() {
+		await this.loadData();
 	},
 }
 </script>
@@ -77,5 +78,12 @@ export default {
 	top: 10px;
 	right: 10px;
 	font-size:12px;
+	cursor: pointer;
+}
+.request-data {
+	width:500px;
+	height:500px;
+	overflow-x:auto;
+	overflow-y:auto;
 }
 </style>

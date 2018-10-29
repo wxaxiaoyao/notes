@@ -30,6 +30,8 @@ export default {
 			headers:[],
 			params:[],
 			datas:[],
+
+			apis:[],
 		}
 	},
 
@@ -79,24 +81,37 @@ export default {
 		clickListBtn() {
 			this.$router.push({path:"/note/apis"});
 		},
+
+		async loadData() {
+			this.config = (await this.api.apis.getConfig()).data || this.config;
+
+			if (this.__data__.id && !this.__data__.loaded) {
+				const data = (await this.api.apis.getById({id:this.__data__.id})).data || {};
+				_.merge(this.__data__, data);
+			}
+
+			if (this.__data__.oper == "create") delete this.__data__.id;
+			this.classify = this.__data__.classify;
+			this.method = this.__data__.method;
+			this.baseURL = this.__data__.baseURL;
+			this.request = this.__data__.request || {};
+			this.response = this.__data__.response || {};
+			this.headers = this.__data__.headers || [];
+			this.params = this.__data__.params || [];
+			this.datas = this.__data__.datas || [];
+			
+		},
+
+		async loadDatas() {
+			const {classify} = this.__data__ || {};
+			const apis = (await this.api.apis.get({classify})).data || [];
+			
+			this.apis = apis;
+
+			return apis;
+		},
 	},
 
 	async mounted() {
-		this.config = (await this.api.apis.getConfig()).data || this.config;
-
-		if (this.__data__.id && !this.__data__.loaded) {
-			const data = (await this.api.apis.getById({id:this.__data__.id})).data || {};
-			_.merge(this.__data__, data);
-		}
-
-		if (this.__data__.oper == "create") delete this.__data__.id;
-		this.classify = this.__data__.classify;
-		this.method = this.__data__.method;
-		this.baseURL = this.__data__.baseURL;
-		this.request = this.__data__.request || {};
-		this.response = this.__data__.response || {};
-		this.headers = this.__data__.headers || [];
-		this.params = this.__data__.params || [];
-		this.datas = this.__data__.datas || [];
 	},
 }
