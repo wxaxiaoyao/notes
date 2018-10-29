@@ -99,6 +99,8 @@ export default {
 	mounted() {
 		const self = this;
 		self.headersFunc();
+		//console.log(this.headers);
+		//console.log(this.__data__);
 	},
 
 	created() {

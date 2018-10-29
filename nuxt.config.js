@@ -64,7 +64,8 @@ module.exports = {
 	css: [
 	  '~assets/css/main.css',
 	  '~assets/css/theme.scss',
-	  'element-ui/lib/theme-chalk/index.css'
+	  'element-ui/lib/theme-chalk/index.css',
+	  'github-markdown-css/github-markdown.css',
 	],
 
 	/*

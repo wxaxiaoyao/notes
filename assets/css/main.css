@@ -34,6 +34,9 @@ blockquote {
 
 pre {
 	background-color:#f6f8fa;
+	padding:16px;
+	border-radius:3px;
+	overflow-x:auto;
 }
 
 .logo {

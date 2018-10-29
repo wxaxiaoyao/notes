@@ -18,7 +18,7 @@ export default {
 			baseURL:"",
 			classify:"",
 			request:{},
-			response:{},
+			response:{status:200, statusText:"OK"},
 			config: {
 				baseUrls:[],
 				headers:[],
@@ -26,10 +26,10 @@ export default {
 			},
 			defaultData: {
 				method:"get",
-				baseUrls:[],
-				headers:[],
-				params:[],
 			},
+			headers:[],
+			params:[],
+			datas:[],
 		}
 	},
 
@@ -65,6 +65,9 @@ export default {
 		},
 
 		async clickSubmitBtn() {
+			this.__data__.headers = this.headers;
+			this.__data__.params = this.params;
+			this.__data__.datas = this.datas;
 			const oper = this.__data__.id ? "update" : "create";
 			const result = await this.api.apis[oper](this.__data__);
 
@@ -92,5 +95,8 @@ export default {
 		this.baseURL = this.__data__.baseURL;
 		this.request = this.__data__.request || {};
 		this.response = this.__data__.response || {};
+		this.headers = this.__data__.headers || [];
+		this.params = this.__data__.params || [];
+		this.datas = this.__data__.datas || [];
 	},
 }

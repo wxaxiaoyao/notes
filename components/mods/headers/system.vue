@@ -105,8 +105,20 @@ export default {
 				url:"/note/demands",
 			},
 			{
-				label:"任务录入",
+				label:"需求录入",
 				url:"/note/demands/upsert",
+			},
+			{
+				label:"API录入",
+				url:"/note/apis/upsert",
+			},
+			{
+				label:"API配置",
+				url:"/note/apis/config",
+			},
+			{
+				label:"API列表",
+				url:"/note/apis",
 			},
 			{
 				label:"设置",

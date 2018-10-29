@@ -1,7 +1,10 @@
 
 <template>
-	<div class="dailies-new-container container">
-		<div class="title-container">{{__data__.title}}</div>
+	<div class="dailies-upsert-container container">
+		<div class="header-container">
+			<div class="title">新增日报</div>
+			<el-button @click="clickListBtn" type="text" round>列表</el-button>
+		</div>
 		<div class="form-container">
 			<el-form ref="form" :model="daily" label-width="80px">
 				<el-form-item label="日期">
@@ -74,6 +77,10 @@ export default {
 	},
 
 	methods: {
+		clickListBtn() {
+			this.$router.push({path:"/note/dailies"});
+		},
+
 		async clickDailyCreateBtn() {
 			const {year, month, day} = g_app.util.getDate(this.daily.date);
 			this.daily.date = `${year}-${month}-${day}`;
@@ -111,18 +118,21 @@ export default {
 <style>
 </style>
 
-<style scoped>
-.dailies-create-container {
-	display:flex;
+<style lang="less" scoped>
+.dailies-upsert-container {
+	/*display:flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	align-items: center;*/
 }
-.title-container {
-	margin:20px;
-	font-size:25px;
-}
-.form-container {
-	/*width:100%;*/
+.header-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+
+	.title {
+		font-weight: bold;
+		font-size:20px;
+	}
 }
 </style>

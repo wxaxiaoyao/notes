@@ -9,6 +9,7 @@
 			<div class="header-middle-container">
 				<pages __style__="search" class="pages-search"></pages>
 				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}" data-toggle="tooltip" title="预览 Alt+P"></i>
+				<i v-if="isFile && !isSmallScreen" @click="clickOpenBtn" class="iconfont icon-open" data-toggle="tooltip" title="打开"></i>
 			</div>
 			<userlinks __style__="system"></userlinks>
 		</div>
@@ -36,6 +37,7 @@ export default {
 				AltP: () => this.clickPreviewBtn(),
 				inited: ref => this.editorInited(ref),
 			},
+			isFile: false,
 			preview: false,
 			head: {
 				title: "简易编辑器",
@@ -58,6 +60,10 @@ export default {
 		currentContent: function(content) {
 			this.modulesRenderData.text = content || "";
 		},
+		currentUrl: function(url) {
+			if (url && !_.endsWith(url, "/")) this.isFile = true;
+			else this.isFile = false;
+		}
 	},
 
 	methods: {
@@ -65,6 +71,10 @@ export default {
 			this.editor = ref;
 			const {text} = ref.getValue();
 			this.modulesRenderData.text = text;
+		},
+
+		clickOpenBtn() {
+			this.isFile && window.open("/" + this.currentUrl);
 		},
 
 		clickPreviewBtn() {
@@ -86,6 +96,9 @@ export default {
 		mousetrap.bind("alt+p", () => {
 			this.clickPreviewBtn();
 		});
+		//mousetrap.bind("alt+o", () => {
+			//this.clickOpenBtn();
+		//});
 	}
 }
 

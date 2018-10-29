@@ -163,9 +163,6 @@ export default {
 }
 </script>
 
-<style>
-@import 'github-markdown-css/github-markdown.css';
-</style>
 <style lang="scss" scoped>
 .quickToTop {
   height: 56px;

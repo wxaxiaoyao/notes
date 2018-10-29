@@ -44,14 +44,16 @@
 						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x.key"></el-option>
 					</el-select>
 					<el-input v-model="headerValue" placeholder="值" clearable></el-input>
-					<el-button @click="__data__.headers.push({key:headerKey, value:headerValue})">添加</el-button>
+					<el-button @click="headers.push({key:headerKey, value:headerValue})">添加</el-button>
 				</div>
 			</el-form-item>
-			<el-form-item label="请求头" v-for="(header, i) in __data__.headers" :key="'header' + i">
+			<el-form-item label="请求头" v-for="(header, i) in headers" :key="'header' + i">
 				<div class="item-container">
-					<el-input disabled v-model="header.key" placeholder="KEY"></el-input>
+					<el-select disabled style="width:245px" v-model="header.key" placeholder="KEY" clearable allow-create filterable default-first-option>
+						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x.key"></el-option>
+					</el-select>
 					<el-input disabled v-model="header.value" placeholder="值"></el-input>
-					<el-button @click="__data__.headers.splice(i, 1)">删除</el-button>
+					<el-button @click="headers.splice(i, 1)">删除</el-button>
 				</div>
 			</el-form-item>
 			<el-form-item label="参数">
@@ -64,15 +66,15 @@
 					</el-select>
 					<el-input clearable v-model="paramValue" placeholder="值"></el-input>
 					<!--el-input clearable v-model="paramDescription" placeholder="备注"></el-input-->
-					<el-button @click="__data__.params.push({key:paramKey, type:paramType, value:paramValue, description:paramDescription})">添加</el-button>
+					<el-button @click="params.push({key:paramKey, type:paramType, value:paramValue, description:paramDescription})">添加</el-button>
 					</div>
 			</el-form-item>
-			<el-form-item v-for="(param, i) in __data__.params" :key="'param' + i">
+			<el-form-item v-for="(param, i) in params" :key="'param' + i">
 				<div class="item-container">
 					<el-input v-model="param.key" placeholder="字段名"></el-input>
 					<el-input v-model="param.type" placeholder="数据类型"></el-input>
-					<el-input v-model="param.value" placeholder="params.description"></el-input>
-					<el-button @click="__data__.params.splice(i, 1)">删除</el-button>
+					<el-input v-model="param.value" :placeholder="param.description"></el-input>
+					<el-button @click="params.splice(i, 1)">删除</el-button>
 				</div>
 			</el-form-item>
 			<el-form-item label="返回">
@@ -84,15 +86,15 @@
 						<el-option v-for="(x,i) in types" :key="i" :label="x.label" :value="x.value"></el-option>
 					</el-select>
 					<el-input clearable v-model="dataDescription" placeholder="备注"></el-input>
-					<el-button @click="__data__.datas.push({key:dataKey, type:dataType, description: dataDescription})">添加</el-button>
+					<el-button @click="datas.push({key:dataKey, type:dataType, description: dataDescription})">添加</el-button>
 				</div>
 			</el-form-item>
-			<el-form-item v-for="(data, i) in __data__.datas" :key="'data' + i">
+			<el-form-item v-for="(data, i) in datas" :key="'data' + i">
 				<div class="item-container">
 					<el-input disabled v-model="data.key" placeholder="字段名"></el-input>
 					<el-input disabled v-model="data.type" placeholder="数据类型"></el-input>
 					<el-input disabled v-model="data.description" placeholder="备注"></el-input>
-					<el-button @click="__data__.datas.splice(i, 1)">删除</el-button>
+					<el-button @click="datas.splice(i, 1)">删除</el-button>
 				</div>
 			</el-form-item>
 			<el-form-item>
@@ -135,8 +137,6 @@ export default {
 			dataDescription:"",
 			dataValue:"",
 			status:"",
-			responseBody:{},
-			responseHeader:{},
 			head: {
 				title:"API测试",
 			},
@@ -179,8 +179,8 @@ export default {
 			//console.log(config);
 			const data = {};
 			const method = config.method;
-			_.each(this.__data__.headers, x => config.headers[x.key] = x.value);
-			_.each(this.__data__.params, x => data[x.key] = x.value);
+			_.each(this.headers, x => config.headers[x.key] = x.value);
+			_.each(this.params, x => data[x.key] = x.value);
 			if (method == "get" || method == "delete" || method == "head" || method == "options") config.params = data;
 			else config.data = data;
 			config.url = pathToRegexp.compile(config.url)(data);
@@ -195,8 +195,8 @@ export default {
 				if (e.response) {
 					const res = e.response;
 					this.__data__.response = res;
-					this.responseBody = res.data;
-					this.responseHeader = res.headers;
+					this.response.data = res.data;
+					this.response.headers = res.headers;
 					this.status = res.status;
 				} else if (e.request) {
 					this.$message("网络异常, 请稍后尝试!!!");

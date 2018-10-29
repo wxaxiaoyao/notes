@@ -1,44 +1,19 @@
 
 <template>
-	<div class="apis-show-container container">
-		<el-tabs>
-			<el-tab-pane label="基本信息">
-				<h3>{{__data__.title}}</h3>
-				<blockquote>{{__data__.description}}</blockquote>
-				<el-input disabled v-model="__data__.url" placeholder="url" size="small">
-					<el-select style="width:150px" v-model="__data__.method" slot="prepend" placeholder="方法">
-						<el-option label="GET" value="get"></el-option>
-						<el-option label="POST" value="post"></el-option>
-						<el-option label="PUT" value="put"></el-option>
-						<el-option label="DELETE" value="delete"></el-option>
-					</el-select>
-				</el-input>
-				<h5 class="input-output">参数: {{__data__.params && __data__.params.length == 0 ? "无" : ""}}</h5>
-				<el-table v-if="__data__.params.length" :data="__data__.params" size="small">
-					<el-table-column prop="key" label="字段名">
-					</el-table-column>
-					<el-table-column prop="type" label="类型">
-					</el-table-column>
-					<el-table-column prop="description" label="备注">
-					</el-table-column>
-				</el-table>
-				<h5 class="input-output">返回: {{__data__.datas && __data__.datas.length == 0 ? "无" : ""}}</h5>
-				<el-table v-if="__data__.datas && __data__.datas.length" :data="__data__.datas" size="small">
-					<el-table-column prop="key" label="字段名">
-					</el-table-column>
-					<el-table-column prop="type" label="类型">
-					</el-table-column>
-					<el-table-column prop="description" label="备注">
-					</el-table-column>
-				</el-table>
-			</el-tab-pane>
-			<el-tab-pane label="请求数据">
-				<pre>{{__data__.request}}</pre>
-			</el-tab-pane>
-			<el-tab-pane label="响应数据">
-				<pre>{{__data__.response}}</pre>
-			</el-tab-pane>
-		</el-tabs>
+	<div class="apis-show-container container markdown-body">
+		<div class="demo-data">
+			<el-popover trigger="hover" width="500">
+				<pre>{{response}}</pre>
+				<b slot="reference">请求示例</b>
+			</el-popover>
+		</div>
+		<h3 style="margin-top:0px;">{{__data__.title}}</h3>
+		<blockquote>{{__data__.description}}</blockquote>
+		<pre>{{__data__.method.toUpperCase() + " " + __data__.url}}</pre>
+		<b class="input-output">参数: {{__data__.params && __data__.params.length == 0 ? "无" : ""}}</b>
+		<ul><li v-for="(x,i) in __data__.params" :key="i">{{x.key + " " + x.type + " " + x.description}}</li></ul>
+		<b class="input-output">返回: {{__data__.datas && __data__.datas.length == 0 ? "无" : ""}}</b>
+		<ul><li v-for="(x,i) in __data__.datas" :key="i">{{x.key + " " + x.type + " " + x.description}}</li></ul>
 	</div>
 </template>
 
@@ -52,6 +27,7 @@ export default {
 
 	data: function() {
 		return {
+			activeItem:"baseinfo",
 			defaultData: {
 				//title:"获取用户列表",
 				//description:"按表字段过滤检索用户列表",
@@ -68,10 +44,17 @@ export default {
 		}
 	},
 
+	filters: {
+	
+	},
+
 	props: {
 	},
 
 	computed: {
+	},
+
+	methods: {
 	},
 
 	mounted() {
@@ -83,7 +66,16 @@ export default {
 </style>
 
 <style lang="less" scoped>
+.apis-show-container {
+	position: relative;
+}
 .input-output {
 	margin: 6px 0px 0px;
+}
+.demo-data {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size:12px;
 }
 </style>

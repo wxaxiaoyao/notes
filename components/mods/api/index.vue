@@ -21,11 +21,11 @@
 			</el-table-column>
 			<el-table-column prop="title" label="标题" sortable>
 			</el-table-column>
-			<el-table-column prop="method" label="方法" width="120px" sortable>
+			<el-table-column prop="method" label="方法" width="120px">
 			</el-table-column>
 			<el-table-column prop="url" label="URL" sortable>
 			</el-table-column>
-			<el-table-column prop="description" label="备注">
+			<el-table-column prop="classify" label="分类" sortable>
 			</el-table-column>
 			<el-table-column label="操作" fixed="right" width="100px">
 				<template slot-scope="{row, $index}">
