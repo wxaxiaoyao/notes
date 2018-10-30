@@ -17,6 +17,10 @@ export default {
 			list:[],
 			filterTags:[],
 			tagsData:{tags:[]},
+
+			defaultData:{
+				tagsData:{tags:[]},
+			}
 		}
 	},
 
@@ -70,7 +74,7 @@ export default {
 		},
 
 		async saveData() {
-			const tagsData = this.__data__.tagsData;
+			const tagsData = this.tagsData;
 			this.__data__.tags = tagsData.tags.length == 0 ? "|" : "|" + tagsData.tags.join("|") + "|";
 			const oper = this.__data__.id ? "update" : "create";
 			const result = await this.api[resourceName][oper](this.__data__);
@@ -84,7 +88,11 @@ export default {
 				const data = (await this.api[resourceName].getById({id:this.__data__.id})).data || {};
 				this.alias && this.alias(data);
 				_.merge(this.__data__, data);
+			} else {
+				this.alias && this.alias(this.__data__);
 			}
+
+			this.tagsData = this.__data__.tagsData;
 		},
 
 		async loadDatas() {
@@ -108,7 +116,7 @@ export default {
 			const ratestr = {0:"不重要", 1: "不紧急", 2:"一般", 3:"重要", 4:"紧急"};
 			data.statestr = statestr[data.state];
 			data.ratestr = ratestr[data.rate];
-			data.tags = data.tags.split("|").filter(o => o);
+			data.tags = _.isString(data.tags) ? data.tags.split("|").filter(o => o) : data.tags;
 			data.tagsData = {tags: data.tags};
 		}
 	},

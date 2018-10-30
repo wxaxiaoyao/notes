@@ -46,10 +46,28 @@ export default {
 <style lang="scss">
 .tags-show-container {
 	.el-tag + .el-tag {
-		margin-right: 10px;
+		margin-left: 10px;
 	}
 }
 </style>
 
 <style scoped>
+.tags-show-container {
+	overflow-x: auto;
+	cursor: pointer;
+}
+.tags-show-container::-webkit-scrollbar {
+	width:1px;
+	height:1px;
+}
+.tags-show-container::-webkit-scrollbar-thumb {
+	border-radius: 1px;
+	-webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.2);
+	background-color: #535353;
+}
+.tags-show-container::-webkit-scrollbar-track {
+	border-radius: 1px;
+	-webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.2);
+	background-color: #EDEDED;
+}
 </style>

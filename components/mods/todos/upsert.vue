@@ -13,7 +13,7 @@
 				<el-input v-model="__data__.description" type="textarea" :autosize="{minRows:2, maxRows:5}" placeholder="简述 ^-^"></el-input>
 			</el-form-item>
 			<el-form-item label="标签">
-				<tags __style__="input" :__default_data__="__data__.tagsData"></tags>
+				<tags __style__="input" :__default_data__="tagsData"></tags>
 			</el-form-item>
 			<el-form-item label="重要性">
 				<el-radio-group v-model="__data__.rate">
@@ -64,6 +64,7 @@ export default {
 
 	async mounted() {
 		await this.loadData();
+		console.log(this.__data__);
 	},
 }
 </script>

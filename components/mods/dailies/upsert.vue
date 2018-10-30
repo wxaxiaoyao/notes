@@ -16,7 +16,7 @@
 					</el-date-picker>
 				</el-form-item>
 				<el-form-item label="标签">
-					<tags :__default_data__="tagsData"></tags>
+					<tags __style__="input" :__default_data__="tagsData"></tags>
 				</el-form-item>
 				<el-form-item label="内容">
 					<el-input v-model="daily.content" 
