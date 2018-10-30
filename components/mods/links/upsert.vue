@@ -3,7 +3,7 @@
 	<div class="links-create-container container">
 		<div class="header-container">
 			<div class="title">链接录入</div>
-			<el-button @click="clickListBtn" type="text" round>列表<i class="iconfont icon-list"></i></el-button>
+			<el-button @click="clickListBtn" type="text">列表</el-button>
 		</div>
 		<el-form ref="form" :model="link" label-width="80px">
 			<el-form-item label="标题">

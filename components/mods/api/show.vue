@@ -10,9 +10,9 @@
 		<h3 :id="__data__.title">{{__data__.title}}</h3>
 		<blockquote>{{__data__.description}}</blockquote>
 		<pre>{{__data__.method.toUpperCase() + " " + __data__.url}}</pre>
-		<b class="input-output">参数: {{__data__.params && __data__.params.length == 0 ? "无" : ""}}</b>
+		<p class="input-output">参数: {{__data__.params && __data__.params.length == 0 ? "无" : ""}}</p>
 		<ul><li v-for="(x,i) in __data__.params" :key="i">{{x.key + " " + x.type + " " + x.description}}</li></ul>
-		<b class="input-output">返回: {{__data__.datas && __data__.datas.length == 0 ? "无" : ""}}</b>
+		<p class="input-output">返回: {{__data__.datas && __data__.datas.length == 0 ? "无" : ""}}</p>
 		<ul><li v-for="(x,i) in __data__.datas" :key="i">{{x.key + " " + x.type + " " + x.description}}</li></ul>
 	</div>
 </template>

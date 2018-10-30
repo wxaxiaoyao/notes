@@ -99,7 +99,7 @@ export default {
 		},
 
 		async clickDeleteBtn(x, index) {
-			const reuslt = await this.api.links.delete({id:x.id});
+			const result = await this.api.links.delete({id:x.id});
 			if (result.isErr()) return this.$message({message:"删除失败"});
 			this.links.splice(index, 1);
 		},

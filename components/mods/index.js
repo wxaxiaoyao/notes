@@ -50,6 +50,8 @@ import links from "./links/index.js";
 import demands from "./demands/index.js";
 import fields from "./fields/index.js";
 import apis from "./api/index.js";
+import questions from "./questions/index.js";
+import todos from "./todos/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -91,6 +93,8 @@ const components = {
 	demands,
 	fields,
 	apis,
+	questions,
+	todos,
 
 	// UI组件
 	templates,

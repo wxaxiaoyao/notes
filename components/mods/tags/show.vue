@@ -1,6 +1,9 @@
 <template>
 	<div class="tags-show-container">
-		<el-tag v-for="(tag, index) in __data__.tags" :key="index" :color="__data__.color" disable-transitions=false>
+		<el-tag v-for="(tag, index) in __data__.tags" :key="index" 
+			:color="__data__.color" 
+			:size="__data__.size"
+			:disable-transitions="false">
 			{{tag}}
 		</el-tag>
 	</div>
@@ -20,20 +23,15 @@ export default {
 
 	data: function() {
 		return {
-			isShowInputTag:false,
-			tag: "",
+			defaultData: {
+				tags:[],
+				color:"white",
+				size: "small",
+			}
 		}
 	},
 
 	props: {
-		__default_data__: {
-			type:Object,
-			default: function() {
-				return {
-					tags:[],
-				}
-			}
-		}
 	},
 
 	methods: {

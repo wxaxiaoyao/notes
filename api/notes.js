@@ -257,6 +257,18 @@ export function Apis(options) {
 	self.setConfig = self.apiRequest("post", "configs");
 }
 
+export function Questions(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "questions");
+}
+
+export function Todos(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "todos");
+}
+
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -289,6 +301,8 @@ export function Notes(options = {}){
 	self.demands = new Demands(self.options);
 	self.fields = new Fields(self.options);
 	self.apis = new Apis(self.options);
+	self.questions = new Questions(self.options);
+	self.todos = new Todos(self.options);
 }
 
 export const options = {

@@ -121,6 +121,22 @@ export default {
 				url:"/note/apis",
 			},
 			{
+				label:"问题",
+				url:"/note/questions",
+			},
+			{
+				label:"问题录入",
+				url:"/note/questions/upsert",
+			},
+			{
+				label:"TODO[待办事项]",
+				url:"/note/todos",
+			},
+			{
+				label:"TODO[待办事项]录入",
+				url:"/note/todos/upsert",
+			},
+			{
 				label:"设置",
 				url:"/note/users/setting",
 			},
