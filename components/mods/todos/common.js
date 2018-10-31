@@ -9,18 +9,22 @@ export default {
 
 	data: function() {
 		return {
-			searchValue:"",
-			searchField:"title",
-			fields: [
-			{label:"标题", value:"title"},
-			],
+			dialogsConfirmData: {},
+			inputsSearchData: {
+				field:"title",
+				fields: [
+					{label:"标题", value:"title"},
+				],
+				change: (str, field) => this.handleSearchChange(str, field),
+			},
 			list:[],
 			filterTags:[],
-			tagsData:{tags:[]},
 
-			defaultData:{
+			data: {
 				tagsData:{tags:[]},
-			}
+				state:0,
+				rate:0,
+			},
 		}
 	},
 
@@ -30,21 +34,11 @@ export default {
 		}
 	},
 
-	watch: {
-		searchValue: function(str) {
-			this.handleSearchChange(str);
-		},
-	},
-
 	methods: {
-		handleSelectField() {
-			this.searchValue = "";
-		},
-
-		handleSearchChange(str = "") {
+		handleSearchChange(str, field) {
 			this.list = [];
 			_.each(this.lists, x => {
-				const value = x[this.searchField];
+				const value = x[field];
 				if (g_app.util.lcs(value, str) == str.length) {
 					this.list.push(x);
 				}
@@ -52,9 +46,16 @@ export default {
 		},
 
 		async clickDeleteBtn(x, index) {
-			const result = await this.api[resourceName].delete({id:x.id});
-			if (result.isErr()) return this.$message({message:"删除失败"});
-			this.list.splice(index, 1);
+			this.dialogsConfirmData = {
+				visible: true,
+				title:"删除确认",
+				content:"确定要删除此条记录?",
+				success: async () => {
+					const result = await this.api[resourceName].delete({id:x.id});
+					if (result.isErr()) return this.$message({message:"删除失败"});
+					this.list.splice(index, 1);
+				}
+			};
 		},
 
 		clickListBtn() {
@@ -74,10 +75,10 @@ export default {
 		},
 
 		async saveData() {
-			const tagsData = this.tagsData;
-			this.__data__.tags = tagsData.tags.length == 0 ? "|" : "|" + tagsData.tags.join("|") + "|";
-			const oper = this.__data__.id ? "update" : "create";
-			const result = await this.api[resourceName][oper](this.__data__);
+			const tagsData = this.data.tagsData;
+			this.data.tags = tagsData.tags.length == 0 ? "|" : "|" + tagsData.tags.join("|") + "|";
+			const oper = this.data.id ? "update" : "create";
+			const result = await this.api[resourceName][oper](this.data);
 			if (result.isErr()) return this.$message({message:"提交失败"});
 
 			this.push(`/note/${resourceName}`);
@@ -92,7 +93,7 @@ export default {
 				this.alias && this.alias(this.__data__);
 			}
 
-			this.tagsData = this.__data__.tagsData;
+			_.each(this.__data__, (val, key) => this.data[key] = val);
 		},
 
 		async loadDatas() {

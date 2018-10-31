@@ -7,16 +7,16 @@
 		</div>
 		<el-form label-width="80px">
 			<el-form-item label="标题" width="200">
-				<el-input v-model="__data__.title" placeholder="请输入标题..."></el-input>
+				<el-input v-model="data.title" placeholder="请输入标题..."></el-input>
 			</el-form-item>
 			<el-form-item label="描述">
-				<el-input v-model="__data__.description" type="textarea" :autosize="{minRows:2, maxRows:5}" placeholder="简述 ^-^"></el-input>
+				<el-input v-model="data.description" type="textarea" :autosize="{minRows:2, maxRows:5}" placeholder="简述 ^-^"></el-input>
 			</el-form-item>
 			<el-form-item label="标签">
-				<tags __style__="input" :__default_data__="tagsData"></tags>
+				<tags __style__="input" :__default_data__="data.tagsData"></tags>
 			</el-form-item>
 			<el-form-item label="重要性">
-				<el-radio-group v-model="__data__.rate">
+				<el-radio-group v-model="data.rate">
 					<el-radio :label="1">不重要</el-radio>
 					<el-radio :label="2">不紧急</el-radio>
 					<el-radio :label="3">一般</el-radio>
@@ -25,7 +25,7 @@
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="状态">
-				<el-radio-group v-model="__data__.state">
+				<el-radio-group v-model="data.state">
 					<el-radio :label="0">未开始</el-radio>
 					<el-radio :label="1">行动中</el-radio>
 					<el-radio :label="2">已完成</el-radio>
@@ -49,6 +49,7 @@ export default {
 
 	data: function() {
 		return {
+			state:0,
 		}
 	},
 

@@ -23,11 +23,11 @@
 					</el-form-item>
 					<el-form-item v-for="(field, i) in data.fields" :key="'field' + i">
 						<div class="item-container">
-							<el-input disabled v-model="field.key" placeholder="字段名"></el-input>
+							<el-input v-model="field.key" placeholder="字段名"></el-input>
 							<el-select v-model="field.type" placeholder="数据类型">
 								<el-option v-for="(x,i) in types" :key="i" :label="x.label" :value="x.value"></el-option>
 							</el-select>
-							<el-input disabled v-model="field.description" placeholder="备注"></el-input>
+							<el-input v-model="field.description" placeholder="备注"></el-input>
 							<el-button @click="data.fields.splice(i, 1)">删除</el-button>
 						</div>
 					</el-form-item>
@@ -44,8 +44,8 @@
 					</el-form-item>
 					<el-form-item v-for="(x, i) in data.baseUrls" :key="i">
 						<div class="item-container">
-							<el-input disabled v-model="x.baseUrl" placeholder="base URL"></el-input>
-							<el-input disabled v-model="x.description" placeholder="备注"></el-input>
+							<el-input v-model="x.baseUrl" placeholder="base URL"></el-input>
+							<el-input v-model="x.description" placeholder="备注"></el-input>
 							<el-button @click="data.baseUrls.splice(i, 1)">删除</el-button>
 						</div>
 					</el-form-item>
@@ -63,9 +63,9 @@
 					</el-form-item>
 					<el-form-item v-for="(header, i) in data.headers" :key="'header' + i">
 						<div style="display:flex">
-							<el-input disabled v-model="header.key" placeholder="KEY"></el-input>
-							<el-input disabled v-model="header.value" placeholder="值"></el-input>
-							<el-input disabled v-model="header.description" placeholder="备注"></el-input>
+							<el-input v-model="header.key" placeholder="KEY"></el-input>
+							<el-input v-model="header.value" placeholder="值"></el-input>
+							<el-input v-model="header.description" placeholder="备注"></el-input>
 							<el-button @click="data.headers.splice(i, 1)">删除</el-button>
 						</div>
 					</el-form-item>
@@ -82,8 +82,8 @@
 					</el-form-item>
 					<el-form-item v-for="(x, i) in data.classify" :key="'classify' + i">
 						<div style="display:flex">
-							<el-input disabled v-model="x.classify" placeholder="分类名"></el-input>
-							<el-input disabled v-model="x.description" placeholder="备注"></el-input>
+							<el-input v-model="x.classify" placeholder="分类名"></el-input>
+							<el-input v-model="x.description" placeholder="备注"></el-input>
 							<el-button @click="data.classify.splice(i, 1)">删除</el-button>
 						</div>
 					</el-form-item>

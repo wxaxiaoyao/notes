@@ -7,6 +7,7 @@ export default {
 
 	data: function() {
 		return {
+			onlytest: false,
 			types:[
 			{label:"字符串", value:'string'},
 			{label:"数字", value:"number"},
@@ -18,7 +19,7 @@ export default {
 			baseURL:"",
 			classify:"",
 			request:{},
-			response:{status:200, statusText:"OK"},
+			response:{status:200, statusText:"OK", data:"", headers:""},
 			config: {
 				baseUrls:[],
 				headers:[],
@@ -76,26 +77,30 @@ export default {
 			if (result.isErr())  return this.$message({message:"提交失败"});
 
 			this.$message({message:"提交成功"});
+
+			this.$router.push({path:"/note/apis"});
 		},	
 
 		clickListBtn() {
 			this.$router.push({path:"/note/apis"});
 		},
 
-		async loadData() {
+		async loadConfig() {
 			this.config = (await this.api.apis.getConfig()).data || this.config;
+		},
 
+		async loadData() {
 			if (this.__data__.id && !this.__data__.loaded) {
 				const data = (await this.api.apis.getById({id:this.__data__.id})).data || {};
 				_.merge(this.__data__, data);
 			}
 
 			if (this.__data__.oper == "create") delete this.__data__.id;
+			if (this.__data__.oper == "test") this.onlytest = true;
 			this.classify = this.__data__.classify;
 			this.method = this.__data__.method;
 			this.baseURL = this.__data__.baseURL;
-			this.request = this.__data__.request || {};
-			this.response = this.__data__.response || {};
+			this.response = {...this.response, ...(this.__data__.response || {})};
 			this.headers = this.__data__.headers || [];
 			this.params = this.__data__.params || [];
 			this.datas = this.__data__.datas || [];
@@ -104,8 +109,10 @@ export default {
 
 		async loadDatas() {
 			const {classify} = this.__data__ || {};
-			const apis = (await this.api.apis.get({classify})).data || [];
+			const apis = (await this.api.apis.search({classify})).data || [];
 			
+			_.each(apis, api => api.loaded = true);
+
 			this.apis = apis;
 
 			return apis;

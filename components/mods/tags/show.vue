@@ -55,15 +55,16 @@ export default {
 .tags-show-container {
 	overflow-x: auto;
 	cursor: pointer;
+	padding-bottom:2px;
 }
 .tags-show-container::-webkit-scrollbar {
 	width:1px;
-	height:1px;
+	height:4px;
 }
 .tags-show-container::-webkit-scrollbar-thumb {
 	border-radius: 1px;
 	-webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.2);
-	background-color: #535353;
+	background-color: gray;
 }
 .tags-show-container::-webkit-scrollbar-track {
 	border-radius: 1px;

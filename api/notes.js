@@ -13,6 +13,7 @@ function initHttpOptions(self, options = {}, prefix) {
 
 	// api api
 	self.search = self.apiRequest("post", "search");
+	self.count = self.apiRequest("get", "count");
 	self.upsert = self.apiRequest("post", "upsert");
 	self.create = self.apiRequest("post");
 	self.update = self.apiRequest("put", ":id");

@@ -6,6 +6,7 @@
 				<pre class="request-data">{{response}}</pre>
 				<b slot="reference">请求示例</b>
 			</el-popover>
+			<a target="_blank" :href="'/note/apis/upsert?oper=test&id=' + __data__.id">测试</a>
 		</div>
 		<h3 :id="__data__.title">{{__data__.title}}</h3>
 		<blockquote>{{__data__.description}}</blockquote>

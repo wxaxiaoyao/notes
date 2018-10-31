@@ -51,6 +51,7 @@ const loadData = async function(full_url) {
 	const url = await getUrl(full_url);
 	console.log("当前URL:", url);
 
+	if (_.startsWith(url, "_nuxt/")) return {url, loaded:true, pageType:"notfound-page"};
 	if (_.startsWith(url, "note/")) return {url, loaded:true, pageType: "system-page"};
 	if (url.indexOf("/") < 0) return {url, loaded: true, pageType:"user-profile-page", modData:{username:url}};
 

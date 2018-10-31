@@ -1,13 +1,10 @@
 
 <template>
 	<div class="todos-index-container container">
+		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
 		<div class="header-container">
 			<div class="title">待办事项</div>
-			<el-input v-model="searchValue" clearable placeholder="请输入搜索内容" class="input-with-select" size="small">
-				<el-select v-model="searchField" slot="prepend" @change="handleSelectField">
-					<el-option v-for="(x, i) in fields" :key="i" :label="x.label" :value="x.value"></el-option>
-				</el-select>
-			</el-input>
+			<inputs __style__="search" :__default_data__="inputsSearchData"></inputs>
 			<el-button @click="clickNewBtn" type="text" round>新增</el-button>
 		</div>
 		<el-table :data="list" :default-sort="{prop:'tags', order:'ascending'}">

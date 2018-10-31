@@ -1,6 +1,7 @@
 
 <template>
 	<div class="apis-index-container container">
+		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
 		<div class="header-container">
 			<div class="title">API列表</div>
 			<el-input v-model="searchValue" clearable placeholder="请输入搜索内容" class="input-with-select" size="small">
@@ -29,7 +30,6 @@
 			</el-table-column>
 			<el-table-column label="操作" fixed="right" width="100px">
 				<template slot-scope="{row, $index}">
-					<i @click="clickTestBtn(row)" class="oper-icon iconfont icon-APIceshi" data-toggle="tooltip" title="API测试"></i>
 					<i @click="clickNewBtn(row)" class="oper-icon el-icon-plus" data-toggle="tooltip" title="复制新增"></i>
 					<i @click="clickEditBtn(row)" class="oper-icon el-icon-edit" data-toggle="tooltip" title="编辑"></i>
 					<i @click="clickDeleteBtn(row, $index)" class="oper-icon el-icon-delete" data-toggle="tooltip" title="移除"></i>
@@ -49,6 +49,7 @@ export default {
 
 	data: function() {
 		return {
+			dialogsConfirmData: {},
 			baseUrl:"",
 			baseUrlDescription:"",
 			headerKey:"",
@@ -62,7 +63,6 @@ export default {
 			dataDescription:"",
 			dataValue:"",
 			searchValue:"",
-			searchField:"name",
 			searchField:"title",
 			fields: [
 			{label:"标题", value:"title"},
@@ -125,10 +125,6 @@ export default {
 			this.push("/note/apis/config");
 		},
 
-		clickTestBtn(x) {
-			this.$router.push({path:"/note/apis/request?id=" + x.id});
-		},
-
 		clickNewBtn(x) {
 			if (x && x.id)  return 	this.$router.push({path:"/note/apis/upsert?id=" + x.id + "&oper=" + "create"});
 
@@ -136,9 +132,17 @@ export default {
 		},
 
 		async clickDeleteBtn(x, index) {
-			const result = await this.api.apis.delete({id:x.id});
-			if (result.isErr()) return this.$message({message:"删除失败"});
-			this.apis.splice(index, 1);
+			this.dialogsConfirmData = {
+				visible: true,
+				title:"删除确认",
+				content:"确定要删除此条记录?",
+				success: async () => {
+					const result = await this.api.apis.delete({id:x.id});
+					if (result.isErr()) return this.$message({message:"删除失败"});
+					this.apis.splice(index, 1);
+				}
+				
+			};
 		},
 
 		async clickEditBtn(x) {
