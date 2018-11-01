@@ -137,6 +137,10 @@ export default {
 				url:"/note/todos/upsert",
 			},
 			{
+				label:"标签",
+				url:"/note/tags",
+			},
+			{
 				label:"设置",
 				url:"/note/users/setting",
 			},

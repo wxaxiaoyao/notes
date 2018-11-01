@@ -1,45 +1,54 @@
 
 <template>
 	<div class="tags-index-container">
-		<el-tag v-for="(tag, index) in __data__.tags" :key="index" closable :color="__data__.color" :disable-transitions="false" @close="handleCloseTag(index)">
+		<el-tag 
+			v-for="(tag, index) in data.tags" 
+			:key="index" 
+			closable 
+			:color="data.color" 
+			:disable-transitions="false" 
+			@close="handleCloseTag(tag, index)">
 			{{tag}}
 		</el-tag>
-		<el-input  class="input-new-tag" v-if="isShowInputTag" v-model="tag" ref="tagInputRef"  size="small" 
-				 @keyup.enter.native="handleInputTagConfirm" @blur="handleInputTagConfirm"></el-input>
-		<el-button v-if="!isShowInputTag" class="button-new-tag" size="small" @click="showInputTag">+ New Tag</el-button>
+		<el-select 
+			ref="selectRef"
+			style="width:140px"
+			v-if="isShowInputTag"
+		    v-model="tag"
+		    @change="handleSelectChange"
+		    size="small"
+			placeholder="标签名"
+			default-first-option
+			allow-create
+			filterable>
+			<el-option v-for="(x, i) in tags" :key="i" :label="x" :value="x"></el-option>
+		</el-select>
+		<el-button 
+			ref="bottonRef"
+			v-if="!isShowInputTag"
+			class="button-new-tag" 
+			size="small" 
+			@click="showInputTag">
+			+ New Tag
+		</el-button>
 	</div>
 </template>
 
 <script>
-import {
-	Tag,
-} from "element-ui";
+import _ from "lodash";
+import common from "./common.js";
 
-import mod from "@/components/mods/common/mod.vue";
 export default {
-	mixins: [mod],
-	components: {
-		[Tag.name]: Tag,
-	},
+	mixins: [common],
 
 	data: function() {
 		return {
 			isShowInputTag:false,
 			tag: "",
-			defaultData: {
+			data: {
 				tags:[],
 				editable: false,
 				color:"white",
-			}
-		}
-	},
-
-	props: {
-		__default_data__: {
-			type:Object,
-			default: function() {
-				return {
-				}
 			}
 		}
 	},
@@ -48,24 +57,39 @@ export default {
 		showInputTag() {
 			this.isShowInputTag = true;
 			this.$nextTick(_ => {
-				this.$refs.tagInputRef.$refs.input.focus();
+				this.$refs.selectRef.focus();
 			});
 		},
 
-		handleInputTagConfirm() {
-			const index = _.findIndex(this.__data__.tags, tag => this.tag == tag);
-			if (index < 0 && this.tag) this.__data__.tags.push(this.tag);
+		handleSelectChange() {
+			if (this.tag) {
+				if (_.indexOf(this.data.tags, this.tag) < 0) {
+					this.data.tags.push(this.tag);
+				} 
+
+				if (_.indexOf(this.tags, this.tag) < 0) {
+					this.tags.push(this.tag);
+					this.api.tags.upsert({name: this.tag});
+				} 
+			}
 
 			this.isShowInputTag = false;
 			this.tag = "";
+
+			this.$nextTick(_ => {
+				this.$refs.bottonRef.$el.focus();
+			});
 		},
 
-		handleCloseTag(index) {
-			this.__data__.tags.splice(index,1);
+		handleCloseTag(tag, index) {
+			this.data.tags.splice(index, 1);
 		}
 	},
 
-	mounted() {
+	async mounted() {
+		_.each(this.__data__, (val, key) => this.data[key] = val);
+
+		await this.loadDatas();
 	}
 }
 
@@ -85,7 +109,7 @@ export default {
 
 <style scoped>
 .button-new-tag {
-	/*margin-left: 10px;*/
+	/*margin-left: 5px;*/
 	height: 32px;
 	line-height: 30px;
 	padding-top: 0;

@@ -67,6 +67,7 @@ export default {
 	async mounted() {
 		// 获取访问用户信息
 		const username = this.__data__.username;
+		this.head.title = username || this.head.title;
 		if (!username) return;
 
 		const result = await this.api.users.detail({username});

@@ -56,6 +56,7 @@ export default {
 	overflow-x: auto;
 	cursor: pointer;
 	padding-bottom:2px;
+	white-space: nowrap;
 }
 .tags-show-container::-webkit-scrollbar {
 	width:1px;
