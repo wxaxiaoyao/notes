@@ -42,7 +42,7 @@ export default {
 			fields: [
 			{label:"日期", value:"date"},
 			{label:"标签", value:"tags"},
-			{label:"备注", value:"content"},
+			{label:"内容", value:"content"},
 			],
 
 			dailies:[],

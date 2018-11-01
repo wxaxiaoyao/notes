@@ -10,9 +10,9 @@
 		<el-table :data="list" :default-sort="{prop:'tags', order:'ascending'}">
 			<el-table-column prop="title" label="链接" width="200" sortable>
 			</el-table-column>
-			<el-table-column prop="ratestr" label="重要性" width="80">
+			<el-table-column prop="ratestr" label="重要性" width="80" :filters="filterRates" :filter-method="filterHandler">
 			</el-table-column>
-			<el-table-column prop="statestr" label="状态" width="80">
+			<el-table-column prop="statestr" label="状态" width="80" :filters="filterStates" :filter-method="filterHandler">
 			</el-table-column>
 			<el-table-column prop="tags" label="标签" width="120" :filters="filterTags" :filter-method="filterTagMethod" sortable>
 				<template slot-scope="{row}">

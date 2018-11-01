@@ -19,6 +19,19 @@ export default {
 			},
 			list:[],
 			filterTags:[],
+			filterStates:[
+			{text:"未开始", value:"未开始"}, 
+			{text:"行动中", value:"行动中"},
+			{text:"已完成", value:"已完成"},
+			{text:"已废弃", value:"已废弃"},
+			],
+			filterRates:[
+			{text:"不重要", value:"不重要"},
+			{text:"不紧急", value:"不紧急"},
+			{text:"一般", value:"一般"},
+			{text:"重要", value:"重要"},
+			{text:"紧急", value:"紧急"},
+			],
 
 			data: {
 				tagsData:{tags:[]},
@@ -35,6 +48,11 @@ export default {
 	},
 
 	methods: {
+		filterHandler(value, row, column) {
+        	const property = column['property'];
+        	return row[property] === value;
+      	},
+
 		handleSearchChange(str, field) {
 			this.list = [];
 			_.each(this.lists, x => {
