@@ -18,7 +18,7 @@
 			</el-dropdown-menu>
 		</el-dropdown>
 		<pagenavs __style__="editor"></pagenavs>
-		<userlinks __style__="system"></userlinks>
+		<userlinks __style__="index"></userlinks>
 	</div>
 </template>
 

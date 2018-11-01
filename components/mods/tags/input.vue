@@ -45,6 +45,9 @@ export default {
 		return {
 			isShowInputTag:false,
 			tag: "",
+			defaultData: {
+				tags:[],
+			},
 			data: {
 				tags:[],
 				editable: false,
