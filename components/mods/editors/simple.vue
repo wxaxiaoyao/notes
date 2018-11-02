@@ -11,7 +11,7 @@
 				<i @click="clickPreviewBtn" class="iconfont icon-preview" :class="{'preview-active': preview}" data-toggle="tooltip" title="预览 Alt+P"></i>
 				<i v-if="isFile && !isSmallScreen" @click="clickOpenBtn" class="iconfont icon-open" data-toggle="tooltip" title="打开"></i>
 			</div>
-			<userlinks __style__="system"></userlinks>
+			<userlinks __style__="index"></userlinks>
 		</div>
 		<div class="body-container">
 			<modules v-if="preview" __style__="render" :__default_data__="modulesRenderData" ></modules>
@@ -135,6 +135,7 @@ export default {
 	margin-left:20px;
 }
 .body-container {
+	overflow-y:auto;
 	position: absolute;
 	top: 60px;
 	left: 0px;

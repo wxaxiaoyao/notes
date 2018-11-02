@@ -13,21 +13,18 @@ import mod from "@/components/mods/common/mod.js";
 export default {
 	mixins:[mod],
 
-	props: {
-		__default_data__: {
-			type: Object,
-			default: function() {
-				return {
-					text: "this is a example",
-				}
+	data:function() {
+		return {
+			head: {
+				title:"404",
 			}
 		}
 	},
 
+	props: {
+	},
+
 	computed: {
-		text() {
-			return this.__data__.text;
-		}
 	},
 }
 </script>

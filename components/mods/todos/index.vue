@@ -41,7 +41,9 @@ export default {
 
 	data: function() {
 		return {
-
+			head: {
+				title:"代办事项",
+			}
 		}
 	},
 
