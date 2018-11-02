@@ -44,7 +44,7 @@ export default {
 		return {
 			isShowInputTag:false,
 			tag: "",
-			defaultData: {
+			__data__: {
 				color:"white",
 			},
 

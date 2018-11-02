@@ -45,7 +45,7 @@ export default {
 		return {
 			isShowInputTag:false,
 			tag: "",
-			defaultData: {
+			__data__: {
 				tags:[],
 			},
 			data: {

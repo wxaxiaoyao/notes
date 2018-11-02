@@ -9,7 +9,7 @@ export default {
 
 	data: function() {
 		return {
-			defaultData:{},
+			//__data__:{},
 		}
 	},
 
@@ -35,13 +35,6 @@ export default {
 			currentMod: "getCurrentMod",
 			currentModData: "getCurrentModData",
 		}),
-		//__set__(data) {
-			//_.each(data, (val, key) => {
-				//console.log(key);
-				//vue.set(data, key, val);
-			//});
-			//return data;
-		//},
 		__uid__() {
 			return this._uid;
 		},
@@ -55,19 +48,18 @@ export default {
 			return currentMod.__key__ == this.__key__;
 		},
 		__data__() {
-			const __set__ = function(data) {
-				_.each(data, (val, key) => vue.set(data, key, val));
-				return data;
-			}
 		   	// 设置默认数据
 			const defaultData = this.__default_data__ || {};
-			_.merge(defaultData, this.defaultData, _.cloneDeep(defaultData)); 
-			if (!this.__key__) return __set__(defaultData);
+			_.merge(defaultData, this.$data.__data__, _.cloneDeep(defaultData)); 
+			_.merge(this.$data.__data__, defaultData);
+			
+			if (!this.__key__) return defaultData;
 
 			// 设置传入数据
 			_.merge(defaultData,  this.getModData(this.__key__));
+			_.merge(this.$data.__data__, defaultData);
 
-			return __set__(defaultData);
+			return defaultData;
 		},
 	},
 
