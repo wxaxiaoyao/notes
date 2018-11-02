@@ -24,6 +24,7 @@ export default {
 				baseUrls:[],
 				headers:[],
 				fields:[],
+				classify:[],
 			},
 			defaultData: {
 				method:"get",

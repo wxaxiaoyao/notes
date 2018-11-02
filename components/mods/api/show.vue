@@ -29,7 +29,7 @@ export default {
 	data: function() {
 		return {
 			activeItem:"baseinfo",
-			__data__: {
+			data: {
 				//title:"获取用户列表",
 				//description:"按表字段过滤检索用户列表",
 				//url:"users",

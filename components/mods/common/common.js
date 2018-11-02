@@ -50,14 +50,14 @@ export default {
 		__data__() {
 		   	// 设置默认数据
 			const defaultData = this.__default_data__ || {};
-			_.merge(defaultData, this.$data.__data__, _.cloneDeep(defaultData)); 
-			_.merge(this.$data.__data__, defaultData);
+			_.merge(defaultData, this.$data.data, _.cloneDeep(defaultData)); 
+			_.merge(this.$data.data, defaultData);
 			
 			if (!this.__key__) return defaultData;
 
 			// 设置传入数据
 			_.merge(defaultData,  this.getModData(this.__key__));
-			_.merge(this.$data.__data__, defaultData);
+			_.merge(this.$data.data, defaultData);
 
 			return defaultData;
 		},

@@ -23,7 +23,7 @@ export default {
 
 	data: function() {
 		return {
-			__data__: {
+			data: {
 				tags:[],
 				color:"white",
 				size: "small",

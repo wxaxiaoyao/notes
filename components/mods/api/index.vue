@@ -74,11 +74,6 @@ export default {
 			{label:"布尔", value:"boolean"},
 			{label:"对象", value:"object"},
 			],
-			data:{
-				baseUrls:[],
-				headers:[],
-				params:[],
-			},
 			head: {
 				title:"API列表",
 			},

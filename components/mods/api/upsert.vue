@@ -148,7 +148,7 @@ export default {
 			head: {
 				title:"API测试",
 			},
-			__data__:{
+			data:{
 				//baseURL:"http://xiaoyao.com:3001/api/v0/",
 				//baseUrls:[],
 				//headers:[],

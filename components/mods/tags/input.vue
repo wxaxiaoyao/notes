@@ -45,9 +45,6 @@ export default {
 		return {
 			isShowInputTag:false,
 			tag: "",
-			__data__: {
-				tags:[],
-			},
 			data: {
 				tags:[],
 				editable: false,
@@ -66,7 +63,7 @@ export default {
 
 		handleSelectChange() {
 			if (this.tag) {
-				if (_.indexOf(this.data.tags, this.tag) < 0) {
+				if (_.indexOf(this.__data__.tags, this.tag) < 0) {
 					this.data.tags.push(this.tag);
 				} 
 
@@ -85,7 +82,7 @@ export default {
 		},
 
 		handleCloseTag(tag, index) {
-			this.data.tags.splice(index, 1);
+			this.__data__.tags.splice(index, 1);
 		}
 	},
 
