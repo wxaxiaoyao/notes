@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-show="user.id">
+		<div v-if="isAuthenticated">
 			<el-dropdown @command="handleCommand" trigger="click">
 				<el-button round size="small" type="text" class="el-dropdown-link">
 					{{user.nickname || user.username || "逍遥"}}
@@ -14,7 +14,7 @@
 				</el-dropdown-menu>
 			</el-dropdown>
 		</div>
-		<div v-show="!user.id">
+		<div v-else>
 			<el-button type="text" @click="clickLoginBtn">登陆</el-button>
 			<el-button type="text" @click="clickRegisterBtn">注册</el-button>
 		</div>

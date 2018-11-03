@@ -16,7 +16,10 @@ async function urlRedirect(ctx) {
 
 	const path = ctx.request.path;
 	const result = await g_app.api.files.rawurl({key: path.substring(1)});
-	if (result.isErr()) return ctx.throw(404);
+	if (result.isErr()) {
+		console.log(result);
+		return ctx.throw(404);
+	}
 	
 	let url = result.data;
 	const querystring = ctx.request.querystring;
@@ -88,6 +91,7 @@ async function start () {
 			}
 		}
 
+		console.log("文件:", path);
 		await urlRedirect(ctx);
 	});
 

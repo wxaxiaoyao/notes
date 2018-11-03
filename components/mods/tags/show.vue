@@ -14,20 +14,15 @@ import {
 	Tag,
 } from "element-ui";
 
-import mod from "@/components/mods/common/mod.vue";
+import common from "./common.js";
 export default {
-	mixins: [mod],
+	mixins: [common],
 	components: {
 		[Tag.name]: Tag,
 	},
 
 	data: function() {
 		return {
-			data: {
-				tags:[],
-				color:"white",
-				size: "small",
-			}
 		}
 	},
 
@@ -45,6 +40,9 @@ export default {
 
 <style lang="scss">
 .tags-show-container {
+	.el-tag {
+		color: black;
+	}
 	.el-tag + .el-tag {
 		margin-left: 10px;
 	}

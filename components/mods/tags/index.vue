@@ -44,10 +44,6 @@ export default {
 		return {
 			isShowInputTag:false,
 			tag: "",
-			data: {
-				color:"white",
-			},
-
 			head: {
 				title:"标签管理"
 			}

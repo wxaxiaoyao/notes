@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-show="user.id">
+		<div v-show="isAuthenticated">
 			<el-dropdown @command="handleCommand" trigger="hover" placement="bottom">
 				<el-button type="text" icon="el-icon-more" class="el-dropdown-link"></el-button>
 				<el-dropdown-menu slot="dropdown">
@@ -30,7 +30,7 @@
 				</el-dropdown-menu>
 			</el-dropdown>
 		</div>
-		<div v-show="!user.id">
+		<div v-show="!isAuthenticated">
 			<el-button type="text" @click="clickLoginBtn">登陆</el-button>
 			<el-button type="text" @click="clickRegisterBtn">注册</el-button>
 		</div>

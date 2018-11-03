@@ -97,6 +97,8 @@ export function httpRequest(method, url, data, config) {
 		return cache.request(config);
 	}
 
+	//console.log(config);
+
 	return axios.request(config).then(res => {
 		const result = new Error(res.data, res.status, res.headers);
 		result.total = parseInt(res.headers["x-total"]);

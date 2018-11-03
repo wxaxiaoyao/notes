@@ -1,7 +1,7 @@
 
+import vue from "vue";
 import _ from "lodash";
-
-import mod from "@/components/mods/common/mod.vue";
+import mod from "@/components/mods/common/mod.js";
 
 const resourceName = "tags";
 
@@ -11,6 +11,12 @@ export default {
 	data: function() {
 		return {
 			tags:[],
+
+			default_data: {
+				tags:[],
+				color:"white",
+				size:"small",
+			},
 		}
 	},
 

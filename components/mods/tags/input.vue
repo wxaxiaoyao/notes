@@ -2,10 +2,10 @@
 <template>
 	<div class="tags-index-container">
 		<el-tag 
-			v-for="(tag, index) in data.tags" 
+			v-for="(tag, index) in __data__.tags" 
 			:key="index" 
 			closable 
-			:color="data.color" 
+			:color="__data__.color" 
 			:disable-transitions="false" 
 			@close="handleCloseTag(tag, index)">
 			{{tag}}
@@ -47,7 +47,6 @@ export default {
 			tag: "",
 			data: {
 				tags:[],
-				editable: false,
 				color:"white",
 			}
 		}
@@ -64,7 +63,7 @@ export default {
 		handleSelectChange() {
 			if (this.tag) {
 				if (_.indexOf(this.__data__.tags, this.tag) < 0) {
-					this.data.tags.push(this.tag);
+					this.__data__.tags.push(this.tag);
 				} 
 
 				if (_.indexOf(this.tags, this.tag) < 0) {
@@ -87,8 +86,6 @@ export default {
 	},
 
 	async mounted() {
-		_.each(this.__data__, (val, key) => this.data[key] = val);
-
 		await this.loadDatas();
 	}
 }

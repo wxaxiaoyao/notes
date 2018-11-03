@@ -9,7 +9,7 @@ export default {
 
 	data: function() {
 		return {
-			//__data__:{},
+			default_data:{},
 		}
 	},
 
@@ -20,6 +20,12 @@ export default {
 		__default_data__: {
 			type: Object,
 		},
+		//__data__: {
+			//type: Object,
+			//default: function() {
+				//return {};
+			//},
+		//},
 		__mode__: {
 			type: String,
 			default: "normal",
@@ -28,7 +34,7 @@ export default {
 			type: String,
 		},
 	},
-	
+
 	computed: {
 		...mapGetters({
 			getModData: "getModData",
@@ -48,19 +54,28 @@ export default {
 			return currentMod.__key__ == this.__key__;
 		},
 		__data__() {
-		   	// 设置默认数据
-			const defaultData = this.__default_data__ || {};
-			_.merge(defaultData, this.$data.data, _.cloneDeep(defaultData)); 
-			_.merge(this.$data.data, defaultData);
-			
-			if (!this.__key__) return defaultData;
+			// 设置默认数据
+			const data = this.__default_data__ || this.default_data || {};	
+			// 设置store值
+			if (this.__key__) {
+				_.each(this.getModData(this.__key__) || {}, (val, key) => {
+					if (data[key] == undefined) {
+						vue.set(data, key , val);
+					} else {
+						data[key] = val
+					}
+				});
+			}
 
-			// 设置传入数据
-			_.merge(defaultData,  this.getModData(this.__key__));
-			_.merge(this.$data.data, defaultData);
+			_.each(this.default_data, (val, key) => {
+				if (data[key] == undefined) {
+					vue.set(data, key, val);
+				}
+			});
 
-			return defaultData;
-		},
+			return data;
+
+		}
 	},
 
 	watch: {

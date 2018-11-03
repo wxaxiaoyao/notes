@@ -13,12 +13,15 @@
 			<el-button @click="clickNewBtn" type="text" round>新增<i class="el-icon-plus"></i></el-button>
 		</div>
 		<el-table :data="links" :default-sort="{prop:'title', order:'ascending'}">
-			<el-table-column prop="title" label="链接" sortable>
+			<el-table-column prop="title" label="链接" sortable width="350">
 				<template slot-scope="{row}">
 					<a :href="row.href" target="_blank">{{row.title || row.href}}</a>
 				</template>
 			</el-table-column>
-			<el-table-column prop="tags" label="标签" sortable>
+			<el-table-column prop="tags" label="标签" width="150">
+				<template slot-scope="{row}">
+					<tags __style__="show" :__default_data__="row.tagsData"></tags>
+				</template>
 			</el-table-column>
 			<el-table-column prop="description" label="备注">
 			</el-table-column>
@@ -113,9 +116,10 @@ export default {
 		const result = await this.api.links.get();
 		const links = result.data || [];
 
-		//_.each(links, x => {
-			//x.tags = x.tags.split("|").filter(o => o).join(" ");
-		//});
+		_.each(links, x => {
+			const tags = x.tags.split("|").filter(o => o);
+			x.tagsData = {tags};
+		});
 
 		this.links = links;
 		this.linksBackUp = links;

@@ -38,7 +38,7 @@ export default {
 	data: function() {
 		return {
 			link: {},
-			tagsData:{tags:[]},
+			tagsData:{},
 
 			head: {
 				title:"链接录入",
@@ -72,7 +72,7 @@ export default {
 		if (this.__data__.id) {
 			const result = await this.api.links.getById({id:this.__data__.id});
 			this.link = result.data || {};
-			this.tagsData.tags = this.link.tags.split("|").filter(o => o);
+			this.tagsData.tags = (this.link.tags || "").split("|").filter(o => o);
 		}
 	},
 }
