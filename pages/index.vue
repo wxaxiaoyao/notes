@@ -11,7 +11,7 @@ import axios from "axios";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import component from "@/components/component.js";
 import config from "@/config";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 export default {
 	mixins: [component],
