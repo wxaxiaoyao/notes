@@ -73,6 +73,7 @@ export default {
 
 			self.setUser(user);
 			self.$router.push({path:"/" + user.username});
+			g_app.initSocket && g_app.initSocket(user.token);
 		}
 	},
 

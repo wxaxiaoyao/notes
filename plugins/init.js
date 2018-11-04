@@ -2,7 +2,8 @@ import axios from "axios";
 import _ from "lodash";
 import vue from "vue";
 import elementUI from 'element-ui';
-import SockJS from "sockjs-client";
+import io from "socket.io-client";
+import jwt from "jwt-simple";
 
 import util from "@/lib/util.js";
 import consts from "@/lib/consts.js";
@@ -72,31 +73,41 @@ app.getData = function(key, defaultValue) {
 }
 
 function initSocket(token) {
-	const socket = new SockJS(config.socketUrl + "?token=" + token);
-
-	socket.onopen = function(e) {
-		console.log("success open websocket", e);
-		//socket.send(JSON.stringify({cmd:0, text:"hello world"}));
+	const user = jwt.decode(token, null, true);
+	if (!user || !user.userId) { 
+		console.log("token 无效", token);
+		return;
 	}
 
-	socket.onclose = function(e) {
-		console.log("websocket closed", e);
+	if (app.socket && app.socket.connected) {
+		console.log("socket already connected");
+		return;
 	}
 
-	socket.onmessage = function(e) {
-		console.log("receive server msg", e);
-		try {
-			const data = JSON.parse(e.data);
+	const socket = io(config.socketUrl, {
+		query: {
+			token: token,
+			userId: user.id || user.userId,
+		},
+		transports: ['websocket'],
+	});
 
-			app.store.commit("setMsg", data);
-		} catch(e) {
-			console.log("server msg format error:", e.data);
-			return;
-		}
-	}
+	socket.on("connect", () => {
+		console.log("socket connect successful", socket);
+	});
+
+	socket.on("disconnect", msg => {
+		console.log("socket disconnect", msg);
+		app.socket = undefined;
+	});
+
+	socket.on("error", e => {
+		console.log("socket error", e);
+	});
 
 	app.socket = socket;
 }
+app.initSocket = initSocket;
 
 export default ({store, req, env}) => {
 	app.store = store;
@@ -107,6 +118,6 @@ export default ({store, req, env}) => {
 	}
 
 	if (process.client && store.state.token) {
-		//initSocket(store.state.token);
+		initSocket(store.state.token);
 	} 
 }

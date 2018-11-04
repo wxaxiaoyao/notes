@@ -9,4 +9,9 @@ export default {
 			return this.getData("__current_session_id__") || 0;
 		},
 	},
+
+	created() {
+		//if (!g_app.socket) this.push("/note/users/login");
+		this.authenticated();
+	},
 }

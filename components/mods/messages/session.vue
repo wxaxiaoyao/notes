@@ -4,8 +4,8 @@
 		<div class="session-header-container">
 			<span>会话</span><i class="new-session-icon iconfont icon-plus"></i>
 		</div>
-		<div v-for="(x, i) in __data__.sessions" :key="i"  
-			:class="[currentSessionId == x.sessionId ? 'current-session' : '']" 
+		<div v-for="(x, i) in sessions" :key="i"  
+			:class="[session.sessionId == x.sessionId ? 'current-session' : '']" 
 			class="session-container" @click="clickSessionItem(x)">
 			<img :src="logos[i]" class="logo">
 			<div class="session-right-container">
@@ -32,43 +32,27 @@ export default {
 			systemSession: {
 				sessionId:0,
 				title: "系统消息",
-			}
-		}
-	},
-
-	props: {
-		__default_data__: {
-			type: Object,
-			default: function() {
-				return {
-					sessions: [
-					{
-						title:"系统消息",
-						sessionId:0,
-					}
-					]
-				}
-			}
+			},
+			session:{},
+			sessions:[],
 		}
 	},
 
 	methods: {
 		async getSessions() {
-			const result = await this.api.sessions.get();
-			const sessions = result.data || [];
-
-			sessions.splice(0,0, this.systemSession);
-			this.__data__.sessions = sessions;
-			console.log(sessions);
+			g_app.socket.emit("sessions", {}, (sessions = []) => {
+				sessions.splice(0,0, this.systemSession);
+				this.sessions = sessions;
+			});
 		},
 
 		async clickSessionItem(x) {
-			this.setData("__current_session_id__", x.sessionId);
-			await this.api.sessions.current({id:x.sessionId});
+			this.session = x;
 		},
 	},
 
 	async mounted() {
+		this.session = this.systemSession;
 		await this.getSessions();
 	}
 }

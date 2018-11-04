@@ -36,11 +36,13 @@ const productionConfig = {
 }
 
 const developmentConfig = {
+	socketUrl:"http://xiaoyao.com:3001/",
 	apiUrlPrefix: "http://xiaoyao.com:3001/api/v0/",
 	origin: "http://xiaoyao.com:3000",
 }
 
 const localConfig = {
+	socketUrl:"http://xiaoyao.com:3001/",
 	apiUrlPrefix: "http://xiaoyao.com:3001/api/v0/",
 	origin: "http://xiaoyao.com:3000",
 }
