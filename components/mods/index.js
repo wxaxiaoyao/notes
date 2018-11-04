@@ -125,42 +125,42 @@ _.each(components, (val, key) => {
 });
 
 
-export const tagMods = {};
+//export const tagMods = {};
 
-const getTagFactoryByTag = (tag) => () => tags.getTagByTag(tag);
-_.each(tagMods, mod => {
-	_.each(mod.styles, style => {
-		var cmdName = style.modName + '-' + style.styleName;
-		tags.registerTagFactory(cmdName, getTagFactoryByTag(style.tag));
-	});
-})
+//const getTagFactoryByTag = (tag) => () => tags.getTagByTag(tag);
+//_.each(tagMods, mod => {
+	//_.each(mod.styles, style => {
+		//var cmdName = style.modName + '-' + style.styleName;
+		//tags.registerTagFactory(cmdName, getTagFactoryByTag(style.tag));
+	//});
+//})
 
-export const mods = {
-}
-
-const getTagFactoryByVNode = (vnode) => () => tags.getTagByVNode(vnode);
-//if (process.client) {
-export const registerModTag = (store) => {
-	for (var modName in mods) {
-		var styles = mods[modName];
-		for (var key in styles) {
-			let style = styles[key];
-			let tagKey = modName + "-" + (style.name || key);
-			let comp = new vue({
-				...style,
-				store,
-			});
-			let vnode = comp.$mount()._vnode;
-
-			////console.log(tagKey);
-			////console.log(vnode);
-
-			tags.registerTagFactory(tagKey, getTagFactoryByVNode(vnode));
-
-		}
-	}
-}
+//export const mods = {
 //}
+
+//const getTagFactoryByVNode = (vnode) => () => tags.getTagByVNode(vnode);
+////if (process.client) {
+//export const registerModTag = (store) => {
+	//for (var modName in mods) {
+		//var styles = mods[modName];
+		//for (var key in styles) {
+			//let style = styles[key];
+			//let tagKey = modName + "-" + (style.name || key);
+			//let comp = new vue({
+				//...style,
+				//store,
+			//});
+			//let vnode = comp.$mount()._vnode;
+
+			//////console.log(tagKey);
+			//////console.log(vnode);
+
+			//tags.registerTagFactory(tagKey, getTagFactoryByVNode(vnode));
+
+		//}
+	//}
+//}
+////}
 
 export default components;
 

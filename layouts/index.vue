@@ -1,21 +1,19 @@
 <template>
 	<div style="display:flex; height:100%; flex-direction:column;">
 		<div>
-			<headers __style__="system"></headers>
+			<!--<headers __style__="system"></headers>-->
 		</div>
 		<div style="flex:1">
 			<nuxt></nuxt>
 		</div>
 		<div>
-			<footers __style__="system"></footers>
+			<!--<footers __style__="system"></footers>-->
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
-	components: {
-	}
 }
 </script>
 
