@@ -10,7 +10,7 @@
 				</el-select>
 			</el-input>
 
-			<el-button @click="clickNewBtn" type="text" round>新增<i class="el-icon-plus"></i></el-button>
+			<el-button @click="clickNewBtn" type="text" round>新增</el-button>
 		</div>
 		<el-table :data="links" :default-sort="{prop:'title', order:'ascending'}">
 			<el-table-column prop="title" label="链接" sortable width="350">
