@@ -1,7 +1,7 @@
 
-//import mods from "@/components/mods";
+import mods from "@/components/mods";
 
 
 export default {
-	//mods,
+	mods,
 }
