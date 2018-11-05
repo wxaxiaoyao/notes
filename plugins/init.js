@@ -118,6 +118,6 @@ export default ({store, req, env}) => {
 	}
 
 	if (process.client && store.state.token) {
-		initSocket(store.state.token);
+		//initSocket(store.state.token);
 	} 
 }
