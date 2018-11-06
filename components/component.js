@@ -2,6 +2,7 @@ import vue from "vue";
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import _ from "lodash";
 import jwt from "jwt-simple";
+import io from "socket.io-client";
 
 import EVENTS from "@/lib/events.js";
 import config from "@/config.js";
@@ -30,6 +31,7 @@ export default {
 	computed: {
 		...mapGetters({
 			msg: "msg",
+			token: "token",
 			user: "user",
 			isAuthenticated: "isAuthenticated",
 			getData: "getData",
@@ -58,6 +60,9 @@ export default {
 		currentContent() {
 			return this.getData("__currentContent__");
 		},
+		socket() {
+			return this.getData("__socket__");
+		},
 	},
 
 	methods: {
@@ -65,6 +70,46 @@ export default {
 			setUser: "setUser",
 			setMsg: "setMsg",
 		}),
+		initSocket() {
+			const user = jwt.decode(token, null, true);
+			if (!user || !user.userId) { 
+				console.log("token 无效", token);
+				return ;
+			}
+
+			if (app.socket && app.socket.connected) {
+				console.log("socket already connected");
+				return app.socket;
+			}
+
+			const socket = io(config.socketUrl, {
+				query: {
+					token: token,
+					userId: user.id || user.userId,
+				},
+				transports: ['websocket'],
+			});
+
+
+			socket.on("connect", () => {
+				console.log("socket connect successful", socket);
+				this.setData("__socket__", socket);
+			});
+
+			socket.on("disconnect", msg => {
+				console.log("socket disconnect", msg);
+				app.socket = undefined;
+				this.setData("__socket__", undefined);
+			});
+
+			socket.on("error", e => {
+				console.log("socket error", e);
+			});
+
+			app.socket = socket;
+
+			return socket;
+		},
 		authenticated() {
 			if (this.isAuthenticated) return {...this.user, userId:this.user.id};
 

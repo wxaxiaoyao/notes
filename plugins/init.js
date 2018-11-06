@@ -2,7 +2,6 @@ import axios from "axios";
 import _ from "lodash";
 import vue from "vue";
 import elementUI from 'element-ui';
-import io from "socket.io-client";
 import jwt from "jwt-simple";
 
 import util from "@/lib/util.js";
@@ -71,43 +70,6 @@ app.getData = function(key, defaultValue) {
 
 	return app.datas[key];
 }
-
-function initSocket(token) {
-	const user = jwt.decode(token, null, true);
-	if (!user || !user.userId) { 
-		console.log("token 无效", token);
-		return;
-	}
-
-	if (app.socket && app.socket.connected) {
-		console.log("socket already connected");
-		return;
-	}
-
-	const socket = io(config.socketUrl, {
-		query: {
-			token: token,
-			userId: user.id || user.userId,
-		},
-		transports: ['websocket'],
-	});
-
-	socket.on("connect", () => {
-		console.log("socket connect successful", socket);
-	});
-
-	socket.on("disconnect", msg => {
-		console.log("socket disconnect", msg);
-		app.socket = undefined;
-	});
-
-	socket.on("error", e => {
-		console.log("socket error", e);
-	});
-
-	app.socket = socket;
-}
-app.initSocket = initSocket;
 
 export default ({store, req, env}) => {
 	app.store = store;

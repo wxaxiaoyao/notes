@@ -13,5 +13,6 @@ export default {
 	created() {
 		//if (!g_app.socket) this.push("/note/users/login");
 		this.authenticated();
+
 	},
 }

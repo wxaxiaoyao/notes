@@ -11,6 +11,9 @@ export const state = () => ({
 	// 模式
 	mode: "normal",
 
+	// socket state
+	// socketState: "disconnect",
+
 	// 用户信息
 	user: {},
 
