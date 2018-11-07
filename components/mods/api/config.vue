@@ -18,7 +18,7 @@
 								<el-option v-for="(x,i) in types" :key="i" :label="x.label" :value="x.value"></el-option>
 							</el-select>
 							<el-input clearable v-model="fieldDescription" placeholder="备注"></el-input>
-							<el-button @click="data.fields.push({key:fieldKey, type:fieldType, description:fieldDescription})">添加</el-button>
+							<el-button @click="config.fields.push({key:fieldKey, type:fieldType, description:fieldDescription})">添加</el-button>
 							</div>
 					</el-form-item>
 					<el-form-item v-for="(field, i) in config.fields" :key="'field' + i">
@@ -123,7 +123,7 @@ export default {
 			head: {
 				title:"API配置",
 			},
-
+			config:{},
 		}
 	},
 
@@ -147,7 +147,7 @@ export default {
 	},
 
 	async mounted() {
-		this.data = (await this.api.apis.getConfig()).data || this.data;
+		this.config = (await this.api.apis.getConfig()).data || this.data;
 		//console.log(this.data);
 	},
 }

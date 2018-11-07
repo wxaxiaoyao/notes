@@ -49,10 +49,10 @@
 			</el-form-item>
 			<el-form-item label="请求头" v-for="(header, i) in headers" :key="'header' + i">
 				<div class="item-container">
-					<el-select disabled style="width:245px" v-model="header.key" placeholder="KEY" clearable allow-create filterable default-first-option>
+					<el-select style="width:245px" v-model="header.key" placeholder="KEY" clearable allow-create filterable default-first-option>
 						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x.key"></el-option>
 					</el-select>
-					<el-input disabled v-model="header.value" placeholder="值"></el-input>
+					<el-input v-model="header.value" placeholder="值"></el-input>
 					<el-button @click="headers.splice(i, 1)">删除</el-button>
 				</div>
 			</el-form-item>

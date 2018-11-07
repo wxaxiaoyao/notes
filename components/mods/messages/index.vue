@@ -53,6 +53,10 @@ export default {
 
 	methods: {
 	},
+
+	mounted() {
+		this.initSocket();
+	}
 }
 </script>
 

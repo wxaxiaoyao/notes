@@ -61,9 +61,18 @@ export default {
 }
 </script>
 
+<style lang="less">
+.dailies-index-container {
+	/*.cell {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}*/
+}
+</style>
 <style lang="less" scoped>
 .dailies-index-container {
-	
+
 }
 .header-container {
 	display: flex;

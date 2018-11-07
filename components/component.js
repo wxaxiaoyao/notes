@@ -71,20 +71,20 @@ export default {
 			setMsg: "setMsg",
 		}),
 		initSocket() {
-			const user = jwt.decode(token, null, true);
+			const user = jwt.decode(this.token, null, true);
 			if (!user || !user.userId) { 
-				console.log("token 无效", token);
+				console.log("token 无效", this.token);
 				return ;
 			}
 
-			if (app.socket && app.socket.connected) {
-				console.log("socket already connected");
+			if (g_app.socket) {
+				console.log("socket already exist");
 				return app.socket;
 			}
 
 			const socket = io(config.socketUrl, {
 				query: {
-					token: token,
+					token: this.token,
 					userId: user.id || user.userId,
 				},
 				transports: ['websocket'],
@@ -106,7 +106,7 @@ export default {
 				console.log("socket error", e);
 			});
 
-			app.socket = socket;
+			g_app.socket = socket;
 
 			return socket;
 		},

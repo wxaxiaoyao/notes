@@ -38,11 +38,20 @@ export default {
 		}
 	},
 
+	watch: {
+		socket: function(socket) {
+			if (!socket) return;
+			this.loadSessions();
+		}
+
+	},
+
 	methods: {
-		async getSessions() {
-			g_app.socket.emit("sessions", {}, (sessions = []) => {
+		async loadSessions() {
+			this.socket.emit("sessions", {}, (sessions = []) => {
 				sessions.splice(0,0, this.systemSession);
 				this.sessions = sessions;
+				console.log("----------load sessions---------------", sessions);
 			});
 		},
 
@@ -53,7 +62,8 @@ export default {
 
 	async mounted() {
 		this.session = this.systemSession;
-		await this.getSessions();
+		this.sessions.push(this.systemSession);
+		this.socket && this.loadSessions();
 	}
 }
 </script>
