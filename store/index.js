@@ -74,7 +74,7 @@ export const actions = {
 		let token = state.token;
 		if (process.server && req && req.ctx) {
 			token = req.ctx.state.token;
-			console.log(req.ctx.state.token);
+			//console.log(req.ctx.state.token);
 			state.token = token;
 		}
 
