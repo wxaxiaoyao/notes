@@ -180,7 +180,7 @@ export default {
 		async clickSendCellphoneCaptchaBtn() {
 			const reg = /^1\d{10}$/;
 			const cellphone = this.cellphoneModel.cellphone || "";
-			if (!reg.test(cellphone)) return Message("手机号格式错误");
+			if (!reg.test(cellphone)) return this.$message("手机号格式错误");
 			this.startTimeout();
 			await this.api.users.cellphoneVerifyOne(this.cellphoneModel);
 		},
@@ -188,7 +188,7 @@ export default {
 		async clickSubmitBindCellphoneBtn() {
 			const reg = /^1\d{10}$/;
 			let cellphone = this.cellphoneModel.cellphone || "";
-			if (!reg.test(cellphone)) return Message("手机号格式错误");
+			if (!reg.test(cellphone)) return this.$message("手机号格式错误");
 			this.cellphoneModel.isBind = !this.cellphoneModel.isBind;
 			const result = await this.api.users.cellphoneVerifyTwo(this.cellphoneModel);
 
@@ -196,14 +196,14 @@ export default {
 
 			if (result.isErr()){
 				this.cellphoneModel.isBind = !this.cellphoneModel.isBind;
-				return Message(result.getMessage());
+				return this.$message(result.data);
 			} 
 
 			if (this.cellphoneModel.isBind){
-				Message("手机绑定成功");
+				this.$message("手机绑定成功");
 			} else {
 				this.cellphoneModel.cellphone = "";
-				Message("手机解绑成功");
+				this.$message("手机解绑成功");
 			}
 			this.timeout = 0;
 			this.cellphoneModel.captcha = "";
@@ -213,7 +213,7 @@ export default {
 		async clickSendEmailCaptchaBtn() {
 			const reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
 			const email = this.emailModel.email || "";
-			if (!reg.test(email)) return Message("邮箱格式错误");
+			if (!reg.test(email)) return this.$message("邮箱格式错误");
 			this.startTimeout();
 			await this.api.users.emailVerifyOne(this.emailModel);
 		},
@@ -221,7 +221,7 @@ export default {
 		async clickSubmitBindEmailBtn() {
 			const reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
 			let email = this.emailModel.email || "";
-			if (!reg.test(email)) return Message("邮箱格式错误");
+			if (!reg.test(email)) return this.$message("邮箱格式错误");
 
 			this.emailModel.isBind = !this.emailModel.isBind;
 			const result = await this.api.users.emailVerifyTwo(this.emailModel);
@@ -229,14 +229,14 @@ export default {
 
 			if (result.isErr()){
 				this.emailModel.isBind = !this.emailModel.isBind;
-				return Message(result.getMessage());
+				return this.$message(result.data);
 			}
 
 			if (this.emailModel.isBind){
-				Message("邮箱绑定成功");
+				this.$message("邮箱绑定成功");
 			} else {
 				this.emailModel.email = "";
-				Message("邮箱解绑成功");
+				this.$message("邮箱解绑成功");
 			}
 			this.timeout = 0;
 			this.cellphoneModel.captcha = "";
@@ -246,35 +246,35 @@ export default {
 		async clickSubmitBtn() {
 			const password = this.password;
 			if (!password.newpassword) {
-				return Message("密码格式错误");
+				return this.$message("密码格式错误");
 			}
 			if (password.newpassword != password.confirmpassword) {
-				return Message("两次新密码不一致");
+				return this.$message("两次新密码不一致");
 			}
 
 			const result = await api.users.changepwd(password);			
 			if (result.isErr()) {
-				return Message(result.getMessage());
+				return this.$message(result.data);
 			}
 
-			Message("密码修改成功");
+			this.$message("密码修改成功");
 		},
 
 		async clickBindOauthUserBtn(oauthUser) {
 			// 已经绑定 进行解绑
 			if (oauthUser.isBind) {
 				const result = await this.api.oauthUsers.delete({id:oauthUser.id});
-				if (result.isErr()) return Message(result.getMessage());
+				if (result.isErr()) return this.$message(result.data);
 				oauthUser.nickname = "";
 				oauthUser.isBind = false;
-				Message("帐号解绑成功");
+				this.$message("帐号解绑成功");
 				return;
 			}
 			
 			const data = await this.$auth.authenticate(oauthUser.type, {state:"bind"}).then(res => res.data);
 			oauthUser.nickname = data.externalUsername;
 			oauthUser.isBind = true;
-			Message("帐号绑定成功");
+			this.$message("帐号绑定成功");
 			//console.log(data);
 		}
 	},

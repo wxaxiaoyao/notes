@@ -48,12 +48,12 @@ export default {
 
 			const result = await this.api.users.update(this.userinfo);
 			if (result.isErr()) {
-				Message(result.getMessage());
+				this.$message(result.data);
 				return;
 			}
 
 			this.setUser(this.userinfo);
-			Message("用户信息修改成功");
+			this.$message("用户信息修改成功");
 		}
 	},
 
