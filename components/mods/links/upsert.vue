@@ -61,7 +61,8 @@ export default {
 			if (!this.link.href) return this.$message({message:"链接地址不能为空"});
 
 			this.link.tags = "|" + this.tagsData.tags.join("|") + "|";
-			const result = await this.api.links.upsert(this.link);
+			const oper = this.link.id ? "update" : "create";
+			const result = await this.api.links[oper](this.link);
 			if (result.isErr()) return this.$message({message:"提交失败, 请稍后重试!!!"});
 
 			this.$router.push("/note/links");
