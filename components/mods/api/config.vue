@@ -39,7 +39,7 @@
 						<div class="item-container">
 							<el-input v-model="baseUrl" placeholder="base URL" clearable></el-input>
 							<el-input v-model="baseUrlDescription" placeholder="备注" clearable></el-input>
-							<el-button @click="data.baseUrls.push({baseUrl:baseUrl, description:baseUrlDescription})">添加</el-button>
+							<el-button @click="config.baseUrls.push({baseUrl:baseUrl, description:baseUrlDescription})">添加</el-button>
 						</div>
 					</el-form-item>
 					<el-form-item v-for="(x, i) in config.baseUrls" :key="i">
@@ -58,7 +58,7 @@
 							<el-input v-model="headerKey" placeholder="KEY" clearable></el-input>
 							<el-input v-model="headerValue" placeholder="值" clearable></el-input>
 							<el-input v-model="headerDescription" placeholder="备注" clearable></el-input>
-							<el-button @click="data.headers.push({key:headerKey, value:headerValue, description:headerDescription})">添加</el-button>
+							<el-button @click="config.headers.push({key:headerKey, value:headerValue, description:headerDescription})">添加</el-button>
 						</div>
 					</el-form-item>
 					<el-form-item v-for="(header, i) in config.headers" :key="'header' + i">
@@ -77,7 +77,7 @@
 						<div class="item-container">
 							<el-input v-model="classify" placeholder="分类名" clearable></el-input>
 							<el-input v-model="classifyDescription" placeholder="备注" clearable></el-input>
-							<el-button @click="data.classify.push({classify:classify, description:classifyDescription})">添加</el-button>
+							<el-button @click="config.classify.push({classify:classify, description:classifyDescription})">添加</el-button>
 						</div>
 					</el-form-item>
 					<el-form-item v-for="(x, i) in config.classify" :key="'classify' + i">
@@ -123,7 +123,12 @@ export default {
 			head: {
 				title:"API配置",
 			},
-			config:{},
+			config:{
+				baseUrls:[],
+				headers:[],
+				fields:[],
+				classify:[],
+			},
 		}
 	},
 
