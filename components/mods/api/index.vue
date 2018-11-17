@@ -30,7 +30,7 @@
 			</el-table-column>
 			<el-table-column label="操作" fixed="right" width="100px">
 				<template slot-scope="{row, $index}">
-					<i @click="clickNewBtn(row)" class="oper-icon el-icon-plus" data-toggle="tooltip" title="复制新增"></i>
+					<!--i @click="clickNewBtn(row)" class="oper-icon el-icon-plus" data-toggle="tooltip" title="复制新增"></i-->
 					<i @click="clickEditBtn(row)" class="oper-icon el-icon-edit" data-toggle="tooltip" title="编辑"></i>
 					<i @click="clickDeleteBtn(row, $index)" class="oper-icon el-icon-delete" data-toggle="tooltip" title="移除"></i>
 				</template>

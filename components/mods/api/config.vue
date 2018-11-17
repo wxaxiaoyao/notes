@@ -144,7 +144,7 @@ export default {
 		},
 
 		async clickSubmitBtn() {
-			const result = await this.api.apis.setConfig(this.data);
+			const result = await this.api.apis.setConfig(this.config);
 			if (result.isErr())  return this.$message({message:"提交失败"});
 			this.$message({message:"提交成功"});
 

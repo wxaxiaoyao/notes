@@ -188,7 +188,15 @@ export default {
 			const data = {};
 			const method = config.method;
 			_.each(this.headers, x => config.headers[x.key] = x.value);
-			_.each(this.params, x => data[x.key] = x.value);
+			//_.each(this.params, x => data[x.key] = x.value);
+			_.each(this.params, x => {
+				try {
+					const value = x.type == "string" ? x.value : JSOn.parse(x.value);
+					_.set(data, x.key, value);
+				} catch(e) {
+					this.$message("数据格式错误");
+				}
+			});
 			if (method == "get" || method == "delete" || method == "head" || method == "options") config.params = data;
 			else config.data = data;
 			config.url = pathToRegexp.compile(config.url)(data);

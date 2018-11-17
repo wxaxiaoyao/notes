@@ -72,7 +72,7 @@ export default {
 	position: relative;
 }
 .input-output {
-	margin: 6px 0px 0px;
+	/*margin: 6px 0px 0px;*/
 }
 .demo-data {
 	position: absolute;
