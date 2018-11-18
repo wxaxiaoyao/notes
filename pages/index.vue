@@ -47,7 +47,13 @@ export default {
 	},
 
 	destroyed() {
-	}
+	},
+
+	beforeMount() {
+		if (this.isSmallScreen) {
+			this.$router.replace({path:"/note/cellphones/index"});
+		}
+	},
 }
 </script>
 

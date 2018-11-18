@@ -9,6 +9,7 @@ const register = () => import("./register.vue");
 const setting = () => import("./setting.vue");
 const profile = () => import("./profile.vue");
 const account = () => import("./account.vue");
+const me = () => import("./me.vue");
 
 export default {
 	index,
@@ -20,4 +21,5 @@ export default {
 	profile,
 	account,
 	home,
+	me,
 };

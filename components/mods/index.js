@@ -52,6 +52,7 @@ import fields from "./fields/index.js";
 import apis from "./api/index.js";
 import questions from "./questions/index.js";
 import todos from "./todos/index.js";
+import cellphones from "./cellphones/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -62,6 +63,8 @@ const components = {
 
 	// 系统模块
 	note,
+
+	cellphones,
 
 	// 功能组件
 	logins, 

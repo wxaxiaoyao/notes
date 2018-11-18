@@ -2,6 +2,7 @@ import axios from "axios";
 import _ from "lodash";
 import vue from "vue";
 import elementUI from 'element-ui';
+import mintUI from 'mint-ui';
 import jwt from "jwt-simple";
 
 import util from "@/lib/util.js";
@@ -15,6 +16,7 @@ import mdconf from "@/lib/markdown/mdconf.js";
 const {mods} = components;
 
 vue.use(elementUI);
+vue.use(mintUI);
 
 api.options.baseURL = config.apiUrlPrefix;
 api.options.withCredentials = true;

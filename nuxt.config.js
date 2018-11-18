@@ -65,6 +65,7 @@ module.exports = {
 	  '~assets/css/main.css',
 	  '~assets/css/theme.scss',
 	  'element-ui/lib/theme-chalk/index.css',
+	  'mint-ui/lib/style.css',
 	  'github-markdown-css/github-markdown.css',
 	],
 

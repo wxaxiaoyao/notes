@@ -49,7 +49,7 @@ export default {
 			return portraits[index];
 		},
 		isSmallScreen() {
-			return g_app.isSmallScreen;
+			return this.$store.state.isSmallScreen;
 		},
 		editorMode() {
 			return this.getData("__editor_mode__")  || "normal";
@@ -68,6 +68,7 @@ export default {
 	methods: {
 		...mapMutations({
 			setUser: "setUser",
+			setToken: "setToken",
 			setMsg: "setMsg",
 		}),
 		initSocket() {
@@ -135,6 +136,9 @@ export default {
 		push(path, data = {}) {
 			g_app.storage.sessionStorageSetItem(path, _.cloneDeep(data));
 			this.$router.push({path});
+		},
+		go(number) {
+			this.$router.go(number);
 		},
 		setEditorMode(mode) {
 			this.setData("__editor_mode__", mode);

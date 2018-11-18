@@ -92,7 +92,10 @@ export default {
 
 		async loadDatas() {
 			//const {classify} = this.__data__ || {};
-			const list = (await this.api[resourceName].get({"x-order":"date-desc"})).data || [];
+			const list = (await this.api[resourceName].get({
+				"x-order":"date-desc",
+				'x-per-page':20,
+			})).data || [];
 			let tags = [];
 			_.each(list, o => {
 				this.initData && this.initData(o);

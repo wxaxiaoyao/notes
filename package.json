@@ -41,6 +41,8 @@
     "koa": "^2.5.2",
     "koa-jwt": "^3.5.1",
     "mavon-editor": "^2.6.17",
+    "mint-ui": "^2.2.13",
+    "moment": "^2.22.2",
     "mousetrap": "^1.6.2",
     "nuxt": "^2.0.0",
     "path-to-regexp": "^2.4.0",

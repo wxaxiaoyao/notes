@@ -54,12 +54,6 @@ window.addEventListener("message", function(e) {
 	postMessage(SUCCESS)
 });
 
-// window size init
-vue.set(app, "isSmallScreen",window.innerWidth < 768);
-window.onresize = () => {
-	vue.set(app, "isSmallScreen", window.innerWidth < 768);
-}
-
 // authorization init
 const baseUrl = config.apiUrlPrefix + "oauth_users/";
 vue.use(vueAxios, axios);
@@ -124,6 +118,10 @@ vue.use(vueAuthenticate, {
 
 // store init
 export default ({store}) => {
+	// window size init
+	store.commit("setState", {isSmallScreen:window.innerWidth < 768});
+	window.onresize = () => store.commit("setState", {isSmallScreen:window.innerWidth < 768});
+
 	// store persisted
 	createPersistedState({
 		paths: ["user"],

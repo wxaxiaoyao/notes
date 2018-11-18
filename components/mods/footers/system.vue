@@ -31,8 +31,6 @@ export default {
 		return {
 			containerStyle: {
 				backgroundColor:"white",
-
-
 			}
 		}
 	},

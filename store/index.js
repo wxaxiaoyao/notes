@@ -5,6 +5,8 @@ import jwt from "jwt-simple";
 import api from "@/api/notes.js";
 
 export const state = () => ({
+	isSmallScreen: false,
+
 	// 认证token
 	token:null,
 
@@ -85,6 +87,9 @@ export const actions = {
 }
 
 export const mutations = {
+	setState(state, obj) {
+		_.each(obj, (val, key) => vue.set(state, key, val));
+	},
 	setMode(state, mode) {
 		state.mode = mode;
 	},

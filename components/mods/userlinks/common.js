@@ -7,7 +7,8 @@ export default {
 	methods: {
 		handleCommand(cmd){
 			if (cmd == "logout") {
-				this.setUser()
+				this.setUser();
+				this.setToken();
 				this.$router.push({path:"/note/users/login"});
 				this.api.users.logout();
 				return;

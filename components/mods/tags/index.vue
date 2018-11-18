@@ -45,7 +45,7 @@ export default {
 			isShowInputTag:false,
 			tag: "",
 			head: {
-				title:"标签管理"
+				title:"我的标签"
 			}
 		}
 	},

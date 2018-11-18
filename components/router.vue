@@ -1,7 +1,7 @@
 <template>
 	<div class="page-container">
 		<div v-if="isExistHeader" class="page-header-container">
-			<headers __style__="system"></headers>
+			<headers :__style__="headerStyle"></headers>
 		</div>
 		<div class="page-body-container">
 			<div v-if="pageType == 'notfound-page'">not found</div>
@@ -10,7 +10,7 @@
 			<component v-else :is="modname" :__style__="stylename" :__default_data__="modData"></component>
 		</div>
 		<div v-if="isExistFooter" class="page-footer-container">
-			<footers __style__="system"></footers>
+			<footers :__style__="footerStyle"></footers>
 		</div>
 	</div>
 </template>
@@ -104,6 +104,8 @@ export default {
 			head:{},
 			isExistHeader:true,
 			isExistFooter:false,
+			headerStyle: "system",
+			footerStyle: "system",
 		}
 	},
 
@@ -117,40 +119,52 @@ export default {
 		return data;
 	},
 
+	methods: {
+		async loadPage() {
+			if (!this.loaded) {
+				const data = await loadData(window.location.href);
+				console.log("客户端加载页面数据:", data);
+				_.merge(this, data);
+			}
+
+			const params = g_app.storage.sessionStorageGetItem("/" + this.url) || {};
+			const query = this.$route.query || {};
+			this.modData = {
+				...this.modData,
+				...params,
+				...query,
+				setPageAttr: ref => {
+					this.head = ref.head || {title:"note"};
+					this.isExistHeader = ref.isExistHeader != undefined ? ref.isExistHeader : this.isExistHeader;
+					this.isExistFooter = ref.isExistFooter != undefined ? ref.isExistFooter : this.isExistFooter;
+				},
+			};
+
+			if (this.isPersonalPage) return;
+
+			const paths = this.url.split("/").filter(o => o);
+			this.modname = paths[1];
+			this.stylename = paths[2] || "index";
+
+			// 设置当前页
+			if (this.pageType == "user-page" && this.page) {
+				this.setData("__currentUrl__", this.page.url);
+				this.setData("__currentContent__", this.page.content);
+			}
+
+			console.log(this.modname, this.stylename);
+			if (this.pageType == "system-page" && !g_app.mods[this.modname]) this.pageType = "notfound-page"; 
+		}
+	},
+
 	async mounted() {
-		if (!this.loaded) {
-			const data = await loadData(window.location.href);
-			console.log("客户端加载页面数据:", data);
-			_.merge(this, data);
+		if (this.isSmallScreen) {
+			this.footerStyle = "smIndex";
+			this.isExistFooter = true;
+			this.isExistHeader = false;
 		}
 
-		const params = g_app.storage.sessionStorageGetItem("/" + this.url) || {};
-		const query = this.$route.query || {};
-		this.modData = {
-			...this.modData,
-			...params,
-			...query,
-			setPageAttr: ref => {
-				this.head = ref.head || {title:"note"};
-				this.isExistHeader = ref.isExistHeader != undefined ? ref.isExistHeader : this.isExistHeader;
-				this.isExistFooter = ref.isExistFooter != undefined ? ref.isExistFooter : this.isExistFooter;
-			},
-		};
-
-		if (this.isPersonalPage) return;
-
-		const paths = this.url.split("/").filter(o => o);
-		this.modname = paths[1];
-		this.stylename = paths[2] || "index";
-
-		// 设置当前页
-		if (this.pageType == "user-page" && this.page) {
-			this.setData("__currentUrl__", this.page.url);
-			this.setData("__currentContent__", this.page.content);
-		}
-
-		console.log(this.modname, this.stylename);
-		if (this.pageType == "system-page" && !g_app.mods[this.modname]) this.pageType = "notfound-page"; 
+		await this.loadPage();
 	}
 }
 </script>
@@ -166,6 +180,7 @@ export default {
 }
 .page-body-container {
 	flex:1;
+	overflow-y:auto;
 }
 .page-footer-container {
 
