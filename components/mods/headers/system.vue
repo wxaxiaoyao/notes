@@ -4,9 +4,8 @@
 			<div class="flex-row">
 				<div>
 					<a class="header-icon iconfont icon-home" href="/" data-toggle="tooltip" title="首页"></a>
-					<!--a v-if="isAuthenticated" class="header-icon iconfont icon-edit" href="/note/editors/simple" data-toggle="tooltip" title="简易编辑器"></a-->
 				</div>
-				<div v-if="isAuthenticated" class="feature-container">
+				<div v-show="isAuthenticated" class="feature-container">
 					<el-select v-model="url"
 						@change="handleSelect"
 						size="small"
