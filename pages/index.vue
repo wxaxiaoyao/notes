@@ -1,5 +1,8 @@
 <template>
 	<div class="index-container">
+		<div class="header-container" v-show="isShowHeader">
+			<headers __style__="system"></headers>
+		</div>
 		<div class="index-body-container">
 		</div>
 	</div>
@@ -13,8 +16,9 @@ import component from "@/components/component.js";
 import config from "@/config";
 
 export default {
+	layout: "blank",
+
 	mixins: [component],
-	layout: "index",
 
 	components: {
 	},
@@ -27,6 +31,7 @@ export default {
 
 	data: function() {
 		return {
+			isShowHeader: false,
 		}
 	},
 
@@ -52,6 +57,8 @@ export default {
 	beforeMount() {
 		if (this.isSmallScreen) {
 			this.$router.replace({path:"/note/cellphones/index"});
+		} else {
+			this.isShowHeader = true;
 		}
 	},
 }

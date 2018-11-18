@@ -1,7 +1,6 @@
 
 <template>
-	<div class="cellphones-index-container">
-		<mt-header :title="user.nickname || user.username"></mt-header>
+	<div>
 	</div>
 </template>
 
@@ -24,19 +23,11 @@ export default {
 	computed: {
 	},
 
-	watch: {
-	},
-
 	created() {
-		if (!this.isAuthenticated) {
-			return this.push("/note/cellphones/login");
-		}
-	},
-
-	beforeMount() {
 	},
 
 	mounted() {
+
 	},
 }
 </script>

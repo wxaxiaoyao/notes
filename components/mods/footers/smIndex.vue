@@ -2,7 +2,10 @@
 <template>
 	<div class="footer-sm-index-container">
 		<mt-tabbar v-model="selected">
-			<mt-tab-item v-for="(x, i) in items" :key="i" :id="x.url">{{x.label}}</mt-tab-item>
+			<mt-tab-item v-for="(x,i) in items" :key="i" :id="x.url">
+				<i slot="icon" :class="x.icon"></i>
+				{{x.label}}
+			</mt-tab-item>
 		</mt-tabbar>
 	</div>
 </template>
@@ -16,9 +19,9 @@ export default {
 		return {
 			selected:"",
 			items: [
-			{label:"首页", url:"/note/cellphones/index"},
-			{label:"功能", url:"/note/cellphones/entry"},
-			{label:"我", url:"/note/cellphones/me"},
+			{label:"首页", url:"/note/cellphones/index", icon:"iconfont icon-home"},
+			{label:"功能", url:"/note/cellphones/entry", icon:"iconfont icon-entry"},
+			{label:"我", url:"/note/cellphones/me", icon:"iconfont icon-me"},
 			]
 		}
 	},

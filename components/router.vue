@@ -1,5 +1,5 @@
 <template>
-	<div class="page-container">
+	<div class="page-container" v-loading="loading">
 		<div v-if="isExistHeader" class="page-header-container">
 			<headers :__style__="headerStyle"></headers>
 		</div>
@@ -93,6 +93,8 @@ export default {
 
 	data: function() {
 		return {
+			cellphonesData:{},
+			loading: true,
 			loaded: false,
 			isNotFound: false,
 			pageType: "system-page",
@@ -102,7 +104,7 @@ export default {
 			stylename:null,
 			modData: {},
 			head:{},
-			isExistHeader:true,
+			isExistHeader:false,
 			isExistFooter:false,
 			headerStyle: "system",
 			footerStyle: "system",
@@ -157,14 +159,21 @@ export default {
 		}
 	},
 
-	async mounted() {
-		if (this.isSmallScreen) {
-			this.footerStyle = "smIndex";
-			this.isExistFooter = true;
-			this.isExistHeader = false;
-		}
+	async beforeMount() {
+		
+	},
 
+	async mounted() {
 		await this.loadPage();
+		if (this.isSmallScreen) {
+			this.isExistHeader = false;
+			this.isExistFooter = true;
+			this.footerStyle = "smIndex";
+		} else {
+			this.isExistHeader = true;
+			this.isExistFooter = false;
+		}
+		this.loading = false;
 	}
 }
 </script>
