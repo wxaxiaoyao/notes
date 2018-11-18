@@ -11,7 +11,7 @@ import config from "@/config.js";
 const events = new vue();
 
 const portraits = [
-	"http://pf0t54gda.bkt.clouddn.com/portraits/1.jpg",
+	"http://statics.qiniu.wxaxiaoyao.cn/portraits/1.jpg",
 ];
 
 export default {

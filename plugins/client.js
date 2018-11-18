@@ -3,6 +3,7 @@ import axios from "axios";
 import vueAxios from "vue-axios";
 import vueAuthenticate from "vue-authenticate";
 import createPersistedState from "vuex-persistedstate";
+import mintUI from 'mint-ui';
 
 import {app} from "./init.js";
 import storage from "@/lib/storage.js";
@@ -10,6 +11,7 @@ import indexedDB from "@/lib/indexedDB.js";
 import upload from "@/api/qiniu.js";
 import config from "@/config.js";
 
+vue.use(mintUI);
 
 // global varible init
 app.storage = storage;
