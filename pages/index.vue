@@ -5,6 +5,8 @@
 		</div>
 		<div class="index-body-container">
 		</div>
+		<div>
+		</div>
 	</div>
 </template>
 
@@ -66,15 +68,12 @@ export default {
 
 <style scoped>
 .index-container {
-	position:relative;
 	height:100%;
 	width:100%;
+	display: flex;
+	flex-direction: column;
 }
 .index-body-container {
-	position:absolute;
-	top:0px;
-	bottom:0px;
-	left:0px;
-	right:0px;
+	flex:1;
 }
 </style>
