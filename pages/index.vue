@@ -1,11 +1,12 @@
 <template>
 	<div class="index-container">
-		<div class="header-container" v-show="isShowHeader">
+		<div class="header-container" v-show="loaded">
 			<headers __style__="system"></headers>
 		</div>
 		<div class="index-body-container">
 		</div>
-		<div>
+		<div class="footer-container" v-show="loaded">
+			<footers __style__="system"></footers>
 		</div>
 	</div>
 </template>
@@ -33,7 +34,7 @@ export default {
 
 	data: function() {
 		return {
-			isShowHeader: false,
+			loaded: false,
 		}
 	},
 
@@ -60,7 +61,7 @@ export default {
 		if (this.isSmallScreen) {
 			this.$router.replace({path:"/note/cellphones/index"});
 		} else {
-			this.isShowHeader = true;
+			this.loaded = true;
 		}
 	},
 }

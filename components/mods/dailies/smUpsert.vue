@@ -58,7 +58,8 @@ export default {
 			this.daily.tags = "|" + this.tagsData.tags.join("|") + "|";
 			//console.log(this.tagsData, this.daily);
 			
-			const result = await this.api.dailies.upsert(this.daily);
+			const oper = this.daily.id ? "update" : "create";
+			const result = await this.api.dailies[oper](this.daily);
 			if (result.isErr()) {
 				this.$message({message:"创建失败", type:'error'});
 				this.__data__.fail && this.__data__.fail();
