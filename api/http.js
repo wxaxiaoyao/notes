@@ -80,8 +80,8 @@ class Cache {
 	}
 }
 
-export function httpRequest(method, url, data, config) {
-	url = pathToRegexp.compile(url)(data || {});
+export function httpRequest(method, url, data = {}, config = {}) {
+	url = pathToRegexp.compile(url)(data);
 	method = (method || "get").toLowerCase();
 	config = {...(config || {}), method:method, url:url};
 	if (method == "get" || method == "delete" || method == "head" || method == "options") {

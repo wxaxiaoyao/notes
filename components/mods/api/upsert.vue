@@ -191,9 +191,10 @@ export default {
 			//_.each(this.params, x => data[x.key] = x.value);
 			_.each(this.params, x => {
 				try {
-					const value = x.type == "string" ? x.value : JSOn.parse(x.value);
+					const value = x.type == "string" ? x.value : JSON.parse(x.value);
 					_.set(data, x.key, value);
 				} catch(e) {
+					console.log(e);
 					this.$message("数据格式错误");
 				}
 			});
