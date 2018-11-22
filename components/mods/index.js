@@ -18,7 +18,6 @@ import tocs from "./tocs/index.js";
 import richtexts from "./richtexts/index.js";
 import breadcrumbs from "./breadcrumbs/index.js";
 import medias from "./medias/index.js";
-
 import logins from "./logins/index.js";
 import registers from "./registers/index.js";
 import menus from "./menus/index.js";
@@ -53,6 +52,8 @@ import apis from "./api/index.js";
 import questions from "./questions/index.js";
 import todos from "./todos/index.js";
 import cellphones from "./cellphones/index.js";
+import projects from "./projects/index.js";
+import bugs from "./bugs/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -98,6 +99,8 @@ const components = {
 	apis,
 	questions,
 	todos,
+	projects,
+	bugs,
 
 	// UI组件
 	templates,

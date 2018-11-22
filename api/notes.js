@@ -270,6 +270,18 @@ export function Todos(options) {
 	initHttpOptions(self, options, "todos");
 }
 
+export function Projects(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "projects");
+}
+
+export function Bugs(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "bugs");
+}
+
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -304,6 +316,8 @@ export function Notes(options = {}){
 	self.apis = new Apis(self.options);
 	self.questions = new Questions(self.options);
 	self.todos = new Todos(self.options);
+	self.projects = new Projects(self.options);
+	self.bugs = new Bugs(self.options);
 }
 
 export const options = {
