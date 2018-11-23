@@ -147,6 +147,22 @@ export default {
 				label:"草稿页",
 				url:"/note/editors/draft",
 			},
+			{
+				label:"项目",
+				url:"/note/projects",
+			},
+			{
+				label:"项目录入",
+				url:"/note/projects/upsert",
+			},
+			{
+				label:"BUG",
+				url:"/note/bugs",
+			},
+			{
+				label:"BUG录入",
+				url:"/note/bugs/upsert",
+			},
 			]
 		}
 	},
