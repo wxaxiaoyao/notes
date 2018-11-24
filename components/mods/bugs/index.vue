@@ -9,6 +9,11 @@
 		</div>
 
 		<el-table :data="list" :default-sort="{prop:'tags', order:'ascending'}" size="mini">
+			<el-table-column type="expand">
+				<template slot-scope="{row}">
+					<modules __style__="render" :__default_data__="{text: row.description}" ></modules>
+				</template>
+			</el-table-column>
 			<el-table-column prop="title" label="标题" width="400" sortable>
 			</el-table-column>
 			<el-table-column prop="projectstr" label="项目">
