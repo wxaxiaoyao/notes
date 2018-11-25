@@ -60,6 +60,7 @@
     "vue-lazyload": "^1.2.6",
     "vue-quill-editor": "^3.0.6",
     "vuex-persistedstate": "^2.5.4",
+    "wangeditor": "^3.1.1",
     "wurl": "^2.5.3"
   },
   "devDependencies": {

@@ -28,8 +28,6 @@ import mod from "@/components/mods/common/mod.js";
 export default {
 	mixins:[mod],
 
-	layout: "editor",
-
 	data: function() {
 		return {
 			modulesRenderData:{text:""},

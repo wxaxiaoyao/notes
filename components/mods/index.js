@@ -54,6 +54,7 @@ import todos from "./todos/index.js";
 import cellphones from "./cellphones/index.js";
 import projects from "./projects/index.js";
 import bugs from "./bugs/index.js";
+import experiences from "./experiences/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -101,6 +102,7 @@ const components = {
 	todos,
 	projects,
 	bugs,
+	experiences,
 
 	// UI组件
 	templates,

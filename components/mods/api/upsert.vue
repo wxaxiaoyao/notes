@@ -6,18 +6,24 @@
 			<div>
 				<el-button v-if="!onlytest" @click="clickSubmitBtn" type="text">提交</el-button>
 				<el-button @click="clickTestBtn" type="text">测试</el-button>
-				<el-button v-if="!onlytest" @click="clickListBtn" type="text">API列表</el-button>
+				<el-button v-if="!onlytest" @click="clickListBtn" type="text">列表</el-button>
 			</div>
 		</div>
 		<el-form ref="form" :model="__data__" label-width="80px" size="small">
-			<el-form-item label="标题">
-				<div class="item-container">
-					<el-select style="width:245px" v-model="classify" placeholder="分类" @change="handleSelectChange('classify')" clearable allow-create filterable default-first-option>
-						<el-option v-for="(x,i) in config.classify" :key="i" :label="x.classify" :value="x.classify"></el-option>
-					</el-select>
-					<el-input v-model="__data__.title" placeholder="链接标题"></el-input>
-				</div>
-			</el-form-item>
+			<el-row>
+				<el-col :span="16">
+					<el-form-item label="标题">
+						<el-input v-model="__data__.title" placeholder="链接标题"></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="8">
+					<el-form-item label="项目">
+						<el-select style="width:100%" v-model="__data__.projectId" placeholder="项目">
+							<el-option v-for="(x,i) in projects" :key="i" :label="x.label" :value="x.value"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+			</el-row>
 			<el-form-item label="备注">
 				<el-input v-model="__data__.description" type="textarea" :autosize="{minRows:2, maxRows:4}"
 					placeholder="链接内容备注 ^-^">
@@ -58,7 +64,7 @@
 			</el-form-item>
 			<el-form-item label="参数">
 				<div class="item-container">
-					<el-select style="width:350px" v-model="paramKey" placeholder="字段名" @change="handleSelectChange('field')" clearable allow-create filterable default-first-option>
+					<el-select style="width:550px" v-model="paramKey" placeholder="字段名" @change="handleSelectChange('field')" clearable allow-create filterable default-first-option>
 						<el-option v-for="(x,i) in config.fields" :key="i" :label="x.key" :value="x.key"></el-option>
 					</el-select>
 					<el-select style="width:250px" v-model="paramType" placeholder="数据类型">
@@ -72,10 +78,10 @@
 			</el-form-item>
 			<el-form-item v-for="(param, i) in params" :key="'param' + i">
 				<div class="item-container">
-					<el-select style="width:350px" v-model="param.key" placeholder="字段名" @change="handleSelectChange('field')" clearable allow-create filterable default-first-option>
+					<el-select style="width:330px" v-model="param.key" placeholder="字段名" @change="handleSelectChange('field')" clearable allow-create filterable default-first-option>
 						<el-option v-for="(x,i) in config.fields" :key="i" :label="x.key" :value="x.key"></el-option>
 					</el-select>
-					<el-select style="width:250px" v-model="param.type" placeholder="数据类型">
+					<el-select style="width:150px" v-model="param.type" placeholder="数据类型">
 						<el-option v-for="(x,i) in types" :key="i" :label="x.label" :value="x.value"></el-option>
 					</el-select>
 					<!--el-input v-model="param.key" placeholder="字段名"></el-input-->
@@ -226,6 +232,8 @@ export default {
 
 	async mounted() {
 		if (this.isAuthenticated) await this.loadConfig();
+
+		await this.loadProjects();
 
 		await this.loadData();
 	}

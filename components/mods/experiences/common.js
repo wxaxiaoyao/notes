@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import mod from "@/components/mods/common/mod.js";
 
-const resourceName = "bugs";
+const resourceName = "experiences";
 
 export default {
 	mixins:[mod],
@@ -10,15 +10,6 @@ export default {
 	data: function() {
 		return {
 			list:[],
-			projects:[],
-			states: [
-			{label:"INIT 初始状态", value:0},
-			{label:"OPEN 打开状态", value:1},
-			{label:"TEST 测试状态", value:2},
-			{label:"PASS 测试通过", value:3},
-			{label:"NOPASS 测试不通过", value:4},
-			{label:"CLOSE 关闭状态", value:5},
-			],
 			dialogsConfirmData: {},
 			inputsQueryData: {
 				values:[],
@@ -95,18 +86,7 @@ export default {
 		},
 		
 		async loadDatas(query = {}) {
-			const projects = {};
-			const states = {};
-			_.each(this.states, o => states[o.value] = o.label);
-			_.each(this.projects, o => projects[o.id] = o.name);
-
-			//const {classify} = this.__data__ || {};
 			const list = (await this.api[resourceName].get(query)).data || [];
-			_.each(list, o => {
-				o.statestr = states[o.state];
-				o.projectstr = projects[o.projectId];
-			});
-
 			this.list = list;
 			this.lists = list;
 			return list;
@@ -130,23 +110,6 @@ export default {
 			if (result.isErr()) return this.$message({message:"提交失败"});
 
 			this.push(`/note/${resourceName}`);
-		},
-
-		async loadProjects() {
-			const {userId} = this.authenticated();
-			const result = await this.api.projects.search({
-				"$or": {
-					userId,
-					members: {
-						"$like": `|${userId}|`,
-					}
-				}
-			});
-			this.projects = result.data || [];
-
-			const options = [];
-			_.each(this.projects, o => options.push({label:o.name, value:o.id}));
-			this.inputsQueryData.fields.projectId.options = options;
 		},
 	},
 

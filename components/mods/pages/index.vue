@@ -1,45 +1,40 @@
 
 <template>
 	<div class="container">
-		<div class="page-item-container page-list-header-container">
-			<breadcrumbs :__default_data__="navsData"></breadcrumbs>
-		</div>
-		<div class="page-item-container" v-for="(x, i) in __data__.pages" :key="i">
-			<div>
-				<i :class="['iconfont', x.isFolder ? 'icon-folder' : 'icon-file']"></i>
-				<a @click="clickPageItem(x)">{{x.filename}}</a>
-			</div>
-			<div>
-				<span>{{x.updatedAt | datetime}}</span>
-			</div>
-		</div>
+		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
+		<el-table :data="list">
+			<el-table-column label="URL" prop="url">
+			</el-table-column>
+			<el-table-column label="更新时间" prop="updatedAt">
+				<template slot-scope="{row}">
+					{{row.updatedAt | datetime}}
+				</template>
+			</el-table-column>
+			<el-table-column label="操作" fixed="right" width="80px">
+				<template slot-scope="{row, $index}">
+					<i @click="clickEditBtn(row)" class="oper-icon el-icon-edit" data-toggle="tooltip" title="编辑"></i>
+					<i @click="clickDeleteBtn(row, $index)" class="oper-icon el-icon-delete" data-toggle="tooltip" title="移除"></i>
+				</template>
+			</el-table-column>
+		</el-table>
 	</div>
 </template>
 
 <script>
 import _ from "lodash";
 import common from "./common.js";
+
 export default {
 	mixins:[common],
 
 	data: function() {
 		return {
-			navsData:{path:""},
-			prefix:"",
+			dialogsConfirmData: {},
+			list:[],
 		}
 	},
 
 	props: {
-		__default_data__: {
-			type: Object,
-			default: function() {
-				return {
-					pages:[],
-					username: "xiaoyao",
-					sitename: "xiaoyao",
-				}
-			}
-		}
 	},
 
 	filters: {
@@ -79,36 +74,35 @@ export default {
 	},
 
 	methods:{
-		async parseData() {
-			const prefix = this.__data__.username + "/" + this.__data__.sitename + "/";
-			await this.getPageList(prefix);
+		clickEditBtn(data) {
+			window.open("/note/editors/simple#" + data.url);
 		},
-		async getPageList(prefix) {
-			if (this.prefix == prefix) return;
-			this.prefix = prefix;
-
-			const res = await this.api.pages.get({folder: prefix});
+		async clickDeleteBtn(x, index) {
+			this.dialogsConfirmData = {
+				visible: true,
+				title:"删除确认",
+				content:"确定要删除此条记录?",
+				success: async () => {
+					const result = await this.api.pages.delete({id:x.id});
+					if (result.isErr()) return this.$message({message:"删除失败"});
+					this.list.splice(index, 1);
+				}
+			};
+		},
+		async getPageList() {
+			const res = await this.api.pages.get({"x-order":"updatedAt-desc"});
 			const list = res.data || [];
+			const pages = [];
 			_.each(list, o => {
-				if(_.endsWith(o.url, "/")) o.isFolder = true;
-				const urls = o.url.split("/");
-				o.filename = o.isFolder ? urls[urls.length-2] : urls[urls.length-1];
+				if(_.endsWith(o.url, "/")) return ;
+				pages.push(o);
 			});
-			this.$set(this.__data__, "pages", list);
-
-			this.navsData.path = prefix.replace(this.__data__.username + "/", "").replace(/\/$/, "");
-		},
-
-		async clickPageItem(page) {
-			if (page.isFolder) {
-				return await this.getPageList(page.url);
-			}
-			window.open(window.location.origin + "/" + page.url.replace(/\/$/, ""));
+			this.list = pages;
 		},
 	},
 
 	async mounted() {
-		await this.parseData();
+		await this.getPageList();
 	},
 }
 </script>

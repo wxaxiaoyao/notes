@@ -7,6 +7,22 @@ export default {
 
 	data: function() {
 		return {
+			inputsQueryData: {
+				values:[],
+				fields: {
+					title:{
+						label:"标题",
+						type:"input",
+					},
+					projectId: {
+						label:"项目",
+						type:"select",
+						options:[],
+						number: true,
+					},
+				},
+			},
+			projects:[],
 			onlytest: false,
 			types:[
 			{label:"字符串", value:'string'},
@@ -38,6 +54,24 @@ export default {
 	},
 
 	methods: {
+		async loadProjects() {
+			const {userId} = this.authenticated();
+			const result = await this.api.projects.search({
+				"$or": {
+					userId,
+					members: {
+						"$like": `|${userId}|`,
+					}
+				}
+			});
+			const projects = result.data || [];
+			const options = [];
+			_.each(projects, o => options.push({label:o.name, value:o.id}));
+
+			this.projects = options;
+			this.inputsQueryData.fields.projectId.options = options;
+		},
+
 		handleSelectChange(type) {
 			if (type == "classify") {
 				this.__data__.classify = this.classify;
@@ -109,10 +143,14 @@ export default {
 		},
 
 		async loadDatas() {
-			const {classify} = this.__data__ || {};
-			const apis = (await this.api.apis.search({classify})).data || [];
+			const projects = {};
+			const apis = (await this.api.apis.search({})).data || [];
 			
-			_.each(apis, api => api.loaded = true);
+			_.each(this.projects, o => projects[o.value] = o.label);
+			_.each(apis, api => {
+				api.loaded = true;
+				api.projectLabel = projects[api.projectId || 0] || ""; 
+			});
 
 			this.apis = apis;
 
