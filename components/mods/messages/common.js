@@ -10,6 +10,12 @@ export default {
 		},
 	},
 
+	methods: {
+		setCurrentSessionId(sessionId) {
+			this.setData("__current_session_id__", sessionId);
+		},
+	},
+
 	created() {
 		//if (!g_app.socket) this.push("/note/users/login");
 		this.authenticated();

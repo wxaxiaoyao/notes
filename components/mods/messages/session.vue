@@ -54,6 +54,7 @@ export default {
 		},
 
 		async clickSessionItem(x) {
+			this.setCurrentSessionId(x.sessionId);
 			this.session = x;
 		},
 
