@@ -13,6 +13,7 @@ function initHttpOptions(self, options = {}, prefix) {
 	self.apiRequest = (method = "get", url) => (data, config = {}) => httpRequest(method, prefix + (url ? "/" + url : ""), data, {...self.options, ...config});
 
 	// api api
+	self.filter = self.apiRequest("post", "filter");
 	self.search = self.apiRequest("post", "search");
 	self.count = self.apiRequest("get", "count");
 	self.upsert = self.apiRequest("post", "upsert");

@@ -3,6 +3,9 @@
 	<div class="apis-request-container container">
 		<div class="header-container">
 			<div class="title">API录入</div>
+			<el-select size="mini" v-model="apiId" @change="changeApiId" filterable remote reserve-keyword placeholder="请输入关键词" :remote-method="apiFilter" :loading="loading">
+				<el-option v-for="(x, i) in options" :key="i" :label="x.label" :value="x.value"></el-option>
+			</el-select>
 			<div>
 				<el-button v-if="!onlytest" @click="clickSubmitBtn" type="text">提交</el-button>
 				<el-button @click="clickTestBtn" type="text">测试</el-button>
@@ -55,16 +58,16 @@
 					</el-select>
 					<el-input v-model="header.value" placeholder="值" clearable></el-input>
 					<el-input v-model="header.description" placeholder="备注" clearable></el-input>
-					<el-button @click="headers.push({key:header.key, value:header.value})">添加</el-button>
+					<el-button @click="headers.push({key:header.key, value:header.value, description:header.description})">添加</el-button>
 				</div>
 			</el-form-item>
-			<el-form-item label="请求头" v-for="(header, i) in headers" :key="'header' + i">
+			<el-form-item label="请求头" v-for="(h, i) in headers" :key="'header' + i">
 				<div class="item-container">
-					<el-select style="width:245px" v-model="header.key" placeholder="KEY" clearable allow-create filterable default-first-option>
+					<el-select style="width:245px" v-model="h.key" placeholder="KEY" clearable allow-create filterable default-first-option>
 						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x.key"></el-option>
 					</el-select>
-					<el-input v-model="header.value" placeholder="值"></el-input>
-					<el-input v-model="header.description" placeholder="备注"></el-input>
+					<el-input v-model="h.value" placeholder="值"></el-input>
+					<el-input v-model="h.description" placeholder="备注"></el-input>
 					<el-button @click="headers.splice(i, 1)">删除</el-button>
 				</div>
 			</el-form-item>
@@ -177,6 +180,9 @@ export default {
 				//],
 				//response:{},
 			},
+			apiId:"",
+			options:[],
+			loading: false,
 		}
 	},
 
@@ -187,6 +193,27 @@ export default {
 	},
 
 	methods: {
+		changeApiId() {
+			window.location.href = "/note/apis/upsert?id=" + this.apiId + (this.onlytest ? "&oper=test" : "");
+		},
+
+		async apiFilter(str) {
+			if (!str) return;
+			if (this.loading) return console.log("数据加载中...");
+			this.loading = true;
+			const result = await this.api.apis.filter({
+				attributes:["id", "title"],
+				where: {
+					"title-like": `%${str}%`,
+				}
+			});
+			const options = [];
+			const list = result.data || [];
+			_.each(list, o => options.push({label:o.title, value:o.id}));
+			this.options = options;
+			this.loading = false;
+		},
+
 		async clickTestBtn() {
 			const config = {
 				baseURL: this.__data__.baseURL,
@@ -202,6 +229,7 @@ export default {
 			_.each(this.headers, x => config.headers[x.key] = x.value);
 			//_.each(this.params, x => data[x.key] = x.value);
 			_.each(this.params, x => {
+				if (x.value == undefined || x.value == "") return ;
 				try {
 					const value = x.type == "string" ? x.value : JSON.parse(x.value);
 					_.set(data, x.key, value);
