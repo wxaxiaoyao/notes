@@ -121,7 +121,7 @@
 				</div>
 			</el-form-item>
 			<el-form-item>
-				<el-tabs>
+				<el-tabs v-loading="testing">
 					<el-tab-pane label="响应体">
 						<pre>{{response.data}}</pre>
 					</el-tab-pane>
@@ -183,6 +183,7 @@ export default {
 			apiId:"",
 			options:[],
 			loading: false,
+			testing: false,
 		}
 	},
 
@@ -242,6 +243,7 @@ export default {
 			else config.data = data;
 			config.url = pathToRegexp.compile(config.url)(data);
 			this.__data__.request = config;
+			this.testing = true;
 			await axios.request(config).then(res => {
 				this.__data__.response = res;
 				this.response.data = res.data;
@@ -261,6 +263,7 @@ export default {
 					this.$message("客户端内部错误!!!");
 				}
 			});
+			this.testing = false;
 		},
 	},
 

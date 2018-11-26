@@ -60,8 +60,8 @@ export default {
 		currentContent() {
 			return this.getData("__currentContent__");
 		},
-		socket() {
-			return this.getData("__socket__");
+		socketState() {
+			return this.getData("__socket_state__");
 		},
 	},
 
@@ -80,7 +80,7 @@ export default {
 
 			if (g_app.socket) {
 				console.log("socket already exist");
-				return app.socket;
+				return g_app.socket;
 			}
 
 			const socket = io(config.socketUrl, {
@@ -94,13 +94,13 @@ export default {
 
 			socket.on("connect", () => {
 				console.log("socket connect successful", socket);
-				this.setData("__socket__", socket);
+				this.setData("__socket_state__", "connect");
 			});
 
 			socket.on("disconnect", msg => {
 				console.log("socket disconnect", msg);
-				app.socket = undefined;
-				this.setData("__socket__", undefined);
+				//g_app.socket = undefined;
+				this.setData("__socket_state__", "disconnect");
 			});
 
 			socket.on("error", e => {

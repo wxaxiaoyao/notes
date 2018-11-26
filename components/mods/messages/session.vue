@@ -39,31 +39,44 @@ export default {
 	},
 
 	watch: {
-		socket: function(socket) {
-			if (!socket) return;
-			this.loadSessions();
+		socketState: function(state) {
+			this.init();
 		}
 
 	},
 
 	methods: {
 		async loadSessions() {
-			this.socket.emit("sessions", {}, (sessions = []) => {
+			g_app.socket.emit("sessions", {}, (sessions = []) => {
 				sessions.splice(0,0, this.systemSession);
 				this.sessions = sessions;
-				console.log("----------load sessions---------------", sessions);
 			});
 		},
 
 		async clickSessionItem(x) {
 			this.session = x;
 		},
+
+		init() {
+			const self = this;
+
+			// socket init
+			if (self.inited || self.socketState != "connect") return;
+			self.inited = true;
+
+			self.loadSessions();
+
+			g_app.socket.on("sessions", data => {
+				console.log(data);
+			});
+		}
 	},
 
 	async mounted() {
 		this.session = this.systemSession;
 		this.sessions.push(this.systemSession);
-		this.socket && this.loadSessions();
+	
+		this.init();
 	}
 }
 </script>
