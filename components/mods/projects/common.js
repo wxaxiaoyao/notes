@@ -6,9 +6,44 @@ const resourceName = "projects";
 export default {
 	mixins:[mod],
 
+	data: function() {
+		return {
+			list:[],
+			dialogsConfirmData: {},
+		}
+	},
+
 	methods: {
 		clickListBtn() {
 			this.push(`/note/${resourceName}`);
+		},
+
+		async clickEditBtn(x) {
+			this.$router.push({path:`/note/${resourceName}/upsert?id=` + x.id});
+		},
+
+		clickNewBtn() {
+			this.$router.push({path:`/note/${resourceName}/upsert`});
+		},
+
+		async clickDeleteBtn(x, index) {
+			this.dialogsConfirmData = {
+				visible: true,
+				title:"删除确认",
+				content:"确定要删除此条记录?",
+				success: async () => {
+					const result = await this.api[resourceName].delete({id:x.id});
+					if (result.isErr()) return this.$message({message:"删除失败"});
+					this.list.splice(index, 1);
+				}
+			};
+		},
+
+		async loadDatas(query = {}) {
+			const list = (await this.api[resourceName].get(query)).data || [];
+			this.list = list;
+
+			return list;
 		},
 
 		async loadData() {

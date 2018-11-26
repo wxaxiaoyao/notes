@@ -7,6 +7,7 @@ export default {
 
 	data: function() {
 		return {
+			header:{},
 			inputsQueryData: {
 				values:[],
 				fields: {

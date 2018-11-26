@@ -1,3 +1,4 @@
+import * as qiniu from "qiniu-js";
 
 import httpRequest from "./http.js";
 
@@ -287,6 +288,47 @@ export function Experiences(options) {
 
 	initHttpOptions(self, options, "experiences");
 }
+
+export function Qinius(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "qinius");
+
+	self.token = self.apiRequest("get", "token");
+	self.upload = async (options = {}) => {
+		let {filename, file="", visibility="public", params={}, next, error, complete} = options;
+		let result = await self.token(filename);
+		const {token, key, url} = result.data || {};
+		if (!token || !key) return ;
+		const opts = {token, putExtra:{mimeType:null, params}, config:{useCdnDomain: true}};
+		if (typeof(file) == "string") file = new Blob([file], {type: "text/plain"});
+	
+		const observable = qiniu.upload(file, key, token, {mimeType:null, params}, {useCdnDomain:true});
+
+		result = await new Promise((resolve, reject) => {
+			observable.subscribe({
+				next(res) {
+					next && next(res);
+				},
+				error(err) {
+					error && error(err);
+					resolve();
+				},
+				complete(res) {
+					complete && complete(res);
+					resolve({key:res.key, size: res.fsize, hash: res.hash});
+				},
+			})
+		});
+
+		if (!result) {
+			console.log("上传文件失败");
+			return;
+		};
+
+		return url;
+	}
+}
 export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -324,6 +366,7 @@ export function Notes(options = {}){
 	self.projects = new Projects(self.options);
 	self.bugs = new Bugs(self.options);
 	self.experiences = new Experiences(self.options);
+	self.qinius = new Qinius(self.options);
 }
 
 export const options = {

@@ -19,7 +19,8 @@
 				<el-col :span="8">
 					<el-form-item label="项目">
 						<el-select style="width:100%" v-model="__data__.projectId" placeholder="项目">
-							<el-option v-for="(x,i) in projects" :key="i" :label="x.label" :value="x.value"></el-option>
+							<el-option v-for="(x,i) in projects" :key="i" :label="x.label" :value="x.value">
+							</el-option>
 						</el-select>
 					</el-form-item>
 				</el-col>
@@ -46,11 +47,15 @@
 			</el-form-item>
 			<el-form-item label="请求头">
 				<div class="item-container">
-					<el-select style="width:245px" v-model="headerKey" placeholder="KEY" @change="handleSelectChange('header')" clearable allow-create filterable default-first-option>
-						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x.key"></el-option>
+					<el-select style="width:245px" v-model="header" placeholder="KEY" clearable allow-create filterable default-first-option>
+						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x">
+							<span style="float:left">{{x.key}}</span>
+							<span style="float:right; color: #8492a6; font-size: 13px">{{x.description}}</span>
+						</el-option>
 					</el-select>
-					<el-input v-model="headerValue" placeholder="值" clearable></el-input>
-					<el-button @click="headers.push({key:headerKey, value:headerValue})">添加</el-button>
+					<el-input v-model="header.value" placeholder="值" clearable></el-input>
+					<el-input v-model="header.description" placeholder="备注" clearable></el-input>
+					<el-button @click="headers.push({key:header.key, value:header.value})">添加</el-button>
 				</div>
 			</el-form-item>
 			<el-form-item label="请求头" v-for="(header, i) in headers" :key="'header' + i">
@@ -59,6 +64,7 @@
 						<el-option v-for="(x,i) in config.headers" :key="i" :label="x.key" :value="x.key"></el-option>
 					</el-select>
 					<el-input v-model="header.value" placeholder="值"></el-input>
+					<el-input v-model="header.description" placeholder="备注"></el-input>
 					<el-button @click="headers.splice(i, 1)">删除</el-button>
 				</div>
 			</el-form-item>
