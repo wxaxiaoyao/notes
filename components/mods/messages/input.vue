@@ -55,7 +55,7 @@ export default {
 
 			const {username, id, portrait, nickname} = this.user;
 			const msg = {
-				id:this.currentSessionId, 
+				sessionId:this.currentSessionId, 
 				type:0,
 				text: this.text,
 				extra: {
@@ -64,12 +64,8 @@ export default {
 			}
 			this.text = "";
 
-			if (this.currentSessionId == 0){
-				this.setMsg({cmd:1, ...msg});
-				return;
-			}
-
-			await this.api.sessions.sendMsg(msg);
+			console.log("--send message--");
+			g_app.socket.emit("push_messages", msg);
 		},
 
 		enter() {

@@ -1,14 +1,14 @@
 
 <template>
 	<div ref="msgs" class="messages-list-container">
-		<div v-for="(x, i) in __data__.msgs" :key="i" class="message-container">
-			<img class="portrait" :src="x.user.portrait">
+		<div v-for="(x, i) in msgs" :key="i" class="message-container">
+			<img class="portrait" :src="x.extra.user.portrait">
 			<div class="messages-right-container">
 				<div class="message-header-container">
-					{{x.user.nickname + " @" + x.user.username}}
+					{{x.extra.user.nickname + " @" + x.extra.user.username}}
 				</div>
 				<div class="message-body-container">
-					<messages __style__="text" :__default_data__="x.msg"></messages>
+					<messages __style__="text" :__default_data__="x"></messages>
 					<span class="message-date">12:41</span>
 				</div>
 			</div>
@@ -26,86 +26,89 @@ export default {
 
 	data: function() {
 		return {
+			msgs:[],
 			sessionMsgs:{},
 		}
 	},
 
 	props: {
-		__default_data__: {
-			type: Object,
-			default: function() {
-				return {
-					msgs: [
-					{
-						user: {portrait:"/xiaoyao/iamges/portrait1538966461893.jpg", username:"xiaoyao", nickname:"逍遥"},
-						msg: {text:"this is a message\n test", createdAt:"", type:"", state:""},
-					},
-					]
-				}
-			}
-		}
 	},
 
 	computed: {
-		text() {
-			return this.__data__.text;
-		},
-	},
-
-	filters: {
-		text(str) {
-			return str.replace("\n", "<br/>");
-		}
 	},
 
 	watch: {
-		msg: function(data) {
-			if (data.cmd == 1) this.handleMsg(data);
-			else if(data.cmd == 2) this.handleSessionMsg(data);
+		socketState: function(state) {
+			this.init();
 		},
+
 		currentSessionId: async function(sessionId) {
 			const msgs = await this.getSessionMsgs(sessionId);
-			this.__data__.msgs = msgs;
+
+			this.sessionMsgs[sessionId] = msgs;
+
+			this.msgs = msgs;
+
+			this.scrollMsgList();
 		},
 	},
 
 	methods: {
-		formatMsg(msg) {
-			msg.extra = msg.extra || {};
-			return {msg: msg, user:msg.extra.user || {}};
-		},
-		async handleMsg(data) {
-			const msg = this.formatMsg(data);
-			this.__data__.msgs.push(msg);
+		init() {
+			const self = this;
+			
+			self.sessionMsgs[0] = self.msgs;
 
+			// socket init
+			if (self.inited || self.socketState != "connect") return;
+			self.inited = true;
+
+			g_app.socket.on("push_messages", message => {
+				const {sessionId} = message;
+				if (self.currentSessionId == sessionId)	self.msgs.push(message);
+				else if (self.sessionMsgs[sessionId]) self.sessionMsgs[sessionId].push(message);
+
+				this.scrollMsgList();
+			});
+
+			g_app.socket.on("pull_messages", data => {
+				const {sessionId} = data;
+				const msgs = this.sessionMsgs[sessionId] || [];
+				_.each(msgs, msg => msg.state = 1);
+			});
+		},
+
+		scrollMsgList() {
 			const el = this.$refs.msgs;
 			if (!el) return;
 			setTimeout(() => {
 				el.scrollTop = el.scrollHeight;
-			},10);
+			},100);
 		},
+
 		async handleSessionMsg(data) {
 			if (data.userId == this.user.id) return;
 			_.each(this.__data__.msgs, x => x.msg.state = 1);
 		},
+
 		async getSessionMsgs(sessionId) {
-			if (this.sessionMsgs[sessionId]) return this.sessionMsgs[sessionId];
+			if (this.sessionMsgs[sessionId]) {
+				return this.sessionMsgs[sessionId];
+			}
 
-			const result = await this.api.sessions.getMsgs({id: sessionId});
-			const list = result.data || [];
-
-			const msgs = [];
-			_.each(list, msg => msgs.push(this.formatMsg(msg)));
-
-			this.sessionMsgs[sessionId] = msgs;
+			const msgs = await new Promise((resolve, reject) => {
+				g_app.socket.emit("pull_messages", {sessionId}, msgs => {
+					resolve(msgs || []);
+				});
+			});
 
 			return msgs;
 		},
-		isSelfMessage(x) {
-			return true;
-		}
 	},
 
+	mounted() {
+		this.init();
+	}
 }
 </script>
 
@@ -117,6 +120,8 @@ export default {
 	background-color:rgb(247,247,247);
 	height:100%;
 	overflow-y:auto;
+	/*padding-bottom: 100px;
+	box-sizing: border-box;*/
 }
 
 .messages-list-container::-webkit-scrollbar {

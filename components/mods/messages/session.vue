@@ -20,7 +20,7 @@ import _ from "lodash";
 import common from "./common.js";
 
 const logos = [
-	"http://pf0t54gda.bkt.clouddn.com/portraits/1.jpg",
+	"http://statics.qiniu.wxaxiaoyao.cn/_/portraits/1.jpg",
 ];
 
 export default {
@@ -41,8 +41,7 @@ export default {
 	watch: {
 		socketState: function(state) {
 			this.init();
-		}
-
+		},
 	},
 
 	methods: {
