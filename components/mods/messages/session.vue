@@ -1,8 +1,17 @@
 
 <template>
 	<div class="messages-session-container">
+		<el-dialog class="dialogs-container" title="选择会话成员" :visible.sync="sessionDialogVisible" @close="sessionDialogVisible = false" width="600px">
+			<div style="display:flex; justify-content:center">
+				<el-transfer filterable filter-placeholder="请输入用户名过滤" v-model="members" :data="users"></el-transfer>
+			</div>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="sessionDialogVisible = false">取消</el-button>
+				<el-button type="primary" @click="clickNewSessionBtn">确定</el-button>
+			</span>
+		</el-dialog>
 		<div class="session-header-container">
-			<span>会话</span><i class="new-session-icon iconfont icon-plus"></i>
+			<span>会话</span><i class="new-session-icon iconfont icon-plus" @click="sessionDialogVisible = true"></i>
 		</div>
 		<div v-for="(x, i) in sessions" :key="i"  
 			:class="[session.sessionId == x.sessionId ? 'current-session' : '']" 
@@ -23,6 +32,7 @@ const logos = [
 	"http://statics.qiniu.wxaxiaoyao.cn/_/portraits/1.jpg",
 ];
 
+
 export default {
 	mixins:[common],
 
@@ -30,11 +40,19 @@ export default {
 		return {
 			logos,
 			systemSession: {
-				sessionId:0,
+				id:0,
+				sessionId: "system session",
 				title: "系统消息",
 			},
 			session:{},
 			sessions:[],
+
+			sessionDialogVisible:false,
+			users:[
+			{label:"xiaoyao", key:1},
+			{label:"xiaoyao2", key:2},
+			],
+			members:[],
 		}
 	},
 
@@ -45,8 +63,14 @@ export default {
 	},
 
 	methods: {
+		async clickNewSessionBtn() {
+			const memberIds = [];
+			_.each(this.members, id => memberIds.push(_.toNumber(id)));
+			g_app.socket.emit("push_sessions", {memberIds});
+		},
+
 		async loadSessions() {
-			g_app.socket.emit("sessions", {}, (sessions = []) => {
+			g_app.socket.emit("pull_sessions", {}, (sessions = []) => {
 				sessions.splice(0,0, this.systemSession);
 				this.sessions = sessions;
 			});
@@ -66,8 +90,11 @@ export default {
 
 			self.loadSessions();
 
-			g_app.socket.on("sessions", data => {
-				console.log(data);
+			g_app.socket.on("push_sessions", session => {
+				const index = _.findIndex(this.sessions, o => o.sessionId == session.sessionId);
+				if (index >= 0) return; 
+
+				this.sessions.push(session);
 			});
 		}
 	},

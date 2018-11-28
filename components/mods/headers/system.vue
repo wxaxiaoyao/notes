@@ -136,18 +136,6 @@ export default {
 				url:"/note/todos/upsert",
 			},
 			{
-				label:"标签",
-				url:"/note/tags",
-			},
-			{
-				label:"设置",
-				url:"/note/users/setting",
-			},
-			{
-				label:"草稿页",
-				url:"/note/editors/draft",
-			},
-			{
 				label:"项目",
 				url:"/note/projects",
 			},
@@ -162,6 +150,22 @@ export default {
 			{
 				label:"BUG录入",
 				url:"/note/bugs/upsert",
+			},
+			{
+				label:"消息",
+				url:"/note/messages",
+			},
+			{
+				label:"标签",
+				url:"/note/tags",
+			},
+			{
+				label:"设置",
+				url:"/note/users/setting",
+			},
+			{
+				label:"草稿页",
+				url:"/note/editors/draft",
 			},
 			]
 		}

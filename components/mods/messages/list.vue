@@ -8,8 +8,10 @@
 					{{x.extra.user.nickname + " @" + x.extra.user.username}}
 				</div>
 				<div class="message-body-container">
-					<messages __style__="text" :__default_data__="x"></messages>
-					<span class="message-date">12:41</span>
+					<div class="message-content-container">
+						<messages __style__="text" :__default_data__="x"></messages>
+					</div>
+					<span class="message-date">{{x.createdAt | msgTimeFilter}}</span>
 				</div>
 			</div>
 		</div>
@@ -18,6 +20,7 @@
 
 <script>
 import _ from "lodash";
+import moment from "moment";
 
 import common from "./common.js";
 
@@ -35,6 +38,23 @@ export default {
 	},
 
 	computed: {
+	},
+
+	filters: {
+		msgTimeFilter(datestr) {
+			const date = new Date(datestr);
+			const curdate = new Date(moment().format("YYYY-MM-DD"));
+			const day = 1000 * 3600 * 24;
+			const timestamp = curdate.getTime() -date.getTime();
+			if (timestamp < 0)  return moment(datestr).format("HH:mm");
+
+			if (timestamp < day) return "昨天" + moment(datestr).format("HH:mm");
+			
+			if (timestamp < day * 356) return moment(datestr).format("MM-DD HH:mm");
+			
+			return moment(datestr).format("YYYY-MM-DD HH:mm");
+		}
+
 	},
 
 	watch: {
@@ -152,7 +172,10 @@ export default {
 	padding:10px;
 }
 .message-body-container {
-	display:inline-block;
+	display: flex;
+	align-items: flex-end;
+}
+.message-content-container {
 	background-color: white;
 	padding: 10px;
 	border-radius:10%;
@@ -160,8 +183,7 @@ export default {
 	position: relative;
 }
 .message-date {
-	position: absolute;
-	right: -60px;
+	margin-left:10px;
 }
 .portrait {
 	width:40px;
