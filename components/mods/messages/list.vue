@@ -84,6 +84,7 @@ export default {
 			self.inited = true;
 
 			g_app.socket.on("push_messages", message => {
+				console.log("push_messages", message);
 				const {sessionId} = message;
 				if (self.currentSessionId == sessionId)	self.msgs.push(message);
 				else if (self.sessionMsgs[sessionId]) self.sessionMsgs[sessionId].push(message);

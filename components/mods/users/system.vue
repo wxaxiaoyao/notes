@@ -1,6 +1,6 @@
 <template>
 	<div class="container" v-loading="!userinfo.username">
-		<img :src="userinfo.portrait || systemPortrait" class="portrait">
+		<img :src="userinfo.portrait || systemPortrait(userinfo.username)" class="portrait">
 		<div style="width:100%">
 			<h3 style="margin-top:10px; margin-bottom:0px" v-cloak>{{(userinfo.nickname || userinfo.username || "") + " " + (userinfo.username || "")}}</h3>
 			<p v-if="!isEditDescription">{{userinfo.description || ""}}</p>

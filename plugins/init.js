@@ -52,6 +52,16 @@ function init() {
 
 export const app = init();
 
+const portraits = {};
+for (let i = 0; i < 26; i++) {
+	for (let j = 1; j <= 4; j++) {
+		const key = "abcdefghijklmnopqrstuvwxyz"[i] + j;
+		const url = "http://statics.qiniu.wxaxiaoyao.cn/_/portraits/" +  key + ".png";
+		portraits[key] = url;
+	}
+}
+app.portraits = portraits;
+
 app.mdconf = mdconf;
 app.datas = {};
 app.config = config;

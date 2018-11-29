@@ -16,7 +16,7 @@
 		<div v-for="(x, i) in sessions" :key="i"  
 			:class="[session.sessionId == x.sessionId ? 'current-session' : '']" 
 			class="session-container" @click="clickSessionItem(x)">
-			<img :src="logos[i]" class="logo">
+			<img :src="x.user.protrait" class="logo">
 			<div class="session-right-container">
 				{{x.title}}
 			</div>
@@ -43,6 +43,7 @@ export default {
 				id:0,
 				sessionId: "system session",
 				title: "系统消息",
+				user:{},
 			},
 			session:{},
 			sessions:[],
@@ -50,7 +51,7 @@ export default {
 			sessionDialogVisible:false,
 			users:[
 			{label:"xiaoyao", key:1},
-			{label:"xiaoyao2", key:2},
+			{label:"wxatest", key:4},
 			],
 			members:[],
 		}
@@ -65,13 +66,26 @@ export default {
 	methods: {
 		async clickNewSessionBtn() {
 			const memberIds = [];
+			console.log(this.members);
 			_.each(this.members, id => memberIds.push(_.toNumber(id)));
 			g_app.socket.emit("push_sessions", {memberIds});
+			this.sessionDialogVisible = false;
+		},
+
+		formatSession(session) {
+			const user = session.user;
+			user.protrait = user.portrait || (g_app.portraits[user.username.toLowerCase()[0] + _.random(1,4)]);
+			const names = [];
+			_.each(session.members, o => names.push(o.nickname || o.username));
+			session.title = names.join(" ");
+
+			return session;
 		},
 
 		async loadSessions() {
 			g_app.socket.emit("pull_sessions", {}, (sessions = []) => {
-				sessions.splice(0,0, this.systemSession);
+				_.each(sessions, session => this.formatSession(session));
+				//sessions.splice(0,0, this.systemSession);
 				this.sessions = sessions;
 			});
 		},
@@ -94,7 +108,9 @@ export default {
 				const index = _.findIndex(this.sessions, o => o.sessionId == session.sessionId);
 				if (index >= 0) return; 
 
-				this.sessions.push(session);
+				console.log(session);
+
+				this.sessions.push(this.formatSession(session));
 			});
 		}
 	},

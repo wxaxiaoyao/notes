@@ -10,10 +10,6 @@ import config from "@/config.js";
 // 定义事件对象
 const events = new vue();
 
-const portraits = [
-	"http://statics.qiniu.wxaxiaoyao.cn/portraits/1.jpg",
-];
-
 export default {
 	data: function() {
 		return {
@@ -44,10 +40,6 @@ export default {
 			if (this.user && this.user.username) return this.user.username;
 			return "";
 		},
-		systemPortrait() {
-			const index = _.random(0, portraits.length - 1);
-			return portraits[index];
-		},
 		isSmallScreen() {
 			return this.$store.state.isSmallScreen;
 		},
@@ -71,6 +63,10 @@ export default {
 			setToken: "setToken",
 			setMsg: "setMsg",
 		}),
+		systemPortrait(username = "username") {
+			const key = username.toLowerCase()[0] + 1;
+			return g_app.portraits[key];
+		},
 		initSocket() {
 			const user = jwt.decode(this.token, null, true);
 			if (!user || !user.userId) { 
