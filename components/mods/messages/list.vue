@@ -2,7 +2,7 @@
 <template>
 	<div ref="msgs" class="messages-list-container">
 		<div v-for="(x, i) in msgs" :key="i" class="message-container">
-			<img class="portrait" :src="x.extra.user.portrait">
+			<img class="portrait" :src="x.extra.user.portrait || systemPortrait(x.extra.user.username)">
 			<div class="messages-right-container">
 				<div class="message-header-container">
 					{{x.extra.user.nickname + " @" + x.extra.user.username}}
@@ -42,19 +42,19 @@ export default {
 
 	filters: {
 		msgTimeFilter(datestr) {
-			const date = new Date(datestr);
+			const date = datestr ? new Date(datestr) : new Date();
 			const curdate = new Date(moment().format("YYYY-MM-DD"));
 			const day = 1000 * 3600 * 24;
 			const timestamp = curdate.getTime() -date.getTime();
+			console.log(date, timestamp);
 			if (timestamp < 0)  return moment(datestr).format("HH:mm");
 
 			if (timestamp < day) return "昨天" + moment(datestr).format("HH:mm");
 			
 			if (timestamp < day * 356) return moment(datestr).format("MM-DD HH:mm");
 			
-			return moment(datestr).format("YYYY-MM-DD HH:mm");
+			return moment(date).format("YYYY-MM-DD HH:mm");
 		}
-
 	},
 
 	watch: {

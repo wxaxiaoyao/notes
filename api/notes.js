@@ -43,6 +43,7 @@ export function Users(options) {
 	self.getByUsername = self.apiRequest("get", ":username");
 	self.detail = self.apiRequest("get", ":username/detail");
 	self.contribution = self.apiRequest("get", ":id/contribution");
+	self.contacts = self.apiRequest("get", "contacts");
 }
 
 export function Sites(options) {

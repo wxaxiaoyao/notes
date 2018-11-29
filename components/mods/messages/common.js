@@ -6,7 +6,7 @@ export default {
 
 	computed: {
 		currentSessionId() {
-			return this.getData("__current_session_id__") || 0;
+			return this.getData("__current_session_id__") || "systemsession";
 		},
 	},
 
