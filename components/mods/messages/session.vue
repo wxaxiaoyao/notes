@@ -22,7 +22,7 @@
 			<span>会话</span><i class="new-session-icon iconfont icon-plus" @click="sessionDialogVisible = true"></i>
 		</div>
 		<div v-for="(x, i) in sessions" :key="i"  
-			:class="[session.sessionId == x.sessionId ? 'current-session' : '']" 
+			:class="[currentSessionId == x.sessionId ? 'current-session' : '']" 
 			class="session-container" @click="clickSessionItem(x)" v-show="x.state == 0">
 			<i class="iconfont icon-close" @click="clickCloseBtn(x, i)"></i>
 			<img :src="x.logo" class="logo">

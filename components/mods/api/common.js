@@ -51,10 +51,41 @@ export default {
 			datas:[],
 
 			apis:[],
+
+			inputsQueryData: {
+				values:[],
+				fields: {
+					title:{
+						label:"标题",
+						type:"input",
+					},
+					projectId:{
+						label:"项目",
+						type:"select",
+						options:[],
+						number: true,
+					},
+				},
+				queryCB: data => this.search(data),
+			}
 		}
 	},
 
 	methods: {
+		async search(data) {
+			const query = {};
+			_.each(data.values, value => {
+				const field = data.fields[value.key];
+				const val = value.value || "";
+				if (field.type == "input") {
+					query[value.key + "-like"] = "%" + val + "%";
+				} else {
+					query[value.key] = field.number ? _.toNumber(val) : val;
+				}
+			});
+
+			await this.loadDatas(query);
+		},
 		async loadProjects() {
 			const {userId} = this.authenticated();
 			const result = await this.api.projects.search({
@@ -143,9 +174,9 @@ export default {
 			
 		},
 
-		async loadDatas() {
+		async loadDatas(query = {}) {
 			const projects = {};
-			const apis = (await this.api.apis.search({})).data || [];
+			const apis = (await this.api.apis.get(query)).data || [];
 			
 			_.each(this.projects, o => projects[o.value] = o.label);
 			_.each(apis, api => {

@@ -3,12 +3,9 @@
 	<div class="apis-index-container container">
 		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
 		<div class="header-container">
-			<div class="title">API列表</div>
-			<el-input v-model="searchValue" clearable placeholder="请输入搜索内容" class="input-with-select" size="small">
-				<el-select v-model="searchField" slot="prepend" @change="handleSelectField">
-					<el-option v-for="(x, i) in fields" :key="i" :label="x.label" :value="x.value"></el-option>
-				</el-select>
-			</el-input>
+			<div>
+				<inputs __style__="query" :__default_data__="inputsQueryData"></inputs>
+			</div>
 			<div>
 				<el-button @click="clickNewBtn" type="text">新增</el-button>
 				<el-button @click="clickConfigBtn" type="text">配置</el-button>
@@ -30,7 +27,6 @@
 			</el-table-column>
 			<el-table-column label="操作" fixed="right" width="100px">
 				<template slot-scope="{row, $index}">
-					<!--i @click="clickNewBtn(row)" class="oper-icon el-icon-plus" data-toggle="tooltip" title="复制新增"></i-->
 					<i @click="clickEditBtn(row)" class="oper-icon el-icon-edit" data-toggle="tooltip" title="编辑"></i>
 					<i @click="clickDeleteBtn(row, $index)" class="oper-icon el-icon-delete" data-toggle="tooltip" title="移除"></i>
 				</template>
@@ -167,18 +163,5 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 15px 40px 0px 10px;
-
-	.input-with-select {
-		width:400px;
-		.el-select {
-			width:100px;
-		}
-	}
-
-	.title {
-		font-weight: bold;
-		font-size:20px;
-	}
 }
 </style>

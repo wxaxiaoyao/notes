@@ -1,15 +1,13 @@
 
 <template>
 	<div class="inputs-query-container">
+		<el-dropdown @command="clickNewBtn" placement="bottom">
+			<i class="iconfont icon-filter" data-toggle="tooltip" title="过滤"></i>
+			<el-dropdown-menu slot="dropdown">
+				<el-dropdown-item v-for="(x, i) in __data__.fields" :key="i" :command="i">{{x.label}}</el-dropdown-item>
+			</el-dropdown-menu>
+		</el-dropdown>
 		<el-form :inline="true" size="mini">
-			<el-form-item>
-				<el-dropdown @command="clickNewBtn" placement="bottom">
-					<el-button>过滤<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item v-for="(x, i) in __data__.fields" :key="i" :command="i">{{x.label}}</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
-			</el-form-item>
 			<el-form-item v-for="(x, i) in __data__.values" :key="i" :label="__data__.fields[x.key].label">
 				<div style="display:flex">
 					<el-input v-if="__data__.fields[x.key].type == 'input'" v-model="x.value" :placeholder="__data__.fields[x.key].description || ''" clearable></el-input>
@@ -27,6 +25,7 @@
 </template>
 
 <script>
+					//<el-button>过滤<i class="el-icon-arrow-down el-icon--right"></i></el-button>
 import _ from "lodash";
 
 import mod from "@/components/mods/common/mod.js";
@@ -87,7 +86,17 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-.inputs-search-container {
+<style lang="less">
+.inputs-query-container {
+	display:flex;
+	align-items: center;
+	
+	.el-dropdown {
+		margin-right: 5px;
+	}
+
+	.el-form-item {
+		margin-bottom: 0px;
+	}
 }
 </style>

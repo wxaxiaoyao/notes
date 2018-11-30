@@ -4,7 +4,9 @@
 		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
 
 		<div class="inputs-container">
-			<inputs __style__="query" :__default_data__="inputsQueryData"></inputs>
+			<div>
+				<inputs __style__="query" :__default_data__="inputsQueryData"></inputs>
+			</div>
 			<div><el-button @click="clickNewBtn" size="mini">新增</el-button></div>
 		</div>
 
@@ -32,15 +34,6 @@
 </template>
 
 <script>
-		//<div class="query-container">
-			//<el-input placeholder="请输入检索内容" v-for="(x, i) in fields" :key="i" v-model="x.value">
-				//<el-select v-model="x.key">
-					//<el-option label="标题" value="title"></el-option>
-					//<el-option label="项目" value="title"></el-option>
-				//</el-select>
-			//</el-input>
-		//</div>
-
 import _ from "lodash";
 
 import common from "./common.js";

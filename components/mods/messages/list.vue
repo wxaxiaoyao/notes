@@ -12,6 +12,7 @@
 						<messages __style__="text" :__default_data__="x"></messages>
 					</div>
 					<span class="message-date">{{x.createdAt | msgTimeFilter}}</span>
+					<span class="message-date">{{x.state == 0 ? "未读" : "已读"}}</span>
 				</div>
 			</div>
 		</div>
@@ -46,7 +47,7 @@ export default {
 			const curdate = new Date(moment().format("YYYY-MM-DD"));
 			const day = 1000 * 3600 * 24;
 			const timestamp = curdate.getTime() -date.getTime();
-			console.log(date, timestamp);
+			//console.log(date, timestamp);
 			if (timestamp < 0)  return moment(datestr).format("HH:mm");
 
 			if (timestamp < day) return "昨天" + moment(datestr).format("HH:mm");
@@ -85,8 +86,13 @@ export default {
 
 			g_app.socket.on("push_messages", message => {
 				console.log("push_messages", message);
-				const {sessionId} = message;
-				if (self.currentSessionId == sessionId)	self.msgs.push(message);
+				const {sessionId, userId} = message;
+				if (self.currentSessionId == sessionId) {
+					self.msgs.push(message);
+					if (userId != this.user.id) {
+						g_app.socket.emit("pull_messages", {sessionId:self.currentSessionId});
+					}
+				}
 				else if (self.sessionMsgs[sessionId]) self.sessionMsgs[sessionId].push(message);
 
 				this.scrollMsgList();
