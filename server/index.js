@@ -109,7 +109,7 @@ async function start () {
 		});
 	});
 	
-	const host = config.host || '127.0.0.1';
+	const host = config.host || '0.0.0.0';
 	const port = config.port || 3000;
 
 	app.listen(port, host);
