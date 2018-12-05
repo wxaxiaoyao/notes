@@ -4,7 +4,7 @@
 		<h3>{{__data__.subject}}</h3>
 		<p>{{__data__.body}}</p>
 		<div>
-			<img :src="trade.QR">
+			<img :src="order.QR">
 		</div>
 	</div>
 </template>
@@ -19,29 +19,25 @@ export default {
 
 	data: function() {
 		return {
-			trade: {},
-		}
-	},
+			order: {},
 
-	props: {
-		__default_data__: {
-			type: Object,
-			default: function() {
-				return {
-					subject: "会员",
-					body: "keepwork 会员",
-					channel: "wx_pub_qr",
-					amount: 30,
-				}
+			default_data: {
+				subject: "会员",
+				body: "keepwork 会员",
+				channel: "wx_pub_qr",
+				amount: 30,
 			}
 		}
 	},
 
+	props: {
+	},
+
 	async mounted() {
-		const result = await this.api.trades.create(this.__data__);
+		const result = await this.api.orders.create(this.__data__);
 		if (result.isErr()) return;
 
-		this.trade = result.data || {};
+		this.order = result.data || {};
 	}
 }
 </script>
