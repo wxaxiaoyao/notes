@@ -7,6 +7,10 @@ import io from "socket.io-client";
 import EVENTS from "@/lib/events.js";
 import config from "@/config.js";
 
+const debug = require("debug");
+//debug.enable('socket.io-client:socket');
+//debug.enable('engine.io-client:socket');
+
 // 定义事件对象
 const events = new vue();
 
