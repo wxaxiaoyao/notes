@@ -154,19 +154,6 @@ export function Tags(options) {
 	initHttpOptions(self, options, "tags");
 }
 
-export function DataSource(options) {
-	const self = this;
-
-	initHttpOptions(self, options);
-
-	const apiRequest = (method, url) => (data, config) => httpRequest(method || "get", url, data, Object.assign(self.options, config));
-	
-	self.getDefaultDataSource = apiRequest("get", "dataSource/getDefaultDataSource");
-	self.getByUsername =  apiRequest("get", "dataSource/getByUsername");
-	self.upsert = apiRequest("post", "dataSource/upsert");
-	self.delete = apiRequest("delete", "dataSource/delete");
-}
-
 export function Issues(options) {
 	const self = this;
 
@@ -178,6 +165,14 @@ export function Trades(options) {
 	const self = this;
 
 	initHttpOptions(self, options, "trades");
+
+	self.getPayQR = self.apiRequest("get", ":id/payQR");
+}
+
+export function Orders(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "orders");
 }
 
 export function Notifications(options) {
@@ -335,7 +330,6 @@ export function Notes(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
 
-	self.dataSource = new DataSource(self.options);
 	self.users = new Users(self.options);
 	self.files = new Files(self.options);
 	self.sites = new Sites(self.options);
@@ -352,6 +346,7 @@ export function Notes(options = {}){
 	self.tags = new Tags(self.options);
 	self.issues = new Issues(self.options);
 	self.trades = new Trades(self.options);
+	self.orders = new Orders(self.options);
 	self.notifications = new Notifications(self.options);
 	self.messages = new Messages(self.options);
 	self.sessions = new Sessions(self.options);
