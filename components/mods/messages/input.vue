@@ -55,9 +55,10 @@ export default {
 				sessionId:this.currentSessionId, 
 				type:0,
 				text: this.text,
-				extra: {
-					user:{username, userId:id, id, portrait, nickname},
-				}
+				userId: id,
+				username,
+				portrait,
+				nickname,
 			}
 			this.text = "";
 

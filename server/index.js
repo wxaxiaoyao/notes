@@ -36,6 +36,11 @@ async function pushCode() {
 	shell.exec(cmd_str);
 }
 
+async function pushServerCode() {
+	const cmd_str = "cd ../notes-server; git reset --hard HEAD; git pull origin master; npm install; npm run build; pm2 restart note-server";
+	shell.exec(cmd_str);
+}
+
 async function start () {
 	const app = new Koa();
 	
@@ -66,6 +71,11 @@ async function start () {
 			ctx.status = 200;
 			ctx.body = "OK";
 			pushCode();
+			return;
+		} else if (path == "/note/push_server_code") {
+			ctx.status = 200;
+			ctx.body = "OK";
+			pushServerCode();
 			return;
 		}
 		if (method.toUpperCase() != "GET" || _.startsWith(path, "/api/")) {
