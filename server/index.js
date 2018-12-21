@@ -37,7 +37,7 @@ async function pushCode() {
 }
 
 async function pushServerCode() {
-	const cmd_str = "cd ../notes-server; git reset --hard HEAD; git pull origin master; npm install; npm run build; pm2 restart note-server";
+	const cmd_str = "cd ../notes-server; git reset --hard HEAD; git pull origin master; npm install; pm2 restart note-server";
 	shell.exec(cmd_str);
 }
 
