@@ -165,14 +165,14 @@ export default {
 
 	async mounted() {
 		await this.loadPage();
-		if (this.isSmallScreen) {
-			this.isExistHeader = false;
-			this.isExistFooter = true;
-			this.footerStyle = "smIndex";
-		} else {
-			this.isExistHeader = true;
-			this.isExistFooter = false;
-		}
+		//if (this.isSmallScreen) {
+			//this.isExistHeader = false;
+			//this.isExistFooter = true;
+			//this.footerStyle = "smIndex";
+		//} else {
+			//this.isExistHeader = true;
+			//this.isExistFooter = false;
+		//}
 		this.loading = false;
 	}
 }

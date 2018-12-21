@@ -61,6 +61,12 @@ export default {
 		},
 	},
 
+	watch: {
+		token() {
+			this.api.options.headers.Authorization = "Bearer " + this.token;
+		},
+	},
+
 	methods: {
 		...mapMutations({
 			setUser: "setUser",
@@ -152,6 +158,7 @@ export default {
 	},
 
 	beforeMount() {
+		this.api.options.headers.Authorization = "Bearer " + this.token;
 	},
 
 }

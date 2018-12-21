@@ -7,7 +7,7 @@
 		filterable 
 		allow-create 
 		default-first-option
-		placeholder="页面url 如: username/dirname/filename">
+		placeholder="页面地址 如: username/pagename">
 		<el-option v-for="(page, i) in pagelist" :key="i" :value="page.url"></el-option>
 	</el-select>
 </template>
@@ -63,6 +63,14 @@ export default {
 
 	async mounted() {
 		await this.loadPageTrees();
+
+		const hash = decodeURIComponent(window.location.hash || "");
+		const url = hash.substring(1);
+		const username = this.user.username;
+		if (url.indexOf(username + "/") == 0) {
+			this.__data__.url = url;
+			await this.switchPage();
+		}
 	},
 }
 </script>

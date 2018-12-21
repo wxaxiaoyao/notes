@@ -45,7 +45,7 @@ module.exports = {
   	  	  	{ hid: 'description', name: 'description', content: 'note是一个在线记笔记产品, 基于此原型扩展出的功能有多人编辑，协同办公和自助建站等, 我们可以用它记录生活各种感悟以及工作学习的总结, 并以网页的形式分享给它人.'},
   	  	],
 		script: [
-			
+			{ type:"text/javascript", src:"https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.0.1.52.js"},
 		],
   	  	link: [
 			{ rel: "stylesheet", href: "http://at.alicdn.com/t/font_654450_vdq5cd0505e.css"},

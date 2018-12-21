@@ -52,14 +52,16 @@ export default {
 	},
 
 	mounted() {
+		console.log("是否认证:", this.isAuthenticated);
 	},
 
 	destroyed() {
 	},
 
 	beforeMount() {
+		console.log(uni);
 		if (this.isSmallScreen) {
-			this.$router.replace({path:"/note/cellphones/index"});
+			//this.$router.replace({path:"/note/cellphones/index"});
 		} else {
 			this.loaded = true;
 		}

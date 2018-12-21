@@ -56,6 +56,17 @@ window.addEventListener("message", function(e) {
 	postMessage(SUCCESS)
 });
 
+document.addEventListener('UniAppJSBridgeReady', function() {
+	uni.postMessage({
+		data: {
+			action: 'message'
+		}
+	});
+	uni.getEnv(function(res) {
+		console.log('当前环境：' + JSON.stringify(res));
+	});
+});
+
 // authorization init
 const baseUrl = config.apiUrlPrefix + "oauth_users/";
 vue.use(vueAxios, axios);

@@ -1,6 +1,7 @@
 import vue from "vue";
 import _ from "lodash";
 import jwt from "jwt-simple";
+import wurl from "wurl";
 
 import api from "@/api/notes.js";
 
@@ -79,6 +80,14 @@ export const actions = {
 			//console.log(req.ctx.state.token);
 			state.token = token;
 		}
+		
+		//if (process.client) {
+			//const accessToken = wurl("?access_token", window.location.href);
+			//if (accessToken) {
+				//token = accessToken;
+				//state.token = token;
+			//}
+		//}
 
 		api.options.headers = _.merge({}, api.options.headers, {
 			"Authorization": "Bearer " + token,

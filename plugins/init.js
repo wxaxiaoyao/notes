@@ -3,6 +3,7 @@ import _ from "lodash";
 import vue from "vue";
 import elementUI from 'element-ui';
 import jwt from "jwt-simple";
+import wurl from "wurl";
 
 import util from "@/lib/util.js";
 import consts from "@/lib/consts.js";
@@ -84,8 +85,9 @@ app.getData = function(key, defaultValue) {
 export default ({store, req, env}) => {
 	app.store = store;
 
-	if (req && req.ctx && req.ctx.state && req.ctx.state.token) {
-		const token = req.ctx.state.token;
+	if (req && req.ctx && ((req.ctx.state && req.ctx.state.token) || req.ctx.query.access_token)) {
+		const token = req.ctx.state.token || req.ctx.query.access_token;
+		req.ctx.state.token = token;
 		api.options.headers["Authorization"] = "Bearer " + token;
 	}
 
