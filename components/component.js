@@ -64,6 +64,12 @@ export default {
 	watch: {
 		token() {
 			this.api.options.headers.Authorization = "Bearer " + this.token;
+			if (this.token) {
+				const payload = jwt.decode(this.token, null, true) || {};
+				this.user.id = payload.userId;
+				this.user.username = payload.username;
+				
+			}
 		},
 	},
 
@@ -159,6 +165,12 @@ export default {
 
 	beforeMount() {
 		this.api.options.headers.Authorization = "Bearer " + this.token;
+		if (this.token) {
+			const payload = jwt.decode(this.token, null, true) || {};
+			this.user.id = payload.userId;
+			this.user.username = payload.username;
+			
+		}
 	},
 
 }

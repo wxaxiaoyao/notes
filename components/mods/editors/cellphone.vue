@@ -107,11 +107,12 @@ export default {
 
 <style scoped>
 .cellphone-editor-container {
+	padding-top:20px;
 	position: relative;
 	height: 100%;
 }
 .header-container {
-	height: 60px;
+	height: 44px;
 	display:flex;
 	align-items: center;
 	justify-content: space-between;
@@ -128,7 +129,7 @@ export default {
 .body-container {
 	overflow-y:auto;
 	position: absolute;
-	top: 60px;
+	top: 64px;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;

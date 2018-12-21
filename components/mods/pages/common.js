@@ -83,7 +83,7 @@ export default {
 			const self = this;
 			const visibility = this.isPrivacyMode ? 1 : 0;
 			const urlPrefix = this.user.username + "/";
-			const result = await this.api.pages.get({visibility, urlPrefix});
+			const result = await this.api.pages.get({visibility});
 			const files = result.data || [];
 			const rootnode = self.pageToNode({url: urlPrefix});
 			const trees = [rootnode];
