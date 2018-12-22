@@ -107,11 +107,15 @@ export default {
 
 <style scoped>
 .cellphone-editor-container {
-	padding-top:20px;
 	position: relative;
 	height: 100%;
 }
 .header-container {
+	position: absolute;
+	top:20px;
+	left:0px;
+	right:0px;
+	bottom:64px;
 	height: 44px;
 	display:flex;
 	align-items: center;

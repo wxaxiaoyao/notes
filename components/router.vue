@@ -18,6 +18,7 @@
 <script>
 import _ from "lodash";
 import wurl from "wurl";
+import api from "../api/notes.js";
 
 import component from "@/components/component.js";
 
@@ -27,6 +28,9 @@ const getUrl = async function(url) {
 		const officialHostname = wurl("hostname", g_app.config.origin);
 		let path = wurl("path", url);
 		path = path.substring(1);
+
+		// 屏蔽域名解析
+		return path;
 
 		if (hostname == officialHostname || hostname.split(".").length < 3) {
 			return path;
@@ -165,14 +169,13 @@ export default {
 
 	async mounted() {
 		await this.loadPage();
-		//if (this.isSmallScreen) {
-			//this.isExistHeader = false;
-			//this.isExistFooter = true;
-			//this.footerStyle = "smIndex";
-		//} else {
-			//this.isExistHeader = true;
-			//this.isExistFooter = false;
-		//}
+		if (this.isSmallScreen) {
+			this.isExistHeader = false;
+			this.isExistFooter = false;
+		} else {
+			this.isExistHeader = true;
+			this.isExistFooter = false;
+		}
 		this.loading = false;
 	}
 }
