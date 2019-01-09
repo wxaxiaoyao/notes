@@ -33,7 +33,7 @@ const defaultConfig = {
 
 
 	// -------------- keepwork config -------------------
-	kpCoreBaseUrl: "https://api.keepwork/core/v0/",
+	kpCoreBaseUrl: "https://api.keepwork.com/core/v0/",
 }
 
 const productionConfig = {
