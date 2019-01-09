@@ -1,11 +1,11 @@
 import _ from "lodash";
 import axios from "axios";
 
+import config from "../../config.js";
 import Error from "./error.js";
-const baseURL = "http://localhost:8081/api/v0/";
 
 const http = axios.create({
-	baseURL,
+	baseURL: config.kpCoreBaseUrl,
 	headers: {
 	},
 });

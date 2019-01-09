@@ -29,7 +29,11 @@ const defaultConfig = {
 		xinlang: {
 			clientId: "2411934420",
 		},
-	}
+	},
+
+
+	// -------------- keepwork config -------------------
+	kpCoreBaseUrl: "https://api.keepwork/core/v0/",
 }
 
 const productionConfig = {
@@ -39,12 +43,16 @@ const developmentConfig = {
 	socketUrl:"http://xiaoyao.com:3001/",
 	apiUrlPrefix: "http://xiaoyao.com:3001/api/v0/",
 	origin: "http://xiaoyao.com:3000",
+
+	kpCoreBaseUrl: "http://localhost:8081/api/v0/",
 }
 
 const localConfig = {
 	socketUrl:"http://xiaoyao.com:3001/",
 	apiUrlPrefix: "http://xiaoyao.com:3001/api/v0/",
 	origin: "http://xiaoyao.com:3000",
+
+	kpCoreBaseUrl: "http://localhost:8081/api/v0/",
 }
 
 const testConfig = {
