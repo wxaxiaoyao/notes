@@ -53,7 +53,7 @@ export const getters = {
 		return true;
 	},
 
-	token: (state) => state.token,
+	token: (state) => state.token || state.user.token,
 
 	user: (state) => _.cloneDeep(state.user),
 
