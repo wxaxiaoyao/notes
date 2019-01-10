@@ -16,7 +16,7 @@
 		</div>
 		<div style="flex:1; display:flex">
 			<div class="left-container">
-				<el-menu @select="handleSelect" default-active="users" class="el-menu-demo" mode="vertical">
+				<el-menu @select="handleSelect" :default-active="defaultActive" class="el-menu-demo" mode="vertical">
 					<el-menu-item v-for='(x, i) in menus' :key="i" :index="x.index">{{x.label}}</el-menu-item>
 				</el-menu>
 			</div>
@@ -51,11 +51,14 @@ export default {
 	data: function() {
 		return {
 			options:{},
+			defaultActive:"projects",
 			menus: [
 				{label:"用户",index:"users"},
+				{label:"项目",index:"projects"},
 				{label:"物品",index:"goods"},
 				{label:"管理员",index:"admins"},
 				{label:"封停",index:"illegals"},
+				{label:"缓存",index:"caches"},
 			],
 		}
 	},
@@ -83,7 +86,7 @@ export default {
 		} else if (query.env == "release") {
 			api.http.defaults.baseURL = "https://api-release.keepwork.com/core/v0/";
 		}
-		this.options = resources["users"];
+		this.options = resources[this.defaultActive];
 	}
 }
 </script>

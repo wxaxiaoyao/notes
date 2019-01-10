@@ -2,9 +2,15 @@
 <template>
 	<div class="table-container">
 		<el-form class="query-container" :inline="true" :model="query" label-suffix=" :" size="mini">
-			<el-form-item v-for="(x, index) in opts.columns" :key="index" v-if="x.query" :label="x.label">
-				<el-autocomplete v-if="isForeginKey(x)" v-model="query['auto-' + x.query]" @select='handleSelect' @focus="autocompleteFocus(x, 'query')" :fetch-suggestions="itemQuerySearch"></el-autocomplete>
-				<el-input v-else v-model="query[x.query]" :placeholder="x.placeholder"></el-input>
+			<el-form-item v-for="(column, index) in opts.columns" :key="index" v-if="column.query" :label="column.label">
+				<el-select v-if="column.type == 'select'" 
+					clearable remote :remote-method="column.search"
+					@change="handleSelectChange(column, 'query')"
+					v-model="query[column.query]" 
+					filterable placeholder="请选择">
+					<el-option v-for="item in column.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+				</el-select>
+				<el-input clearable v-else v-model="query[column.query]" :placeholder="column.placeholder"></el-input>
 			</el-form-item>
 			<el-form-item>
 				<el-button v-if="isShowQueryBtn" type="primary" @click="clickQueryBtn">查询</el-button>
@@ -17,13 +23,13 @@
 				:width="x.width" :min-width="x.minWidth"	
 				:prop="x.prop" :label="x.label" :sortable="x.sort && 'custom'">
 				<template slot-scope="{row, column, $index}">
-					<div class="cell-container" data-toggle="tooltip" :title="x.aliasprop ? row[x.aliasprop] : row[x.prop]">
+					<div class="cell-container" data-toggle="tooltip" :title="x.propLabel ? row[x.propLabel] : row[x.prop]">
 						<i v-if="x.editable" @click="clickCellEditBtn(x, $index, index)" class="el-icon-edit"></i>
-						{{x.aliasprop ? row[x.aliasprop] : row[x.prop]}}
+						{{row[x.prop]}}
 					</div>
 				</template>
 			</el-table-column>
-			<el-table-column v-if="opts.actions.isShowActions" label="操作" min-width="160px">
+			<el-table-column v-if="opts.actions.isShowActions" label="操作" width="160px">
 				<template slot-scope="{row, column, $index}">
 					<el-button size="mini" @click="clickEditItemBtn($index)">编辑</el-button>
 					<el-button size="mini" @click="clickDeleteItemBtn($index)">删除</el-button>
@@ -40,24 +46,28 @@
 			:total="opts.pagination.total">
 		</el-pagination>
 
-		<el-dialog :title="cell.label" :visible.sync="isShowEditCellDialog" width="500px">
+		<el-dialog :title="column.label" :visible.sync="isShowEditCellDialog" width="500px">
 			<div>
-				<el-autocomplete v-if="isForeginKey(cell.x)" v-model="cell.value" @select='handleSelect' @focus="autocompleteFocus(cell.x, 'item')" :fetch-suggestions="itemQuerySearch"></el-autocomplete>
-				<el-input v-else-if="cell.x.type == 'text'" type="textarea" :rows=2 v-model="cell.realValue"></el-input>
-				<el-input v-else v-model="cell.realValue"></el-input>
+				<el-select v-if="column.type == 'select'" v-model="item[column.relateProp || column.prop]" filterable placeholder="请选择" clearable remote :remote-method="column.search" @change="handleSelectChange(column, 'item')">
+					<el-option v-for="item in column.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+				</el-select>
+				<el-input clearable v-else-if="column.type == 'text'" type="textarea" :rows=2 v-model="item[column.prop]"></el-input>
+				<el-input clearable v-else v-model="item[column.prop]"></el-input>
 			</div>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="isShowEditCellDialog=false">取消</el-button>
-				<el-button @click="clickCellModifyBtn">确定</el-button>
+				<el-button @click="clickSubmitItemBtn">确定</el-button>
 			</span>
 		</el-dialog>
 
 		<el-dialog :title="isNewItem ? '新增' : '编辑'" :visible.sync="isShowEditDialog">
 			<el-form ref="form" :model="item" label-width="100px" size="mini">
-				<el-form-item v-for="(x, index) in opts.columns" :key="index" :label="x.label">
-					<el-autocomplete v-if="isForeginKey(x)" :disabled="isNewItem ? x.prop == 'id' : !x.editable" v-model="item[x.aliasprop]" @select='handleSelect' @focus="autocompleteFocus(x, 'item')" :fetch-suggestions="itemQuerySearch"></el-autocomplete>
-					<el-input v-else-if= "x.type == 'text'" type="textarea" rows=2 :disabled="isNewItem ? x.prop == 'id' : !x.editable" v-model="item[x.prop]"></el-input>
-					<el-input v-else :disabled="isNewItem ? x.prop == 'id' : !x.editable" v-model="item[x.prop]"></el-input>
+				<el-form-item v-for="(column, index) in opts.columns" :key="index" :label="column.label">
+					<el-select v-if="column.type == 'select'" v-model="item[column.relateProp || column.prop]" filterable placeholder="请选择" clearable remote :remote-method="column.search" @change="handleSelectChange(column, 'item')">
+						<el-option v-for="item in column.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+					</el-select>
+					<el-input clearable v-else-if= "column.type == 'text'" type="textarea" rows=2 :disabled="isNewItem ? column.prop == 'id' : !column.editable" v-model="item[column.prop]"></el-input>
+					<el-input clearable v-else :disabled="isNewItem ? column.prop == 'id' : !column.editable" v-model="item[column.prop]"></el-input>
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
@@ -71,26 +81,10 @@
 <script>
 import vue from "vue";
 import _ from "lodash";
-import {
-	Dialog,
-	Form,
-	FormItem,
-	Table,
-	TableColumn,
-	Pagination,
-	Autocomplete,
-} from "element-ui";
 
 
 export default {
 	components: {
-		[Dialog.name]: Dialog,
-		[Form.name]: Form,
-		[FormItem.name]: FormItem,
-		[Table.name]:Table,
-		[TableColumn.name]: TableColumn,
-		[Pagination.name]: Pagination,
-		[Autocomplete.name]: Autocomplete,
 	},
 
 	props: {
@@ -118,14 +112,13 @@ export default {
 				],
 			},
 			items:[],
-			cell:{value:"", rowIndex:-1, colIndex:-1, x:{}},
-			cells:{},
-			isShowEditDialog: false,
 			itemIndex:0,
 			item:{},
+			column:{},
+			isShowEditDialog: false,
 			isNewItem: false,
 			query:{},
-			querys:{},
+			querys:{"x-order": true, "x-per-page": true, "x-page": true},
 			isShowQueryBtn:false,
 			isShowEditCellDialog: false,
 		}
@@ -143,41 +136,27 @@ export default {
 			this.opts.columns = opts.columns || [];
 			this.opts.actions = opts.actions || this.opts.actions;
 			this.opts.pagination = opts.pagination || this.opts.pagination;
-			this.isShowQueryBtn = this.isCanQuery();
+			_.each(this.opts.columns, o => {
+				if (!o.query) return;
+				this.querys[o.query] = true;
+				this.isShowQueryBtn = true;
+			});
+
 			this.loadDatas();
 		},
 
-		cellKey(row, col) {
-			return row + "-" + col;
+		handleSelectChange(x, type) {
+			if (type == "query") return;
+			if (!x.relateProp || x.relateProp == x.prop) return;
+
+			const value = this.item[x.relateProp];
+			const index = _.findIndex(x.options, o => o.value == value);
+
+			if (index < 0) return;
+			this.item[x.prop] = x.options[index].label;
 		},
 
-		async clickCellModifyBtn() {
-			const {x, rowIndex, colIndex} = this.cell;
-			this.items[rowIndex][x.prop] = this.cell.realValue;
-			if (x.aliasprop) this.items[rowIndex][x.aliasprop] = this.cell.value;
-
-			const item = this.items[rowIndex];
-			console.log(item);
-
-			const api = this.opts.api;
-			if (api) await api.update(item);
-
-			this.isShowEditCellDialog = false;
-		},
-
-		clickCellEditBtn(x, rowIndex, colIndex) {
-			const self = this;
-			if (!x.editable) return;
-			
-			this.cell.x = x;
-			this.cell.value = x.aliasprop && self.items[rowIndex][x.aliasprop];
-			this.cell.realValue = self.items[rowIndex][x.prop];
-			this.cell.label = x.label;
-			this.cell.rowIndex = rowIndex;
-			this.cell.colIndex = colIndex;
-			this.isShowEditCellDialog = true;
-		},
-
+		// 删除项
 		async clickDeleteItemBtn(rowIndex) {
 			const data = this.items[rowIndex];
 			const api = this.opts.api;
@@ -187,175 +166,79 @@ export default {
 			await api.destroy({id:data.id});
 		},
 
+		// 编辑列
+		clickCellEditBtn(x, rowIndex, colIndex) {
+			this.isShowEditCellDialog = true;
+			this.item = _.cloneDeep(this.items[rowIndex]);
+			this.column = x;
+			this.itemIndex = rowIndex;
+		},
+
+		// 新增项
+		clickNewBtn() {
+			this.isNewItem = true;
+			this.isShowEditDialog = true;
+		},
+
+		// 编辑项
 		clickEditItemBtn(rowIndex) {
 			const data = this.items[rowIndex];
 			this.item = _.cloneDeep(data);
 			this.itemIndex = rowIndex;
 			this.isShowEditDialog = true;
+			this.isNewItem = false;
 		},
 
+		// 保存项
 		async clickSubmitItemBtn() {
 			const api = this.opts.api;
-			if (!api) {
-				this.isShowEditDialog = false;
-				return;
-			}
-
 			const res = await api.upsert(this.item);
-			if (res.isErr()) {
-				this.$message({message:"提交失败", type:"error"});
-				return;
-			}
+			if (res.isErr()) return this.$message({message:"提交失败", type:"error"});
 
 			if (!this.isNewItem) _.merge(this.items[this.itemIndex], this.item);
 
 			this.isShowEditDialog = false;
+			this.isShowEditCellDialog = false;
 			this.isNewItem = false;
 		},
 
-		handleSizeChange(val) {
-			this.opts.pagination.pageSize = val;
+		// 加载数据
+		async loadDatas() {
+			if (!this.opts.api) return;
+			this.query['x-per-page'] = this.opts.pagination.pageSize;
+			this.query['x-page'] = this.opts.pagination.currentPage;
+			const query = _.pickBy(this.query, (val, key) => this.querys[key] && val !== "" && val !== undefined);
+			//console.log(this.query, query);
+			const res = await this.opts.api.search(query);
+			if (res.isErr()) return this.$message({type:"error", message:"获取数据列表错误"});
+			this.items = res.data || [];
+			this.opts.pagination.total = res.total || this.items.length;
 		},
 
+		// 设置分页大小
+		handleSizeChange(val) {
+			this.opts.pagination.pageSize = val;
+			this.loadDatas();
+		},
+
+		// 设置当前页
 		handleCurrentChange(val) {
 			this.opts.pagination.currentPage = val;
 			this.loadDatas();
 		},
 
-		//async loadFieldDatas(x) {
-
-		//}
-
-		async loadDatas() {
-			const api = this.opts.api;
-			if (!api) return;
-
-			this.query['x-per-page'] = this.opts.pagination.pageSize;
-			this.query['x-page'] = this.opts.pagination.currentPage;
-
-			const query = _.pickBy(this.query, (val, key) => this.querys[key] && val);
-			//console.log(this.query, query);
-			let res = await api.search(query);
-			
-			if (res.isErr()) {
-				this.$message({type:"error", message:"获取数据列表错误"});
-				return;
-			}
-
-			this.items = res.data || [];
-			this.opts.pagination.total = res.total || this.items.length;
-
-			for (let i = 0; i < this.opts.columns.length; i++) {
-				const column = this.opts.columns[i];
-				const aliasprop = column.aliasprop;
-				const key = column.foreignKey || "id";
-				if (column.isHide) continue;
-				if ((!column.api && !column.datas) || !aliasprop) continue;
-
-				let ids = [];
-				for (let j = 0; j < this.items.length; j++) {
-					ids.push(this.items[j][column.prop]);
-				}
-				ids = _.uniq(ids);
-				
-				let datas = column.datas || [];
-				if (column.api) {
-					res = await column.api.search({[key + "-in"]: ids})
-					datas = res.data || [];
-				}
-
-				for (let j = 0; j < this.items.length; j++) {
-					const item = this.items[j];
-					const index = _.findIndex(datas, o => o[key] == item[column.prop]);
-					if (index>-1 && datas[index][aliasprop]) {
-						vue.set(item, aliasprop, datas[index][aliasprop]);
-					}
-				}
-			}
-		},
-
-		isCanQuery() {
-			this.querys = {"x-order": true, "x-per-page": true, "x-page": true};
-			let ok = false;
-			for (let i = 0; i < this.opts.columns.length; i++) {
-				if (this.opts.columns[i].query) {
-					this.querys[this.opts.columns[i].query] = true;
-					ok = true;
-				};
-			}
-
-			return ok;
-		},
-
-		isForeginKey(x = {}) {
-			if (x.aliasprop) return true;
-			return false;
-		},
-
+		// 查询数据
 		async clickQueryBtn() {
 			await this.loadDatas();
 		},
 
+		// 排序
 		async sortChange({column, prop, order}) {
 			//console.log(column, prop, order);
 			if (!prop) return;
 			this.query["x-order"] = prop + "-" + (order == "ascending" ? "asc" : "desc");
 			await this.loadDatas();
 		},
-
-		clickNewBtn() {
-			this.isNewItem = true;
-			this.isShowEditDialog = true;
-		},
-
-		autocompleteFocus(x, type) {
-			this.currentColumn = x;
-			this.autocompleteType = type;
-		},
-
-		async itemQuerySearch(str, cb) {
-			const x = this.currentColumn;
-			const foreignKey = x.foreignKey || "id";
-			const transformDatas = (datas) => {
-				const list = [];
-				_.each(datas, o => {
-					list.push({
-						value: o[x.aliasprop],
-						realValue: o[foreignKey],
-					});
-				})
-
-				return list;
-			}
-
-			str = str || "";
-			//console.log(str, x.datas, x.aliasprop);
-			if (x.datas) return cb(transformDatas(_.filter(x.datas, o => o[x.aliasprop].indexOf(str) == 0)));
-
-			if (!x.api) return cb([]);
-
-			const aliasprop = x.aliasprop;
-			const res = await x.api.search({[aliasprop + "-like"]: str + "%"});
-			const datas = res.data || [];
-
-			return cb(transformDatas(datas));
-
-		},
-
-		handleSelect(item) {
-			const x = this.currentColumn;
-			const foreignKey = x.foreignKey || "id";
-			//this.item[x.aliasprop] = item["value"];
-			if (this.autocompleteType == "item") {
-				this.item[x.prop] = item["realValue"];
-			} else if (this.autocompleteType == "cell") {
-				this.cell.value = item["value"];
-				this.cell.realValue = item["realValue"];
-			} else if (this.autocompleteType == "query") {
-				this.query["auto-" + x.query] = item["value"];
-				this.query[x.query] = item["realValue"];
-			}
-		}
 	},
 
 	async mounted() {

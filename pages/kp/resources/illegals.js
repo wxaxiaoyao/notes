@@ -1,6 +1,7 @@
 
 import _ from "lodash";
 import api from "../api.js";
+import consts from "./consts.js";
 
 const illegalApi = api.resource("illegals", illegal => {
 	illegal.extra = illegal.extra || {};
@@ -16,7 +17,6 @@ export default {
 		prop: "id",
 		label: "ID",
 		type: "number",
-		query: "id-eq",
 		sort: true,
 	}, 
 	{
@@ -28,9 +28,13 @@ export default {
 	}, 
 	{
 		prop: "objectType",
+		propLabel: "label",
+		propValue: "value",
 		label: "对象类型",
-		type: "number",
+		type: "select",
+		query: "objectType",
 		editable: true,
+		options: consts.objectType,
 	}, 
 	{
 		prop: "handler",
