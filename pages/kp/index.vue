@@ -76,7 +76,13 @@ export default {
 
 	mounted() {
 		if (!this.isAuthenticated) this.push("/kp/login");
+		const query = this.$route.query;
 		api.setToken(this.token);
+		if (query.env == "stage") {
+			api.http.defaults.baseURL = "https://api-stage.keepwork.com/core/v0/";
+		} else if (query.env == "release") {
+			api.http.defaults.baseURL = "https://api-release.keepwork.com/core/v0/";
+		}
 		this.options = resources["users"];
 	}
 }

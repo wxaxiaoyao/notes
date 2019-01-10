@@ -20,6 +20,8 @@ function fail(res) {
 }
 
 export default {
+	http,
+
 	setToken(token) {
 		http.defaults.headers.common['Authorization'] = "Bearer " + token;
 	},
