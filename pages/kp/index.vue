@@ -14,16 +14,22 @@
 				</el-dropdown>
 			</div>
 		</div>
-		<div style="flex:1; display:flex">
-			<div class="left-container">
-				<el-menu @select="handleSelect" :default-active="defaultActive" class="el-menu-demo" mode="vertical">
-					<el-menu-item v-for='(x, i) in menus' :key="i" :index="x.index">{{x.label}}</el-menu-item>
+		<el-row>
+			<el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="2" class="left-container">
+				<el-menu unique-opened @select="handleSelect" :default-active="defaultActive" class="el-menu-demo" mode="vertical" @open="handleMenuOpen">
+					<el-menu-item index="users">用户</el-menu-item>
+					<el-menu-item index="projects">项目</el-menu-item>
+					<el-menu-item index="caches">缓存</el-menu-item>
+					<el-submenu index="illegalUsers">
+						<template slot="title">封停</template>
+						<el-menu-item index="illegalUsers">用户封停</el-menu-item>
+					</el-submenu>
 				</el-menu>
-			</div>
-			<div class="main-container">
+			</el-col>
+			<el-col :xs="16" :sm="18" :md="20" :lg="21" :xl="22" class="main-container">
 				<tables :options="options"></tables>
-			</div>
-		</div>
+			</el-col>
+		</el-row>
 	</div>
 </template>
 
@@ -57,7 +63,9 @@ export default {
 				{label:"项目",index:"projects"},
 				{label:"物品",index:"goods"},
 				{label:"管理员",index:"admins"},
-				{label:"封停",index:"illegals"},
+				{label:"封停",index:"illegals", children:[
+					{label:"用户封停", index:"illegalUsers"},
+				]},
 				{label:"缓存",index:"caches"},
 			],
 		}
@@ -71,6 +79,10 @@ export default {
 				this.push("kp/login");
 				return;
 			}
+		},
+		handleMenuOpen(index) {
+			this.defaultActive = index;
+			this.options = resources[index];
 		},
 		handleSelect(index, indexPath) {
 			this.options = resources[index];
@@ -93,10 +105,8 @@ export default {
 
 <style scoped>
 .left-container {
-	min-width: 100px;
 }
 .main-container {
-	flex:1;
 }
 .header-container {
 	border-bottom: 1px solid rgb(221,221,221);

@@ -4,6 +4,7 @@ import users from "./users.js";
 import goods from "./goods.js";
 import admins from "./admins.js";
 import illegals from "./illegals.js";
+import illegalUsers from "./illegalUsers.js";
 import caches from "./caches.js";
 import projects from "./projects.js";
 
@@ -12,6 +13,7 @@ export default {
 	goods,
 	admins,
 	illegals,
+	illegalUsers,
 	caches,
 	projects,
 

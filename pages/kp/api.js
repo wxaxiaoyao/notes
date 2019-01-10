@@ -91,7 +91,7 @@ export default {
 			},
 
 			async search(params = {}) {
-				toOut && toOut(params);
+				toOut && toOut(params, "search");
 
 				const result = await http.post(`admins/${name}/search`, params).then(success).catch(fail);
 				if (result.isErr()) return result;
@@ -99,7 +99,7 @@ export default {
 				result.total = result.data.count;
 				result.data = result.data.rows;
 
-				_.each(result.data, o => toIn && toIn(o));
+				_.each(result.data, o => toIn && toIn(o, "search"));
 
 				await loadRelateData(result.data, columns);
 				//options.search && options.search(result.data);
@@ -108,20 +108,20 @@ export default {
 			},
 
 			async delete(params = {}) {
-				toOut && toOut(params);
+				toOut && toOut(params, "delete");
 				return await http.delete(`admins/${name}`, {params}).then(success).catch(fail);
 			},
 
 			async update(params = {}) {
-				toOut && toOut(params);
+				toOut && toOut(params, "update");
 				return await http.put(`admins/${name}/${params.id}`, params).then(success).catch(fail);
 			},
 
 			async create(params = {}) {
-				toOut && toOut(params);
+				toOut && toOut(params, "create");
 				const result = await http.post(`admins/${name}`, params).then(success).catch(fail);
 				if (result.isOK()) {
-					toIn && toIn(result.data);
+					toIn && toIn(result.data, "create");
 				}
 
 				return result;
