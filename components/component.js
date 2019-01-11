@@ -30,6 +30,7 @@ export default {
 
 	computed: {
 		...mapGetters({
+			pagedata: "pagedata",
 			msg: "msg",
 			token: "token",
 			user: "user",

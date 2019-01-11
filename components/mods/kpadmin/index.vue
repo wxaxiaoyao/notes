@@ -58,15 +58,14 @@
 </template>
 
 <script>
-import component from "@/components/component.js";
+//import component from "@/components/component.js";
+import mod from "@/components/mods/common/mod.vue";
 import tables from "./tables.vue";
 import resources from "./resources/index.js";
 import api from "./api.js";
 
 export default {
-	layout: 'blank',
-
-	mixins: [component],
+	mixins: [mod],
 
 	components: {
 		tables,
@@ -76,6 +75,9 @@ export default {
 		return {
 			options:{},
 			defaultActive:"users",
+
+			isExistHeader:false,
+			isExistFooter:false,
 		}
 	},
 
@@ -84,7 +86,7 @@ export default {
 			if (cmd == "logout") {
 				this.setUser();
 				this.setToken();
-				this.push("kp/login");
+				this.push("/login");
 				return;
 			}
 		},
@@ -94,7 +96,7 @@ export default {
 	},
 
 	mounted() {
-		if (!this.isAuthenticated) this.push("/kp/login");
+		if (!this.isAuthenticated) this.push("/login");
 		const query = this.$route.query;
 		api.setToken(this.token);
 		if (query.env == "stage") {

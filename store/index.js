@@ -14,8 +14,8 @@ export const state = () => ({
 	// 模式
 	mode: "normal",
 
-	// socket state
-	// socketState: "disconnect",
+	// 路由数据
+	pagedata:{},
 
 	// 用户信息
 	user: {},
@@ -36,6 +36,7 @@ const CURRENT_MOD = "__currentMod__";
 
 export const getters = {
 	mode: (state) => state.mode,
+	pagedata: state => _.cloneDeep(state.pagedata),
 
 	isAuthenticated: (state) => {
 		const token = state.token || state.user.token;
@@ -96,6 +97,9 @@ export const actions = {
 }
 
 export const mutations = {
+	setPageData(state, data) {
+		state.pagedata = data;
+	},
 	setState(state, obj) {
 		_.each(obj, (val, key) => vue.set(state, key, val));
 	},

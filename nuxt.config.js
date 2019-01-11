@@ -19,17 +19,13 @@ module.exports = {
 	},
 
 	router: {
+		middleware: ['router'],
 		extendRoutes(routes) {
 			routes.push({
 				name: "page",
 				path:"/:path*",
-				component: path.resolve(__dirname, "components/router.vue"),
+				component: path.resolve(__dirname, "pages/index.vue"),
 			});
-			//routes.push({
-				//name: "userpage",
-				//path:"/:username/:sitename/:pagepath+",
-				//component: path.resolve(__dirname, pagepath + "userpage.vue"),
-			//});
 		},
 	},
 

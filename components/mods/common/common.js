@@ -138,10 +138,10 @@ export default {
 	},
 
 	mounted() {
+		this.__data__.setPageAttr && this.__data__.setPageAttr(this);
 	},
 
 	created() {
-		this.__data__.setPageAttr && this.__data__.setPageAttr(this);
 	},
 }
 

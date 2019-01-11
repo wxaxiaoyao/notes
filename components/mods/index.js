@@ -56,6 +56,8 @@ import projects from "./projects/index.js";
 import bugs from "./bugs/index.js";
 import experiences from "./experiences/index.js";
 
+import kpadmin from "./kpadmin/index.js";
+
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
 
@@ -65,6 +67,7 @@ const components = {
 
 	// 系统模块
 	note,
+	kpadmin,
 
 	cellphones,
 
@@ -126,6 +129,7 @@ _.each(components, (val, key) => {
 
 		data: function() {
 			return {
+				isModContainer: true,
 				styles: val,
 			}
 		},
