@@ -3,20 +3,7 @@ import _ from "lodash";
 import api from "../api.js";
 import consts from "./consts.js";
 
-const illegalUserApi = api.resource("illegals", illegalUser => {
-	// 传入
-	illegalUser.extra = illegalUser.extra || {};
-}, (illegalUser, oper) => {
-	// 传出
-	if (oper == "create" || oper == "update") illegalUser.handler = g_app.store.state.user.id;
-
-	illegalUser.objectType = 0;
-});
-
-export default {
-	api: illegalUserApi,
-
-	columns: [
+const columns = [
 	{
 		prop: "id",
 		label: "ID",
@@ -41,5 +28,19 @@ export default {
 		type: "string",
 		editable: true,
 	}, 
-	],
+];
+
+const illegalUserApi = api.resource("illegals", illegalUser => {
+	// 传入
+	illegalUser.extra = illegalUser.extra || {};
+}, (illegalUser, oper) => {
+	// 传出
+	if (oper == "create" || oper == "update") illegalUser.handler = g_app.store.state.user.id;
+
+	illegalUser.objectType = 0;
+}, {columns});
+
+export default {
+	api: illegalUserApi,
+	columns,
 }

@@ -3,16 +3,7 @@ import _ from "lodash";
 import api from "../api.js";
 import moment from "moment";
 
-const cacheApi = api.resource("caches", cache => {
-	cache.value = JSON.stringify(cache.value);
-	cache.expire = moment(cache.expire).format("YYYY-MM-DD hh:mm:ss");
-}, cache => {
-});
-
-export default {
-	api: cacheApi,
-
-	columns: [
+const columns = [
 	{
 		prop: "id",
 		label: "ID",
@@ -35,5 +26,16 @@ export default {
 		label: "值",
 		type: "text",
 	}, 
-	],
+];
+
+const cacheApi = api.resource("caches", cache => {
+	cache.value = JSON.stringify(cache.value);
+	cache.expire = moment(cache.expire).format("YYYY-MM-DD hh:mm:ss");
+}, cache => {
+
+}, {columns});
+
+export default {
+	api: cacheApi,
+	columns,
 }

@@ -4,18 +4,7 @@ import md5 from "blueimp-md5";
 
 import api from "../api.js";
 
-const adminApi = api.resource("admins", admin => {
-	admin.extra = admin.extra || {};
-	admin.password = "";
-}, admin => {
-	if (admin.password) admin.password = md5(admin.password);
-	else delete admin.password;
-});
-
-export default {
-	api: adminApi,
-
-	columns: [
+const columns = [
 	{
 		prop: "id",
 		label: "ID",
@@ -64,5 +53,17 @@ export default {
 		type: "string",
 		editable: true,
 	}, 
-	],
+];
+
+const adminApi = api.resource("admins", admin => {
+	admin.extra = admin.extra || {};
+	admin.password = "";
+}, admin => {
+	if (admin.password) admin.password = md5(admin.password);
+	else delete admin.password;
+}, {columns});
+
+export default {
+	api: adminApi,
+	columns,
 }

@@ -25,6 +25,9 @@ const query = async (params = {}) => {
 
 const formatColumns = (columns) => {
 	_.each(columns, o => {
+		const typeMinWidths = {"number":"80px", "select":"100px", "string":"160px", "text":"220px"};
+		o.minWidth = o.minWidth || typeMinWidths[o.type];
+
 		if (!o.resource || !o.resource.name || !o.resource.srckey || !o.resource.dstkey || !o.resource.dstval) return;
 		const {name, srckey, dstkey, dstval} = o.resource;
 

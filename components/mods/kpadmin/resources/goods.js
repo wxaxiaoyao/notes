@@ -1,20 +1,7 @@
 import _ from "lodash";
 import api from "../api.js";
 
-const goodsApi = api.resource("goods", goods => {
-	goods.extra = goods.extra || {};
-	goods["extra.enSubject"] = goods.extra.enSubject;
-	goods["extra.enBody"] = goods.extra.enBody;
-}, goods => {
-	goods.extra = goods.extra || {};
-	goods.extra.enSubject = goods["extra.enSubject"];
-	goods.extra.enBody = goods["export.enBody"];
-});
-
-export default {
-	api: goodsApi,
-
-	columns: [
+const columns = [
 	{
 		prop: "id",
 		label: "ID",
@@ -98,5 +85,19 @@ export default {
 		label: "回调地址",
 		type: "string",
 	}, 
-	],
+];
+
+const goodsApi = api.resource("goods", goods => {
+	goods.extra = goods.extra || {};
+	goods["extra.enSubject"] = goods.extra.enSubject;
+	goods["extra.enBody"] = goods.extra.enBody;
+}, goods => {
+	goods.extra = goods.extra || {};
+	goods.extra.enSubject = goods["extra.enSubject"];
+	goods.extra.enBody = goods["export.enBody"];
+}, {columns});
+
+export default {
+	api: goodsApi,
+	columns,
 }
