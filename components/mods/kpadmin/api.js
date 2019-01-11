@@ -41,6 +41,7 @@ const formatColumns = (columns) => {
 
 const loadRelateData = async(list, columns) => {
 	const datas = {};
+
 	// 收集需要加载的资源
 	_.each(columns, o => {
 		if (!o.resource || !o.resource.name || !o.resource.srckey || !o.resource.dstkey || !o.resource.dstval) return;
@@ -55,6 +56,7 @@ const loadRelateData = async(list, columns) => {
 		_.each(list, item => data.keys.push(item[srckey]));
 		_.uniq(data.keys);
 	});
+
 	// 加载资源
 	for (let key in datas) {
 		const {name, key, keys, cols} = datas[key];
@@ -72,6 +74,7 @@ const loadRelateData = async(list, columns) => {
 			});
 		});
 	}
+
 	// 设置别名
 	_.each(list, item => {
 		_.each(columns, col => {
@@ -134,7 +137,7 @@ export default {
 			async create(params = {}) {
 				toOut && toOut(params, "create");
 				const result = await http.post(`admins/${name}`, params).then(success).catch(fail);
-				if (result.isOK()) {
+				if (result.isOk()) {
 					toIn && toIn(result.data, "create");
 				}
 

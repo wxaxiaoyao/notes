@@ -40,7 +40,7 @@ export default {
 			stylename:null,
 			modData: {},
 			head:{},
-			isExistHeader:false,
+			isExistHeader:true,
 			isExistFooter:false,
 			headerStyle: "system",
 			footerStyle: "system",

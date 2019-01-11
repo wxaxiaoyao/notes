@@ -3,6 +3,7 @@
 	<div style="display:flex; height:100%; flex-direction:column;">
 		<div class="header-container">
 			<div class="container header-content-container">
+				<div>{{currentEnv}}</div>
 				<el-dropdown @command="handleCommand" trigger="click">
 					<el-button round size="small" type="text" class="el-dropdown-link">
 						{{user.nickname || user.username || "逍遥"}}
@@ -26,6 +27,7 @@
 					<el-submenu index="users">
 						<template slot="title">用户</template>
 						<el-menu-item index="accounts">用户账户</el-menu-item>
+						<el-menu-item index="roles">用户角色</el-menu-item>
 						<el-menu-item index="discounts">用户优惠券</el-menu-item>
 						<el-menu-item index="oauthUsers">账号绑定</el-menu-item>
 					</el-submenu>
@@ -34,15 +36,15 @@
 						<el-menu-item index="projectMembers">项目成员</el-menu-item>
 						<el-menu-item index="projectIssues">项目问题</el-menu-item>
 					</el-submenu>
+					<el-submenu index="trades">
+						<template slot="title">交易</template>
+						<el-menu-item index="goods">物品</el-menu-item>
+						<el-menu-item index="orders">充值</el-menu-item>
+					</el-submenu>
 					<el-submenu index="favorites">
 						<template slot="title">收藏</template>
 						<el-menu-item index="favoriteUsers">用户收藏</el-menu-item>
 						<el-menu-item index="favoriteProjects">项目收藏</el-menu-item>
-					</el-submenu>
-					<el-submenu index="illegals">
-						<template slot="title">封停</template>
-						<el-menu-item index="illegalUsers">用户封停</el-menu-item>
-						<el-menu-item index="illegalProjects">项目封停</el-menu-item>
 					</el-submenu>
 					<el-submenu index="systems">
 						<template slot="title">系统</template>
@@ -50,6 +52,12 @@
 						<el-menu-item index="caches">缓存</el-menu-item>
 						<el-menu-item index="sensitiveWords">敏感词</el-menu-item>
 					</el-submenu>
+					<el-submenu index="illegals">
+						<template slot="title">封停</template>
+						<el-menu-item index="illegalUsers">用户封停</el-menu-item>
+						<el-menu-item index="illegalProjects">项目封停</el-menu-item>
+					</el-submenu>
+
 				</el-menu>
 			</el-col>
 			<el-col :xs="16" :sm="18" :md="20" :lg="21" :xl="22" class="main-container">
@@ -75,6 +83,7 @@ export default {
 
 	data: function() {
 		return {
+			env:"stage",
 			options:{},
 			defaultActive:"users",
 
@@ -83,6 +92,13 @@ export default {
 			head: {
 				title:"KEEPWORK后台管理",
 			},
+		}
+	},
+
+	computed: {
+		currentEnv() {
+			const envs = {stage:"开发", release:"测试", production:"正式"};
+			return  "环境:" + envs[this.env];
 		}
 	},
 
@@ -113,6 +129,7 @@ export default {
 		}
 		api.setToken(this.token);
 
+		this.env = env;
 		this.options = resources[this.defaultActive];
 	}
 }
@@ -130,7 +147,7 @@ export default {
 .header-content-container {
 	height: 100%;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	align-items: center;
 }
 </style>

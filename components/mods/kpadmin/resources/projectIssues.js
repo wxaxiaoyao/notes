@@ -41,7 +41,7 @@ const columns = [
 	},
 	{
 		prop: "content",
-		label: "标题",
+		label: "内容",
 		type: "text",
 	},
 	{
