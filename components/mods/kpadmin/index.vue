@@ -80,6 +80,9 @@ export default {
 
 			isExistHeader:false,
 			isExistFooter:false,
+			head: {
+				title:"KEEPWORK后台管理",
+			},
 		}
 	},
 

@@ -14,26 +14,31 @@ const columns = [
 		prop: "userId",
 		label: "用户ID",
 		type: "number",
+		query:"userId",
 	}, 
 	{
 		prop: "rmb",
 		label: "人民币",
 		type: "number",
+		editable: true,
 	}, 
 	{
 		prop: "coin",
 		label: "知识币",
 		type: "number",
+		editable: true,
 	}, 
 	{
 		prop: "bean",
 		label: "知识豆",
 		type: "number",
+		editable: true,
 	}, 
 	{
 		prop: "lockCoin",
 		label: "待解锁的知识币",
 		type: "number",
+		editable: true,
 	}, 
 ];
 
