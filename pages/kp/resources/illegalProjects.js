@@ -3,18 +3,18 @@ import _ from "lodash";
 import api from "../api.js";
 import consts from "./consts.js";
 
-const illegalUserApi = api.resource("illegals", illegalUser => {
+const illegalProjectApi = api.resource("illegals", illegalProject => {
 	// 传入
-	illegalUser.extra = illegalUser.extra || {};
-}, (illegalUser, oper) => {
+	illegalProject.extra = illegalProject.extra || {};
+}, (illegalProject, oper) => {
 	// 传出
-	if (oper == "create" || oper == "update") illegalUser.handler = g_app.store.state.user.id;
+	if (oper == "create" || oper == "update") illegalProject.handler = g_app.store.state.user.id;
 
-	illegalUser.objectType = 0;
+	illegalProject.objectType = 5;
 });
 
 export default {
-	api: illegalUserApi,
+	api: illegalProjectApi,
 
 	columns: [
 	{
@@ -25,7 +25,7 @@ export default {
 	}, 
 	{
 		prop: "objectId",
-		label: "用户ID",
+		label: "项目ID",
 		type: "number",
 		query: "objectId",
 		editable: true,

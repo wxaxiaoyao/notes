@@ -16,14 +16,35 @@
 		</div>
 		<el-row>
 			<el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="2" class="left-container">
-				<el-menu unique-opened @select="handleSelect" :default-active="defaultActive" class="el-menu-demo" mode="vertical" @open="handleMenuOpen">
-					<el-menu-item index="users">用户</el-menu-item>
-					<el-menu-item index="projects">项目</el-menu-item>
-					<el-menu-item index="caches">缓存</el-menu-item>
-					<el-submenu index="illegalUsers">
+				<el-menu unique-opened 
+					@select="handleSelect" 
+					@open="handleSelect" 
+					@close="handleSelect"
+					:default-active="defaultActive" 
+					class="el-menu-demo" 
+					mode="vertical">
+					<el-submenu index="users">
+						<template slot="title">用户</template>
+						<el-menu-item index="accounts">用户账户</el-menu-item>
+						<el-menu-item index="discounts">用户优惠券</el-menu-item>
+						<el-menu-item index="oauthUsers">账号绑定</el-menu-item>
+					</el-submenu>
+					<el-submenu index="projects">
+						<template slot="title">项目</template>
+						<el-menu-item index="projectMembers">项目成员</el-menu-item>
+						<el-menu-item index="projectIssues">项目问题</el-menu-item>
+					</el-submenu>
+					<el-submenu index="favorites">
+						<template slot="title">收藏</template>
+						<el-menu-item index="favoriteUsers">用户收藏</el-menu-item>
+						<el-menu-item index="favoriteProjects">项目收藏</el-menu-item>
+					</el-submenu>
+					<el-submenu index="illegals">
 						<template slot="title">封停</template>
 						<el-menu-item index="illegalUsers">用户封停</el-menu-item>
+						<el-menu-item index="illegalProjects">项目封停</el-menu-item>
 					</el-submenu>
+					<el-menu-item index="caches">缓存</el-menu-item>
 				</el-menu>
 			</el-col>
 			<el-col :xs="16" :sm="18" :md="20" :lg="21" :xl="22" class="main-container">
@@ -57,17 +78,7 @@ export default {
 	data: function() {
 		return {
 			options:{},
-			defaultActive:"projects",
-			menus: [
-				{label:"用户",index:"users"},
-				{label:"项目",index:"projects"},
-				{label:"物品",index:"goods"},
-				{label:"管理员",index:"admins"},
-				{label:"封停",index:"illegals", children:[
-					{label:"用户封停", index:"illegalUsers"},
-				]},
-				{label:"缓存",index:"caches"},
-			],
+			defaultActive:"users",
 		}
 	},
 
@@ -79,10 +90,6 @@ export default {
 				this.push("kp/login");
 				return;
 			}
-		},
-		handleMenuOpen(index) {
-			this.defaultActive = index;
-			this.options = resources[index];
 		},
 		handleSelect(index, indexPath) {
 			this.options = resources[index];

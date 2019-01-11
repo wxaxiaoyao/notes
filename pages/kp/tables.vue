@@ -13,7 +13,7 @@
 				<el-input clearable v-else v-model="query[column.query]" :placeholder="column.placeholder"></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button v-if="isShowQueryBtn" type="primary" @click="clickQueryBtn">查询</el-button>
+				<el-button type="primary" @click="clickQueryBtn">查询</el-button>
 				<el-button type="primary" @click="clickNewBtn">新增</el-button>
 			</el-form-item>
 		</el-form>
@@ -25,7 +25,7 @@
 				<template slot-scope="{row, column, $index}">
 					<div class="cell-container" data-toggle="tooltip" :title="x.propLabel ? row[x.propLabel] : row[x.prop]">
 						<i v-if="x.editable" @click="clickCellEditBtn(x, $index, index)" class="el-icon-edit"></i>
-						{{row[x.prop]}}
+						{{row[x.aliasprop || x.prop] || row[x.prop]}}
 					</div>
 				</template>
 			</el-table-column>
@@ -75,6 +75,14 @@
 				<el-button @click="clickSubmitItemBtn">确定</el-button>
 			</span>
 		</el-dialog>
+
+		<el-dialog title="确认对话框" :visible.sync="isShowConfirmDialog" width="300px">
+			<div>确认删除此条记录?</div>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="isShowConfirmDialog=false">取消</el-button>
+				<el-button @click="confrimDeleteItem">确定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
@@ -119,8 +127,8 @@ export default {
 			isNewItem: false,
 			query:{},
 			querys:{"x-order": true, "x-per-page": true, "x-page": true},
-			isShowQueryBtn:false,
 			isShowEditCellDialog: false,
+			isShowConfirmDialog: false,
 		}
 	},
 
@@ -139,7 +147,6 @@ export default {
 			_.each(this.opts.columns, o => {
 				if (!o.query) return;
 				this.querys[o.query] = true;
-				this.isShowQueryBtn = true;
 			});
 
 			this.loadDatas();
@@ -156,14 +163,25 @@ export default {
 			this.item[x.prop] = x.options[index].label;
 		},
 
-		// 删除项
-		async clickDeleteItemBtn(rowIndex) {
-			const data = this.items[rowIndex];
+		// 确认删除 
+		async confrimDeleteItem() {
+			const data = this.items[this.deleteIndex];
 			const api = this.opts.api;
 
-			this.items.splice(rowIndex, 1);
-			if (!api) return;
-			await api.destroy({id:data.id});
+			this.items.splice(this.deleteIndex, 1);
+
+			if (!api || this.deleteIndex < 0) return;
+
+			await api.delete({id:data.id});
+
+			this.isShowConfirmDialog = false;
+			this.deleteIndex = -1;
+		},
+
+		// 删除项
+		async clickDeleteItemBtn(rowIndex) {
+			this.deleteIndex = rowIndex;
+			this.isShowConfirmDialog = true;
 		},
 
 		// 编辑列

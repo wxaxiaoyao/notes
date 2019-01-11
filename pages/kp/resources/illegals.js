@@ -5,8 +5,8 @@ import consts from "./consts.js";
 
 const illegalApi = api.resource("illegals", illegal => {
 	illegal.extra = illegal.extra || {};
-}, illegal => {
-	illegal.handler = g_app.store.state.user.id;
+}, (illegal, oper) => {
+	if (oper == "create" || oper == "update") illegal.handler = g_app.store.state.user.id;
 });
 
 export default {
@@ -24,16 +24,12 @@ export default {
 		label: "对象ID",
 		type: "number",
 		query: "objectId",
-		editable: true,
 	}, 
 	{
 		prop: "objectType",
-		propLabel: "label",
-		propValue: "value",
 		label: "对象类型",
 		type: "select",
 		query: "objectType",
-		editable: true,
 		options: consts.objectType,
 	}, 
 	{

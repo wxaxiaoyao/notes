@@ -20,7 +20,6 @@ export default {
 		label: "ID",
 		type: "number",
 		query: "id-eq",
-		sort: true,
 	}, 
 	{
 		prop: "username",
@@ -40,7 +39,6 @@ export default {
 		prop: "nickname",
 		label: "昵称",
 		type: "string",
-		query: "nickname-eq",
 		editable: true,
 	}, 
 	{
@@ -54,7 +52,6 @@ export default {
 		prop: "realname",
 		label: "实名手机号",
 		type: "string",
-		query: "realname-eq",
 		editable: true,
 	}, 
 	{

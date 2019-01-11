@@ -47,7 +47,8 @@ const loadRelateData = async(list, columns) => {
 		datas[key] = datas[key] || {name: name, key: dstkey, keys:[], cols:[]};
 		const data = datas[key];
 
-		data.cols.push({prop: o.prop, srckey, dstkey, dstval});
+		data.cols.push({prop: o.prop, srckey, dstkey, dstval, column:o,});
+
 		_.each(list, item => data.keys.push(item[srckey]));
 		_.uniq(data.keys);
 	});
@@ -58,6 +59,7 @@ const loadRelateData = async(list, columns) => {
 		const sql = `select * from ${name} where ${key} in (${keystr})`;
 		const values = await query({sql});
 		_.each(cols, col => {
+			col.options = col.options || values;
 			const {srckey, dstkey, dstval, prop} = col; 
 			_.each(list, item => {
 				const srcval = item[srckey];
@@ -67,6 +69,15 @@ const loadRelateData = async(list, columns) => {
 			});
 		});
 	}
+	// 设置别名
+	_.each(list, item => {
+		_.each(columns, col => {
+			if (col.type != "select" || !col.aliasprop || !col.options) return;
+			const aliaspropIndex = _.findIndex(col.options, o => o.value == item[col.prop]);
+			if (aliaspropIndex < 0) return;
+			item[col.aliasprop] = col.options[aliaspropIndex]["label"];
+		});
+	});
 }
 
 export default {
@@ -109,7 +120,7 @@ export default {
 
 			async delete(params = {}) {
 				toOut && toOut(params, "delete");
-				return await http.delete(`admins/${name}`, {params}).then(success).catch(fail);
+				return await http.delete(`admins/${name}/${params.id}`, {params}).then(success).catch(fail);
 			},
 
 			async update(params = {}) {
