@@ -47,6 +47,7 @@
 					<el-submenu index="systems">
 						<template slot="title">系统</template>
 						<el-menu-item index="caches">缓存</el-menu-item>
+						<el-menu-item index="sensitiveWords">敏感词</el-menu-item>
 					</el-submenu>
 				</el-menu>
 			</el-col>
