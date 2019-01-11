@@ -97,13 +97,17 @@ export default {
 
 	mounted() {
 		if (!this.isAuthenticated) this.push("/login");
-		const query = this.$route.query;
-		api.setToken(this.token);
-		if (query.env == "stage") {
+
+		const env = g_app.storage.sessionStorageGetItem("__kpadmin_env__") || "stage";
+		if (env == "stage") {
 			api.http.defaults.baseURL = "https://api-stage.keepwork.com/core/v0/";
-		} else if (query.env == "release") {
+		} else if (env == "release") {
 			api.http.defaults.baseURL = "https://api-release.keepwork.com/core/v0/";
+		} else {
+			api.http.defaults.baseURL = "https://api.keepwork.com/core/v0/";
 		}
+		api.setToken(this.token);
+
 		this.options = resources[this.defaultActive];
 	}
 }
