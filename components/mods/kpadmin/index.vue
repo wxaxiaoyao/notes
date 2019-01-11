@@ -97,7 +97,7 @@ export default {
 	},
 
 	mounted() {
-		if (!this.isAuthenticated) this.push("/login");
+		if (!this.isAuthenticated) return this.push("/login");
 
 		const env = g_app.storage.sessionStorageGetItem("__kpadmin_env__") || "stage";
 		if (env == "stage") {
