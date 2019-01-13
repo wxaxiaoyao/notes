@@ -57,6 +57,7 @@ import bugs from "./bugs/index.js";
 import experiences from "./experiences/index.js";
 
 import kpadmin from "./kpadmin/index.js";
+import admins from "./admins/index.js";
 
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
@@ -68,6 +69,7 @@ const components = {
 	// 系统模块
 	note,
 	kpadmin,
+	admins,
 
 	cellphones,
 

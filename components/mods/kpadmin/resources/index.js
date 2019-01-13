@@ -18,6 +18,7 @@ import favoriteProjects from "./favoriteProjects.js";
 // 交易
 import trades from "./trades.js";
 import goods from "./goods.js";
+import orders from "./orders.js";
 
 // 系统
 import admins from "./admins.js";
@@ -41,6 +42,7 @@ export default {
 	
 	trades,
 	goods,
+	orders,
 
 	admins,
 	caches,

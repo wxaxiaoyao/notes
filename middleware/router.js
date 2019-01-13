@@ -6,6 +6,7 @@ import api from "../api/notes.js";
 const domains = {
 	"kpadmin.wxaxiaoyao.cn": "/note/kpadmin",
 	"kpadmin.xiaoyao.com": "/note/kpadmin",
+	"admin.xiaoyao.com": "/note/admins",
 };
 
 const getUrl = async function(url) {

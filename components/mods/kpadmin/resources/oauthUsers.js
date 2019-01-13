@@ -14,6 +14,7 @@ const columns = [
 		prop: "userId",
 		label: "用户ID",
 		type: "number",
+		query: "userId",
 	}, 
 	{
 		prop: "externalId",
