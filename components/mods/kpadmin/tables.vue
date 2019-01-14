@@ -141,6 +141,7 @@ export default {
 
 	methods: {
 		initOpts(opts = {}) {
+			this.query = opts.query || {};
 			this.opts.api = opts.api;
 			this.opts.columns = opts.columns || [];
 			this.opts.actions = opts.actions || this.opts.actions;

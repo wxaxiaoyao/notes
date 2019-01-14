@@ -14,12 +14,14 @@ const columns = [
 		prop: "userId",
 		label: "用户ID",
 		type: "number",
+		query: "userId",
 	}, 
 	{
 		prop: "objectId",
 		label: "项目ID",
 		type: "number",
 		query: "objectId",
+		editable: true,
 	}, 
 ];
 
