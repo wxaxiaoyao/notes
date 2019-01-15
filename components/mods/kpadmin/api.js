@@ -145,7 +145,6 @@ export default {
 			},
 
 			async upsert(params = {}) {
-				toOut && toOut(params);
 				if (params.id) {
 					return await this.update(params);
 				} else {

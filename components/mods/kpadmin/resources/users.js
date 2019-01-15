@@ -62,9 +62,10 @@ const columns = [
 const userApi = api.resource("users", user => {
 	user.extra = user.extra || {};
 	user.password = "";
-}, user => {
+}, (user, oper) => {
 	if (user.password) user.password = md5(user.password);
 }, {columns});
+
 
 export default {
 	api: userApi,
