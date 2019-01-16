@@ -39,6 +39,24 @@ const columns = [
 		options: consts.projectType,
 	},
 	{
+		prop:"hotNo",
+		label: "热门",
+		type:"number",
+		editable: true,
+	},
+	{
+		prop:"choicenessNo",
+		label: "精选",
+		type:"number",
+		editable: true,
+	},
+	{
+		prop:"rate",
+		label: "评分",
+		type:"number",
+		editable: true,
+	},
+	{
 		prop: "description",
 		label: "备注",
 		type: "text",
