@@ -176,7 +176,7 @@ export default {
 
 			if (!api || this.deleteIndex < 0) return;
 
-			await api.delete({id:data.id});
+			await api.destroy({id:data.id});
 
 			this.isShowConfirmDialog = false;
 			this.deleteIndex = -1;
@@ -217,7 +217,9 @@ export default {
 			const res = await api.upsert(this.item);
 			if (res.isErr()) return this.$message({message:"提交失败", type:"error"});
 
-			if (!this.isNewItem) _.merge(this.items[this.itemIndex], this.item);
+			//if (!this.isNewItem) _.merge(this.items[this.itemIndex], this.item);
+			//else this.items.splice(0,0, res.data);
+			await this.loadDatas();
 
 			this.isShowEditDialog = false;
 			this.isShowEditCellDialog = false;
