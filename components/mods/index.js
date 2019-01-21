@@ -42,7 +42,7 @@ import views from "./views/index.js";
 import editors from "./editors/index.js";
 import tasks from "./tasks/index.js";
 import teams from "./teams/index.js";
-import note from "./note/index.js";
+import notes from "./notes/index.js";
 import dailies from "./dailies/index.js";
 import suggestions from "./suggestions/index.js";
 import links from "./links/index.js";
@@ -67,13 +67,13 @@ const components = {
 	examples,
 
 	// 系统模块
-	note,
 	kpadmin,
 	admins,
 
 	cellphones,
 
 	// 功能组件
+	notes,
 	logins, 
 	menus,
 	pagenavs,

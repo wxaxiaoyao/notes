@@ -326,7 +326,20 @@ export function Qinius(options) {
 		return url;
 	}
 }
-export function Notes(options = {}){
+
+export function Notes(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "notes");
+}
+
+export function ClassifyTags(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "classifyTags");
+}
+
+export function __Notes__(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
 
@@ -364,6 +377,8 @@ export function Notes(options = {}){
 	self.bugs = new Bugs(self.options);
 	self.experiences = new Experiences(self.options);
 	self.qinius = new Qinius(self.options);
+	self.notes = new Notes(self.options);
+	self.classifyTags = new ClassifyTags(self.options);
 }
 
 export const options = {
@@ -371,4 +386,4 @@ export const options = {
 	cache: process.client,  // 客户端默认开启缓存
 }
 
-export default new Notes(options);
+export default new __Notes__(options);
