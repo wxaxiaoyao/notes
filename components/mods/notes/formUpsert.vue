@@ -5,10 +5,20 @@
 			<div class="title">便条录入</div>
 			<el-button @click="clickListBtn" type="text">列表</el-button>
 		</div>
-		<div class="tags-container">
-			<tags __style__="classify" :__default_data__="tagsData"></tags>
-		</div>
-		<editors class="editor" __style__="codemirror" :__default_data__="editorData"></editors>
+		<el-form label-width="80px">
+			<el-form-item label="标题">
+				<el-input v-model="__data__.title" placeholder="请输入需求标题..."></el-input>
+			</el-form-item>
+			<el-form-item label="标签">
+				<tags __style__="classify" :__default_data__="tagsData"></tags>
+			</el-form-item>
+			<el-form-item label="描述">
+				<editors class="editor" __style__="codemirror" :__default_data__="editorData"></editors>
+			</el-form-item>
+			<el-form-item>
+				<el-button @click="saveData">提交</el-button>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 
@@ -50,8 +60,6 @@ export default {
 
 <style lang="less" scoped>
 .note-container {
-	display: flex;
-	flex-direction: column;
 	height: 100%;
 }
 .header-container {
@@ -65,10 +73,7 @@ export default {
 	}
 }
 .editor {
-	flex:1;
-}
-
-.tags-container {
-	padding:10px 0px;
+	line-height: 20px;
+	height:400px;
 }
 </style>

@@ -79,14 +79,16 @@ export default {
 			return row.tags.indexOf(`|${value}|`) >= 0;
 		},
 
-		async saveData() {
+		async saveData(back=true) {
 			this.__data__.tags = this.tagsData.tags;
 			this.__data__.text = this.editorData.text;
 			const oper = this.__data__.id ? "update" : "create";
 			const result = await this.api[resourceName][oper](this.__data__);
 			if (result.isErr()) return this.$message({message:"提交失败"});
 
-			this.push(`/note/${resourceName}`);
+			if (back) {
+				this.push(`/note/${resourceName}`);
+			}
 		},
 
 		async loadData() {
