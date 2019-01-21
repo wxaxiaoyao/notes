@@ -52,6 +52,14 @@ export default {
 				url:"/note/editors",
 			},
 			{
+				label:"便条",
+				url:"/note/notes",
+			},
+			{
+				label:"便条录入",
+				url:"/note/notes/upsert",
+			},
+			{
 				label:"链接",
 				url:"/note/links",
 			},

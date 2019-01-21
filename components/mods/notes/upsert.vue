@@ -58,7 +58,7 @@ export default {
 <style>
 </style>
 
-<style scoped>
+<style lang="less" scoped>
 .note-container {
 	height: 100%;
 }
