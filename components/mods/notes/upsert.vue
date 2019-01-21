@@ -33,7 +33,10 @@ export default {
 		return {
 			editorData: {
 				text:"",
-			}
+			},
+			default_data: {
+				classifyTags:[],
+			},
 		}
 	},
 

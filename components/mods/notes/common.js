@@ -10,6 +10,7 @@ export default {
 
 	data: function() {
 		return {
+			dialogsConfirmData: {},
 			searchValue:"",
 			searchField:"aliasTitle",
 			fields: [
@@ -54,9 +55,16 @@ export default {
 		},
 
 		async clickDeleteBtn(x, index) {
-			const result = await this.api[resourceName].delete({id:x.id});
-			if (result.isErr()) return this.$message({message:"删除失败"});
-			this.list.splice(index, 1);
+			this.dialogsConfirmData = {
+				visible: true,
+				title:"删除确认",
+				content:"确定要删除此条记录?",
+				success: async () => {
+					const result = await this.api[resourceName].delete({id:x.id});
+					if (result.isErr()) return this.$message({message:"删除失败"});
+					this.list.splice(index, 1);
+				}
+			};
 		},
 
 		async clickEditBtn(x) {
@@ -82,7 +90,7 @@ export default {
 		},
 
 		async loadData() {
-			if (this.__data__.id && !this.__data__.loaded) {
+			if (this.__data__.id) {
 				const data = (await this.api[resourceName].getById({id:this.__data__.id})).data || {};
 				_.merge(this.__data__, data);
 			}

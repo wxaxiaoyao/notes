@@ -1,6 +1,7 @@
 
 <template>
 	<div class="notes-index-container container">
+		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
 		<div class="header-container">
 			<div class="title">便条管理</div>
 			<el-input v-model="searchValue" clearable placeholder="请输入搜索内容" class="input-with-select" size="small">
