@@ -2,9 +2,10 @@
 	<div class="note-container">
 		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
 		<div class="header-container">
-			<div class="tip-info">
+			<!--div class="tip-info">
 				{{isModify ? "已修改 Ctrl+S保存" : "未修改或已自动保存"}}
-			</div>
+			</div-->
+			<i @click="CtrlS" :class='isModify ? "iconfont icon-edit" : "iconfont icon-save"'></i>
 			<el-select 
 				class="filename"
 				v-if="showFiles"
