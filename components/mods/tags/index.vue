@@ -28,7 +28,7 @@
 			class="button-new-tag" 
 			size="small" 
 			@click="showInputTag">
-			+ New Tag
+			标签
 		</el-button>
 	</div>
 </template>
