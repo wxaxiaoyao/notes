@@ -217,7 +217,7 @@ export default {
 			const res = await api.upsert(this.item);
 			if (res.isErr()) return this.$message({message:"提交失败", type:"error"});
 
-			if (!this.isNewItem) _.merge(this.items[this.itemIndex], this.item);
+			await this.loadDatas();
 
 			this.isShowEditDialog = false;
 			this.isShowEditCellDialog = false;
