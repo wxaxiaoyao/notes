@@ -1,0 +1,61 @@
+import _ from "lodash";
+
+import api from "../api.js";
+import consts from "./consts.js";
+
+const columns = [
+	{
+		prop: "id",
+		label: "ID",
+		type: "number",
+	}, 
+	{
+		prop: "key",
+		label: "激活码",
+		type: "string",
+		query:"key",
+	}, 
+	{
+		prop: "price",
+		label: "价格",
+		type: "number",
+		editable: true,
+	}, 
+	{
+		prop: "gameCoin",
+		label: "游戏币数量",
+		type: "number",
+		editable: true,
+	}, 
+	{
+		prop: "purchaseName",
+		label: "购买者姓名",
+		type: "string",
+		editable: true,
+	}, 
+	{
+		prop: "purchaseCellphone",
+		label: "购买者手机",
+		type: "string",
+		editable: true,
+	}, 
+	{
+		prop: "purchaseTime",
+		label: "购买时间",
+		type: "string",
+		editable: true,
+	}, 
+];
+
+
+const resourceApi = api.resource("paracraftGameCoinKeys", obj => {
+}, (obj, oper) => {
+	if (oper == "search") {
+		obj.purchase = 1;
+	}
+}, {columns});
+
+export default {
+	api:resourceApi,
+	columns,
+}

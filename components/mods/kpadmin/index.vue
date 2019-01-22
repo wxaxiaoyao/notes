@@ -57,7 +57,13 @@
 						<el-menu-item index="illegalUsers">用户封停</el-menu-item>
 						<el-menu-item index="illegalProjects">项目封停</el-menu-item>
 					</el-submenu>
-
+					<el-submenu index="paracraftDevices">
+						<template slot="title">探索APP</template>
+						<el-menu-item index="paracraftDevices">设备</el-menu-item>
+						<el-menu-item index="paracraftGameCoinKeys">激活码</el-menu-item>
+						<el-menu-item index="paracraftGameCoinKeyBuys">购买记录</el-menu-item>
+						<el-menu-item index="paracraftGameCoinKeyActives">消费记录</el-menu-item>
+					</el-submenu>
 				</el-menu>
 			</el-col>
 			<el-col :xs="16" :sm="18" :md="20" :lg="21" :xl="22" class="main-container">

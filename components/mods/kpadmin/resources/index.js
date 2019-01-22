@@ -24,6 +24,13 @@ import orders from "./orders.js";
 import admins from "./admins.js";
 import sensitiveWords from "./sensitiveWords.js";
 import caches from "./caches.js";
+
+// 探索APP
+import paracraftDevices from "./paracraftDevices.js";
+import paracraftGameCoinKeys from "./paracraftGameCoinKeys.js";
+import paracraftGameCoinKeyBuys from "./paracraftGameCoinKeyBuys.js";
+import paracraftGameCoinKeyActives from "./paracraftGameCoinKeyActives.js";
+
 export default {
 	users,
 	accounts,
@@ -47,4 +54,9 @@ export default {
 	admins,
 	caches,
 	sensitiveWords,
+
+	paracraftDevices,
+	paracraftGameCoinKeys,
+	paracraftGameCoinKeyBuys,
+	paracraftGameCoinKeyActives,
 }
