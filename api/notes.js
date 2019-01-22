@@ -339,6 +339,12 @@ export function ClassifyTags(options) {
 	initHttpOptions(self, options, "classifyTags");
 }
 
+export function Documents(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "documents");
+}
+
 export function __Notes__(options = {}){
 	const self = this;
 	initHttpOptions(self, options);
@@ -379,6 +385,7 @@ export function __Notes__(options = {}){
 	self.qinius = new Qinius(self.options);
 	self.notes = new Notes(self.options);
 	self.classifyTags = new ClassifyTags(self.options);
+	self.documents = new Documents(self.options);
 }
 
 export const options = {

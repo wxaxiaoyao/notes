@@ -6,6 +6,7 @@ import mod from "./common/mod.vue";
 import {tags} from "@/lib/tags";
 import common from "./common";
 import templates from "./templates";
+import documents from "./documents/index.js";
 import markdowns from "./markdowns";
 import headers from "./headers/index.js";
 import footers from "./footers/index.js";
@@ -108,6 +109,7 @@ const components = {
 	projects,
 	bugs,
 	experiences,
+	documents,
 
 	// UI组件
 	templates,
