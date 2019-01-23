@@ -12,15 +12,7 @@
 			<el-button @click="clickNewBtn" type="text" round>新增</el-button>
 		</div>
 		<el-table :data="list" cell-class-name="cell-container">
-			<el-table-column type="expand">
-				<template slot-scope="{row}">
-					<documents __style__="show" :__default_data__="row | dataFilters"></documents>
-				</template>
-			</el-table-column>
-			<el-table-column prop="title" label="标题" sortable>
-				<template slot-scope="{row, $index}">
-					{{row.aliasTitle || row.title}}
-				</template>
+			<el-table-column prop="filename" label="文档名" sortable>
 			</el-table-column>
 			<el-table-column prop="tags" label="标签" width=200>
 				<template slot-scope="{row}">

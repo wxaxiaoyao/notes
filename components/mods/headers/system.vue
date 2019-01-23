@@ -60,6 +60,14 @@ export default {
 				url:"/note/notes/upsert",
 			},
 			{
+				label:"文档",
+				url:"/note/documents",
+			},
+			{
+				label:"文档编辑",
+				url:"/note/documents/editor",
+			},
+			{
 				label:"链接",
 				url:"/note/links",
 			},

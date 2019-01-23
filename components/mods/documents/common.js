@@ -59,11 +59,11 @@ export default {
 		},
 
 		async clickEditBtn(x) {
-			this.$router.push({path:`/note/${resourceName}/upsert?id=` + x.id});
+			this.$router.push({path:`/note/${resourceName}/editor?filename=` + x.filename});
 		},
 
 		clickNewBtn() {
-			this.$router.push({path:`/note/${resourceName}/upsert`});
+			this.$router.push({path:`/note/${resourceName}/editor`});
 		},
 
 		filterTagMethod(value, row) {
@@ -71,7 +71,6 @@ export default {
 		},
 
 		async saveData(back = true) {
-			this.__data__.tags = this.tagsData.tags.length == 0 ? "|" : "|" + this.tagsData.tags.join("|") + "|";
 			const oper = this.__data__.id ? "update" : "create";
 			const result = await this.api[resourceName][oper](this.__data__);
 			if (result.isErr()) return this.$message({message:"提交失败"});
@@ -91,13 +90,13 @@ export default {
 
 		async loadDatas() {
 			const list = (await this.api[resourceName].get({})).data || [];
-			let tags = [];
-			_.each(list, o => {
-				const ts = o.tags.split("|").filter(t => t);
-				tags = tags.concat(ts);
-			});
-			this.filterTags = [];
-			_.each(_.uniq(tags), val => this.filterTags.push({text:val, value:val}));
+			//let tags = [];
+			//_.each(list, o => {
+				//const ts = o.tags.split("|").filter(t => t);
+				//tags = tags.concat(ts);
+			//});
+			//this.filterTags = [];
+			//_.each(_.uniq(tags), val => this.filterTags.push({text:val, value:val}));
 
 			this.list = list;
 			this.lists = list;

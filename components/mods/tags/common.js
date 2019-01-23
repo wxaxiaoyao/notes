@@ -22,9 +22,9 @@ export default {
 
 	methods: {
 		async loadDatas() {
-			const list = (await this.api[resourceName].get()).data || [];
+			const list = (await this.api[resourceName].get({classify:0})).data || [];
 			const tags = [];
-			_.each(list, x => tags.push(x.name));
+			_.each(list, x => tags.push(x.tagname));
 
 			this.tags = tags;
 			return tags;

@@ -61,7 +61,7 @@ export default {
 		handleSelectChange() {
 			if (_.indexOf(this.tags, this.tag) < 0 && this.tag) {
 				this.tags.push(this.tag);
-				this.api.tags.upsert({name: this.tag});
+				this.api.tags.upsert({name: this.tag, classify:0});
 			} 
 
 			this.isShowInputTag = false;

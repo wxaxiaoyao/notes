@@ -10,6 +10,9 @@
 			<el-table-column prop="date" label="日期" width="100px">
 			</el-table-column>
 			<el-table-column prop="content" label="内容">
+				<template slot-scope="{row}">
+					<div class="daily-content">{{row.content}}</div>
+				</template>
 			</el-table-column>
 			<el-table-column prop="tags" label="标签" fixed="right" width="150">
 				<template slot-scope="{row}">
@@ -92,8 +95,10 @@ export default {
 		font-size:20px;
 	}
 }
-.task-container {
-	display: flex;
+.daily-content {
+	overflow:hidden;
+   	white-space:nowrap; 
+	text-overflow:ellipsis;	
 }
 .oper-icon {
 	margin:2px;

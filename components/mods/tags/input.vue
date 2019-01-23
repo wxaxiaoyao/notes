@@ -68,7 +68,7 @@ export default {
 
 				if (_.indexOf(this.tags, this.tag) < 0) {
 					this.tags.push(this.tag);
-					this.api.tags.upsert({name: this.tag});
+					this.api.tags.upsert({tagname: this.tag, classify:0});
 				} 
 			}
 

@@ -7,7 +7,7 @@ export default {
 	],
 
 	projectType: [
-	{label:"PARACRAFT", value:0},
-	{label:"网站", value:1},
+	{label:"网站", value:0},
+	{label:"PARACRAFT", value:1},
 	],
 }

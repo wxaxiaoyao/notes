@@ -25,7 +25,7 @@ export default {
 				text:"",
 			},
 			default_data: {
-				classifyTags:[],
+				tags:[],
 			},
 		}
 	},
@@ -40,7 +40,7 @@ export default {
 	async mounted() {
 		await this.loadData();
 		this.editorData = {text: this.__data__.text || "", CtrlS: _ => this.CtrlS(),};
-		this.tagsData = {tags: this.__data__.classifyTags, classify:3};
+		this.tagsData = {tags: this.__data__.tags, classify:3};
 	},
 }
 </script>

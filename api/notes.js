@@ -339,6 +339,12 @@ export function ClassifyTags(options) {
 	initHttpOptions(self, options, "classifyTags");
 }
 
+export function Folders(options) {
+	const self = this;
+
+	initHttpOptions(self, options, "folders");
+}
+
 export function Documents(options) {
 	const self = this;
 
@@ -386,6 +392,7 @@ export function __Notes__(options = {}){
 	self.notes = new Notes(self.options);
 	self.classifyTags = new ClassifyTags(self.options);
 	self.documents = new Documents(self.options);
+	self.folders = new Folders(self.options);
 }
 
 export const options = {

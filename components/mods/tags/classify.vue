@@ -65,7 +65,7 @@ export default {
 				const index = _.findIndex(this.tags, o => o.tagname ==  this.tag);
 				const tag = this.tags[index];
 				if (index < 0) {
-					const result = await this.api.classifyTags.create({
+					const result = await this.api.tags.create({
 						classify: this.__data__.classify,
 						tagname: this.tag,
 					});
@@ -93,7 +93,7 @@ export default {
 	},
 
 	async mounted() {
-		this.tags = await this.api.classifyTags.get({classify:this.__data__.classify || 0}).then(res => res.data || []);
+		this.tags = await this.api.tags.get({classify:this.__data__.classify || 0}).then(res => res.data || []);
 	}
 }
 

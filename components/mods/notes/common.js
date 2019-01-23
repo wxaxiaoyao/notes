@@ -107,8 +107,8 @@ export default {
 			const tags = [];
 			_.each(list, o => {
 				o.aliasTitle = o.title || o.text.split("\n")[0];
-				o.tagsData = {tags:o.classifyTags.map(o => o.tagname)};
-				_.each(o.classifyTags, o => {
+				o.tagsData = {tags:o.tags.map(o => o.tagname)};
+				_.each(o.tags, o => {
 					tags.push(o.tagname);
 				});
 			});
