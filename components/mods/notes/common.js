@@ -89,6 +89,7 @@ export default {
 			const oper = this.__data__.id ? "update" : "create";
 			const result = await this.api[resourceName][oper](this.__data__);
 			if (result.isErr()) return this.$message({message:"提交失败"});
+			if (oper == "create") this.__data__.id = result.data.id;
 
 			if (back) {
 				this.push(`/note/${resourceName}`);
