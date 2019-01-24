@@ -60,12 +60,14 @@ import experiences from "./experiences/index.js";
 import kpadmin from "./kpadmin/index.js";
 import admins from "./admins/index.js";
 
+import cubes from "./cubes/index.js";
 import tests from "./tests/index.js";
 import examples from "./examples/index.js";
 
 const components = {
 	tests,
 	examples,
+	cubes,
 
 	// 系统模块
 	kpadmin,
