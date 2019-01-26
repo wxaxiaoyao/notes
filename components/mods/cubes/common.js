@@ -81,7 +81,56 @@ function rotateSquareArr(arr, dir, step) {
 	return arrAfterRotate;
 }
 
+function getRotateArgs(options = {}) {
+	const {faceType, arrowType, row, col, cubeColNum} = options;
+	const rowRotateData = {}, colRotateData = {};
+	const args = {};
+	////确定横竖分别会触发的旋转方向，主要就是用faceType查common.js的rotateDir
+	for (let dir in rotateDir) {
+		const edges = rotateDir[dir].sizeEdges;
+		for (let i = 0; i < edges.length; i++) {
+			if (edges[i].face == faceType) {
+				if (edges[i].rowOrCol == 'row') {
+					rowRotateData.rotateType = dir;
+					rowRotateData.stackDir = edges[i].stackDir;
+					rowRotateData.readDir = edges[i].readDir;
+				} else {
+					colRotateData.rotateType = dir;
+					colRotateData.stackDir = edges[i].stackDir;
+					colRotateData.readDir = edges[i].readDir;
+				}
+			}
+		}
+	}
+
+	switch (arrowType) {
+		case 'up':
+			args.rotateType = colRotateData.rotateType;
+			args.dir = -colRotateData.readDir;
+			args.floorNum = (colRotateData.stackDir == 1 ? col : cubeColNum - 1 - col);
+			break;
+		case 'down':
+			args.rotateType = colRotateData.rotateType;
+			args.dir = colRotateData.readDir;
+			args.floorNum = (colRotateData.stackDir == 1 ? col : cubeColNum - 1 - col);
+			break;
+		case 'left':
+			args.rotateType = rowRotateData.rotateType;
+			args.dir = -rowRotateData.readDir;
+			args.floorNum = (rowRotateData.stackDir == 1 ? row : cubeColNum - 1 - row);
+			break;
+		case 'right':
+			args.rotateType = rowRotateData.rotateType;
+			args.dir = rowRotateData.readDir;
+			args.floorNum = (rowRotateData.stackDir == 1 ? row : cubeColNum - 1 - row);
+			break;
+	}
+
+	return args;
+}
+
 export default {
 	rotateDir,
 	rotateSquareArr,
+	getRotateArgs,
 }

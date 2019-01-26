@@ -66,7 +66,8 @@ class Block {
 		}
 
 		const arrows = this.arrows;
-		const cube_floor_num = cubeColNum || common.cubeColNum;
+		const cube_floor_num = cubeColNum;
+		let rotateType = 0, dir = 0, floorNum = 0;
 		for (let i = 0; i < arrows.length; i++) {
 			let arrowType = arrows[i].className.replace('arrow-', ''), rotateType = '', dir = '', floorNum = 0;
 			switch (arrowType) {

@@ -13,15 +13,17 @@ class Floor {
 		floor.sizeEdges = {up:[], right: [], bottom: [], left: []};
 
 		_.set(floor, 'frontFace', new Face({faceType:"front"}));
-		_.set(floor, 'backFace', new Face({faceType:"front"}));
+		_.set(floor, 'backFace', new Face({faceType:"back"}));
 
-		floor.front = floor.frontFace;
-		floor.back = floor.backFace;
+		_.set(floor, 'floorEles.front', floor.frontFace);
+		_.set(floor, 'floorEles.back', floor.backFace);
+
+		this.style = {transform:"", opacity:1};
 
 		_.set(floor, 'floorEles.frontMask.className', 'floor-frontmask');
 		_.set(floor, 'floorEles.backMask.className', 'floor-backmask');
 		_.set(floor, 'floorEles.floorBox.className', 'floor-box');
-		_.set(floor, 'floorEles.floorBox.style', {});
+		_.set(floor, 'floorEles.floorBox.style', {transform:"", opacity:1, transition:null});
 		_.set(floor, 'floorEles.front.className', 'floor-front');
 		_.set(floor, 'floorEles.back.className', 'floor-back');
 		_.set(floor, 'floorEles.up.style.top', '50%');
@@ -30,6 +32,8 @@ class Floor {
 		_.set(floor, 'floorEles.right.style.top', '50%');
 
 		//初始化最初变换
+		_.set(floor, 'floorEles.frontMask.style.opacity', 1);
+		_.set(floor, 'floorEles.backMask.style.opacity', 1);
 		_.set(floor, 'floorEles.frontMask.style.transform', 'translateZ(0px)');
 		_.set(floor, 'floorEles.backMask.style.transform', 'rotateY(180deg) translateZ(0px)');
 		_.set(floor, 'floorEles.front.style.transform', 'translateZ(0px)');
@@ -77,8 +81,8 @@ class Floor {
 
 
 		//前后面的blocks
-		this.frontFace.reset({cubeColNum, cubeSize});
-		this.backFace.reset({cubeColNum, cubeSize});
+		this.frontFace.reset({cubeColNum: this.cubeColNum, cubeSize: this.cubeSize});
+		this.backFace.reset({cubeColNum: this.cubeColNum, cubeSize: this.cubeSize});
 
 		//todo:置空前后里面的block的箭头
 		_.each(this.frontFace.blocks, blockRow => {
@@ -126,19 +130,19 @@ class Floor {
 	//rotateType旋转类型：x/y/z；floorNum：该方向下的第几层；旋转层数据；方向；持续时间；旋转完之后的回调
 	rotate(rotateType, floorNum, rotateFloorData, dir, durTime, callback) {
 		const cube_floor_num = this.cubeColNum;
-		var cubeSize = cube.getCurrentCubeSize(),
+		const cubeSize = this.cubeSize,
 			blockSize = cubeSize/cube_floor_num,
 			blockWidthPercent = 100/cube_floor_num;
 
 		//设置旋转数据
-		rotateFloorData.faceUp && frontFace.setFaceData(rotateFloorData.faceUp.faceData);
-		rotateFloorData.faceBottom && backFace.setFaceData(rotateFloorData.faceBottom.faceData);
+		rotateFloorData.faceUp && this.frontFace.setFaceData(rotateFloorData.faceUp.faceData);
+		rotateFloorData.faceBottom && this.backFace.setFaceData(rotateFloorData.faceBottom.faceData);
 		
 		//设置四边的数据
-		this.setSizeData(sizeEdges.up, rotateFloorData.sizeEdges[0].floorData);
-		this.setSizeData(sizeEdges.right, rotateFloorData.sizeEdges[1].floorData);
-		this.setSizeData(sizeEdges.bottom, rotateFloorData.sizeEdges[2].floorData);
-		this.setSizeData(sizeEdges.left, rotateFloorData.sizeEdges[3].floorData);
+		this.setSizeData(this.sizeEdges.up, rotateFloorData.sizeEdges[0].floorData);
+		this.setSizeData(this.sizeEdges.right, rotateFloorData.sizeEdges[1].floorData);
+		this.setSizeData(this.sizeEdges.bottom, rotateFloorData.sizeEdges[2].floorData);
+		this.setSizeData(this.sizeEdges.left, rotateFloorData.sizeEdges[3].floorData);
 
 		//设置floor位置，和transition时间
 		var floorWrapTransform = '';
@@ -153,21 +157,21 @@ class Floor {
 				floorWrapTransform = 'rotateX(-90deg)';
 		}
 		floorWrapTransform += 'translateZ(' + ((floorNum - (cube_floor_num-1)/2) * blockSize) + 'px)';
-		this.floorEles.floorWrap.style.transform = floorWrapTransform;
+		this.style.transform = floorWrapTransform;
 
 		//设置上下蒙板
 		this.floorEles.backMask.style.opacity = (floorNum == 0 ? '0' : '1');
 		this.floorEles.frontMask.style.opacity = (floorNum == cube_floor_num - 1 ? '0' : '1');
 
-		this.floorEles.floorWrap.style.opacity = 1;
+		this.style.opacity = 1;
 
 		this.floorEles.floorBox.style.transition = 'transform ' + durTime/1000 + 's';
 		this.floorEles.floorBox.style.transform = 'rotateZ(' + (dir == 1 ? 90 : -90) + 'deg)';
 
 		setTimeout(() => {
 			callback();
-			this.floorEles.floorWrap.style.opacity = 0;
-			this.floorEles.floorWrap.style.transform = 'scale(0.1)';
+			this.style.opacity = 0;
+			this.style.transform = 'scale(0.1)';
 			this.floorEles.floorBox.style.transform = '';
 		}, durTime-100);
 	}

@@ -1,36 +1,48 @@
 
 <template>
-	<div class="cubes-container">
+	<div class="cubes-container" 
+		@touchstart="touchstart($event)"
+		@touchmove="touchmove($event)"
+		@touchend="touchend($event)"
+		@mousedown="mousedown($event)" 
+		@mousemove="mousemove($event)" 
+		@mouseup="mouseup($event)">
 		<div class='state'>
-			<div id='startBtn'>Start</div>
+			<div id='startBtn' v-if="!start" @click="clickStartBtn">Start</div>
 
 			<div id='cubeWrap' :class="cube.className" :style="cube.style">
-				<div id="floorWrap" class="floor-wrap">
+				<div id="floorWrap" class="floor-wrap" :style="cube.floor.style">
 					<div :class="floorFrontMask.className" :style="floorFrontMask.style"></div>
 					<div :class="floorBackMask.className" :style="floorBackMask.style"></div>
 					<div :class="floorBox.className" :style="floorBox.style">
-						<div :style="floorFront.style" :classs="floorFront.className">
+						<div :style="floorFront.style" :class="floorFront.className">
 							<div v-for="(block, j) in floorFront.blocklist" :key="j" :class="block.className" :style="block.style"></div>
 						</div>
-						<div :style="floorBack.style" :classs="floorBack.className">
+						<div :style="floorBack.style" :class="floorBack.className">
 							<div v-for="(block, j) in floorBack.blocklist" :key="j" :class="block.className" :style="block.style"></div>
 						</div>
-						<div :style="floorUp.style" :classs="floorUp.className">
+						<div :style="floorUp.style" :class="floorUp.className">
 							<div v-for="(block, j) in floorUp.blocklist" :key="j" :class="block.className" :style="block.style"></div>
 						</div>
-						<div :style="floorLeft.style" :classs="floorLeft.className">
+						<div :style="floorLeft.style" :class="floorLeft.className">
 							<div v-for="(block, j) in floorLeft.blocklist" :key="j" :class="block.className" :style="block.style"></div>
 						</div>
-						<div :style="floorBottom.style" :classs="floorBottom.className">
+						<div :style="floorBottom.style" :class="floorBottom.className">
 							<div v-for="(block, j) in floorBottom.blocklist" :key="j" :class="block.className" :style="block.style"></div>
 						</div>
-						<div :style="floorRight.style" :classs="floorRight.className">
+						<div :style="floorRight.style" :class="floorRight.className">
 							<div v-for="(block, j) in floorRight.blocklist" :key="j" :class="block.className" :style="block.style"></div>
 						</div>
 					</div>
 				</div>
-				<div v-for="(x, i) in cube.faces" :key="i" :class="x.className" :style="x.style">
-					<div v-for="(block, j) in x.blocklist" :key="j" :class="block.className" :style="block.style"></div>
+				<div v-for="(face, i) in cube.faces" :key="i" :class="face.className" :style="face.style">
+					<div v-for="(block, j) in face.blocklist" :key="j"  :id="'block-' + i + '-' + j"
+						@touchstart="floorTouchStart(face, block, $event)" 
+						@touchend="floorTouchEnd(face, block, $event)"
+						@mousedown="floorMouseDown(face, block, $event)" 
+						@mouseup="floorMouseUp(face, block, $event)" 
+						:class="block.className" :style="block.style">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -66,7 +78,7 @@
 		<!-- 游戏开始之前允许的操作 over -->
 
 		<!-- 游戏开始之后允许的操作 -->
-		<div class='option-playing' id='optPlayingWrap'>
+		<div class='option-playing' id='optPlayingWrap' :style="optStyle">
 			<div id='undo'>undo</div>
 			<div id='redo'>redo</div>
 			<div id='reset'>reset</div>
@@ -74,12 +86,12 @@
 		<!-- 游戏开始之后允许的操作over -->
 
 		<!-- 计时 -->
-		<div class='time-area' id='time'>
+		<div class='time-area' id='time' :style="timerStyle">
 			00:00
 		</div>
 
 		<!-- 成功 -->
-		<div class='success' id='successTxt'>
+		<div class='success' v-if="win" id='successTxt'>
 			<span>YOU WIN</span>
 		</div>
 	</div>
@@ -97,7 +109,13 @@ export default {
 
 	data: function() {
 		return {
+			start: false,
+			win: false,
 			cube: new Cube(),
+
+			isExistHeader: false,
+			timerStyle:{top:"-30px"},
+			optStyle:{bottom:"0px", top:"-200px"},
 		}
 	},
 
@@ -117,11 +135,135 @@ export default {
 	},
 
 	methods: {
+		clickStartBtn() {
+			this.start = true;
+			this.timerStyle.top = "10px";
+			this.optStyle.bottom = "-200px";
+			this.optStyle.top = "0px";
+
+			this.cube.startCube();
+		},
+		
+		clickResetBtn() {
+			this.start = false;
+			this.timerStyle.top = "-30px";
+			this.optStyle.bottom = "0px";
+			this.optStyle.top = "-200px";
+			this.cube.reset();
+		},
+
+		rotateCube(startFace, startBlock, endFace, endBlock) {
+			if (!startFace || !endFace || !startBlock || !endBlock) return;
+			if (startBlock.col != endBlock.col && startBlock.row != endBlock.row) return;
+
+			let arrowType = "up";
+			if (startFace.faceType == endFace.faceType) {
+				if (endBlock.row == startBlock.row) {
+					arrowType = endBlock.col > startBlock.col ? "right" : "left";
+				} else {
+					arrowType = endBlock.row > startBlock.row ? "down" : "up";
+				}
+			} else {
+				if (endBlock.row == startBlock.row) {
+					arrowType = endBlock.col < startBlock.col ? "right" : "left";
+				} else {
+					arrowType = endBlock.row < startBlock.row ? "down" : "up";
+				}
+			}
+
+			this.cube.handRotateCube(startFace.faceType, arrowType, startBlock.row, startBlock.col);
+		},
+
+		floorTouchStart(face, block, e) {
+			this.face = face;
+			this.block = block;
+		},
+
+		floorTouchEnd(face, block, e) {
+			const touch = e.changedTouches[0];
+			const element = document.elementFromPoint(touch.pageX, touch.pageY);
+			//console.log(element.id);
+			if (element && element.id && element.id.indexOf("block-") == 0) {
+				const arrs = element.id.split("-");
+				const endFace = this.cube.faces[arrs[1]];
+				const endBlock = endFace.blocklist[parseInt(arrs[2])];
+				//console.log(endFace, endBlock);
+				this.rotateCube(this.face, this.block, endFace, endBlock);
+			}
+
+			this.face = undefined;
+			this.block = undefined;
+		},
+
+		floorMouseDown(face, block, e) {
+			this.face = face;
+			this.block = block;
+		},
+
+		floorMouseUp(face, block, e) {
+			if (!this.block) return;
+			this.rotateCube(this.face, this.block, face, block);
+			this.face = undefined;
+			this.block = undefined;
+		},
+
+		touchstart(e) {
+			if (this.block) return;
+
+			const touch = e.targetTouches[0];
+			this.startX = touch.clientX;
+			this.startY = touch.clientY;
+
+			setTimeout(() => {
+				this.isTouchStart = true;
+			}, 10);
+		},
+
+		touchmove(e) {
+			if (!this.isTouchStart) return;
+			const touch = e.targetTouches[0];
+			this.cube.rotateView({
+				startX: this.startX,
+				startY: this.startY,
+				endX: touch.clientX,
+				endY: touch.clientY,
+			});
+			this.startX = touch.clientX;
+			this.startY = touch.clientY;
+		},
+
+		touchend(e) {
+			this.isTouchStart = false;
+		},
+
+		mousedown(e) {
+			if (this.block) return;
+
+			this.startX = e.clientX;
+			this.startY = e.clientY;
+			this.isMouseDown = true;
+		},
+
+		mousemove(e) {
+			//console.log("mousemove", e);
+			if (!this.isMouseDown) return;
+			this.cube.rotateView({
+				startX: this.startX,
+				startY: this.startY,
+				endX: e.clientX,
+				endY: e.clientY,
+			});
+			this.startX = e.clientX;
+			this.startY = e.clientY;
+		},
+
+		mouseup(e) {
+			this.isMouseDown = false;
+		},
 
 	},
 
 	mounted() {
-		this.cube.startCube();
 	},
 }
 </script>
