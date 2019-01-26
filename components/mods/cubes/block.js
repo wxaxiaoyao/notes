@@ -35,69 +35,6 @@ class Block {
 			this.style.top = this.top + "%";
 			this.style.left = this.left + "%";
 		}, 100);
-
-		this.arrows = [];
-		if (floorBlock) return;
-		this.arrows = [
-		{className:"arrow-up", style:{}, attr:{}},
-		{className:"arrow-right", style:{}, attr:{}},
-		{className:"arrow-down", style:{}, attr:{}},
-		{className:"arrow-left", style:{}, attr:{}},
-		];
-		//箭头横向（left right）转的时候要用的旋转数据，在sizeEdges里
-		//箭头竖向（up down）转的时候要用的旋转数据，在sizeEdges里
-		const rowRotateData = {}, colRotateData = {};
-		////确定横竖分别会触发的旋转方向，主要就是用faceType查common.js的rotateDir
-		for (let dir in rotateDir) {
-			let edges = rotateDir[dir].sizeEdges;
-			for (let i = 0; i < edges.length; i++) {
-				if (edges[i].face == this.belongFaceType) {
-					if (edges[i].rowOrCol == 'row') {
-						rowRotateData.rotateType = dir;
-						rowRotateData.stackDir = edges[i].stackDir;
-						rowRotateData.readDir = edges[i].readDir;
-					} else {
-						colRotateData.rotateType = dir;
-						colRotateData.stackDir = edges[i].stackDir;
-						colRotateData.readDir = edges[i].readDir;
-					}
-				}
-			}
-		}
-
-		const arrows = this.arrows;
-		const cube_floor_num = cubeColNum;
-		let rotateType = 0, dir = 0, floorNum = 0;
-		for (let i = 0; i < arrows.length; i++) {
-			let arrowType = arrows[i].className.replace('arrow-', ''), rotateType = '', dir = '', floorNum = 0;
-			switch (arrowType) {
-				case 'up':
-					rotateType = colRotateData.rotateType;
-					dir = -colRotateData.readDir;
-					floorNum = (colRotateData.stackDir == 1 ? this.col : cube_floor_num - 1 - this.col);
-					break;
-				case 'down':
-					rotateType = colRotateData.rotateType;
-					dir = colRotateData.readDir;
-					floorNum = (colRotateData.stackDir == 1 ? this.col : cube_floor_num - 1 - this.col);
-					break;
-				case 'left':
-					rotateType = rowRotateData.rotateType;
-					dir = -rowRotateData.readDir;
-					floorNum = (rowRotateData.stackDir == 1 ? this.row : cube_floor_num - 1 - this.row);
-					break;
-				case 'right':
-					rotateType = rowRotateData.rotateType;
-					dir = rowRotateData.readDir;
-					floorNum = (rowRotateData.stackDir == 1 ? this.row : cube_floor_num - 1 - this.row);
-					break;
-			}
-			arrows[i].rotateType = rotateType;
-			arrows[i].dir = dir;
-			arrows[i].floorNum = floorNum;
-			arrows[i].attr.alt = rotateType + ',' + dir + ',' + floorNum;
-			arrows[i].style.borderWidth = this.cubeSize/this.cubeColNum/6 + 'px';
-		}
 	}
 
 	setType(type) {

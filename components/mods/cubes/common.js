@@ -129,6 +129,32 @@ function getRotateArgs(options = {}) {
 	return args;
 }
 
+export function getTimeStr(millisecond) {
+	const second = 1000, minute = 60*second, hour = 60*minute, day = 24*hour, timeInfo = {};
+
+	//补0
+	function addZero(num) {
+		if (num < 10) {
+			return '0' + num.toString();
+		}
+		return num;
+	}
+
+	timeInfo.day = parseInt(millisecond / day, 10);
+	millisecond -= timeInfo.day * day;
+	timeInfo.hour = parseInt(millisecond / hour, 10);
+	millisecond -= timeInfo.hour * hour;
+	timeInfo.minute = parseInt(millisecond / minute, 10);
+	millisecond -= timeInfo.minute * minute;
+	timeInfo.second = parseInt(millisecond / second, 10);
+	millisecond -= timeInfo.second * second;
+	timeInfo.hour = addZero(timeInfo.hour);
+	timeInfo.minute = addZero(timeInfo.minute);
+	timeInfo.second = addZero(timeInfo.second);
+
+	return timeInfo;
+}
+
 export default {
 	rotateDir,
 	rotateSquareArr,

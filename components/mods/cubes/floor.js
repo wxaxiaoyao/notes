@@ -18,7 +18,7 @@ class Floor {
 		_.set(floor, 'floorEles.front', floor.frontFace);
 		_.set(floor, 'floorEles.back', floor.backFace);
 
-		this.style = {transform:"", opacity:1};
+		this.style = {transform:"", opacity:0};
 
 		_.set(floor, 'floorEles.frontMask.className', 'floor-frontmask');
 		_.set(floor, 'floorEles.backMask.className', 'floor-backmask');
@@ -83,18 +83,6 @@ class Floor {
 		//前后面的blocks
 		this.frontFace.reset({cubeColNum: this.cubeColNum, cubeSize: this.cubeSize});
 		this.backFace.reset({cubeColNum: this.cubeColNum, cubeSize: this.cubeSize});
-
-		//todo:置空前后里面的block的箭头
-		_.each(this.frontFace.blocks, blockRow => {
-			_.each(blockRow, block => {
-				block.arrow = [];
-			});
-		});
-		_.each(this.backFace.blocks, blockRow => {
-			_.each(blockRow, block => {
-				block.arrow = [];
-			});
-		});
 
 		//四边block,blockType统一先设置成front
 		for (let sizeType in this.sizeEdges) {

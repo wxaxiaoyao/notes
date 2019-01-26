@@ -17,7 +17,7 @@ body {width: 100%;height: 100%; position: absolute; -webkit-user-select: none; -
 .option-playing div {display: inline-block; width: 45px; height: 45px; font-size: 14px; border-radius: 10px; text-align: center; line-height: 45px; color: #333; cursor: pointer; background: #ddd; margin:5px 5px;}
 .option-playing div:hover {background: #aaa;}
 
-.time-area{ position: fixed; top: -30px; right: 30px; font-size: 30px; color: #ddf; transition:all 1s;}
+.time-area{ position: fixed; bottom: 10px; right: 30px; font-size: 30px; color: #ddf; transition:all 1s;}
 
 .success {display:none; position:fixed; top:50%; left:0;  width: 100%; height:50px; margin-top: -50px; text-align: center; font-size: 50px; color: #edf;text-shadow: 0 0 15px #333;}
 

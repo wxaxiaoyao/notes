@@ -48,12 +48,12 @@
 		</div>
 
 		<!-- 游戏开始之前允许的操作 -->
-		<div class='options' id='cubeOptWrap'>
+		<div class='options' id='cubeOptWrap' v-if="!start">
 			<div class='option-block size-opt-wrap'>
 				<ul>
-					<li class='size-opt' id='optSizeSmall'>small</li>
-					<li class='size-opt' id='optSizeMedium'>medium</li>
-					<li class='size-opt' id='optSizeLarge'>large</li>
+					<li @click="clickSetSize(150)" class='size-opt' id='optSizeSmall'>small</li>
+					<li @click="clickSetSize(200)" class='size-opt' id='optSizeMedium'>medium</li>
+					<li @click="clickSetSize(250)" class='size-opt' id='optSizeLarge'>large</li>
 				</ul>			
 			</div>
 
@@ -79,15 +79,15 @@
 
 		<!-- 游戏开始之后允许的操作 -->
 		<div class='option-playing' id='optPlayingWrap' :style="optStyle">
-			<div id='undo'>undo</div>
-			<div id='redo'>redo</div>
-			<div id='reset'>reset</div>
+			<div id='undo' @click="clickUndo">undo</div>
+			<div id='redo' @click="clickRedo">redo</div>
+			<div id='reset' @click="clickReset">reset</div>
 		</div>
 		<!-- 游戏开始之后允许的操作over -->
 
 		<!-- 计时 -->
-		<div class='time-area' id='time' :style="timerStyle">
-			00:00
+		<div class='time-area' id='time' v-if="start">
+			{{timestr}}
 		</div>
 
 		<!-- 成功 -->
@@ -103,6 +103,7 @@ import _ from "lodash";
 import mod from "@/components/mods/common/mod.js";
 
 import Cube from "./cube.js";
+import {getTimeStr} from "./common.js";
 
 export default {
 	mixins:[mod],
@@ -112,9 +113,9 @@ export default {
 			start: false,
 			win: false,
 			cube: new Cube(),
+			timestr: "00:00:00",
 
 			isExistHeader: false,
-			timerStyle:{top:"-30px"},
 			optStyle:{bottom:"0px", top:"-200px"},
 		}
 	},
@@ -135,23 +136,45 @@ export default {
 	},
 
 	methods: {
-		clickStartBtn() {
-			this.start = true;
-			this.timerStyle.top = "10px";
-			this.optStyle.bottom = "-200px";
-			this.optStyle.top = "0px";
-
-			this.cube.startCube();
+		clickSetSize(size) {
+			if (this.start) return;
+			this.cube.setSize(size);
 		},
-		
-		clickResetBtn() {
+
+		clickUndo() {
+			this.cube.undo();
+		},
+
+		clickRedo() {
+			this.cube.redo();
+		},
+
+		clickReset() {
+			this.cube.resetCube();
 			this.start = false;
 			this.timerStyle.top = "-30px";
 			this.optStyle.bottom = "0px";
 			this.optStyle.top = "-200px";
-			this.cube.reset();
+
+			clearInterval(this.timer);
+			this.totalSec = 0;
 		},
 
+		clickStartBtn() {
+			this.start = true;
+			this.optStyle.bottom = "-200px";
+			this.optStyle.top = "0px";
+
+			this.totalSec = 0;
+			this.timer = setInterval(() => {
+				this.totalSec += 1000;
+				const timeObj = getTimeStr(this.totalSec);
+				this.timestr = timeObj.hour + ':' + timeObj.minute + ':' + timeObj.second;
+			}, 1000);
+
+			this.cube.startCube();
+		},
+		
 		rotateCube(startFace, startBlock, endFace, endBlock) {
 			if (!startFace || !endFace || !startBlock || !endBlock) return;
 			if (startBlock.col != endBlock.col && startBlock.row != endBlock.row) return;
