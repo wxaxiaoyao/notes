@@ -38,8 +38,10 @@
 				<div v-for="(face, i) in cube.faces" :key="i" :class="face.className" :style="face.style">
 					<div v-for="(block, j) in face.blocklist" :key="j"  :id="'block-' + i + '-' + j"
 						@touchstart="floorTouchStart(face, block, $event)" 
+						@touchmove="floorTouchMove(face, block, $event)" 
 						@touchend="floorTouchEnd(face, block, $event)"
 						@mousedown="floorMouseDown(face, block, $event)" 
+						@mousemove="floorMouseMove(face, block, $event)" 
 						@mouseup="floorMouseUp(face, block, $event)" 
 						:class="block.className" :style="block.style">
 					</div>
@@ -178,6 +180,7 @@ export default {
 		rotateCube(startFace, startBlock, endFace, endBlock) {
 			if (!startFace || !endFace || !startBlock || !endBlock) return;
 			if (startBlock.col != endBlock.col && startBlock.row != endBlock.row) return;
+			if (startFace.faceType == endFace.faceType && startBlock.row == endBlock.row && startBlock.col == endBlock.col) return;
 
 			let arrowType = "up";
 			if (startFace.faceType == endFace.faceType) {
@@ -198,29 +201,41 @@ export default {
 		},
 
 		floorTouchStart(face, block, e) {
+			//console.log(e);
 			this.face = face;
 			this.block = block;
+			this.blockId = e.target.id;
+		},
+
+		floorTouchMove(face, block, e) {
+			const touch = e.changedTouches[0];
+			const element = document.elementFromPoint(touch.pageX, touch.pageY);
+			const blockId = element.id;
+			//console.log(element.id);
+			if (!element || !element.id || element.id.indexOf("block-") != 0 || element.id == this.blockId) return ;
+
+			const arrs = element.id.split("-");
+			const endFace = this.cube.faces[arrs[1]];
+			const endBlock = endFace.blocklist[parseInt(arrs[2])];
+			//console.log(endFace, endBlock);
+			this.rotateCube(this.face, this.block, endFace, endBlock);
+			this.face = undefined;
+			this.block = undefined;
 		},
 
 		floorTouchEnd(face, block, e) {
-			const touch = e.changedTouches[0];
-			const element = document.elementFromPoint(touch.pageX, touch.pageY);
-			//console.log(element.id);
-			if (element && element.id && element.id.indexOf("block-") == 0) {
-				const arrs = element.id.split("-");
-				const endFace = this.cube.faces[arrs[1]];
-				const endBlock = endFace.blocklist[parseInt(arrs[2])];
-				//console.log(endFace, endBlock);
-				this.rotateCube(this.face, this.block, endFace, endBlock);
-			}
-
-			this.face = undefined;
-			this.block = undefined;
 		},
 
 		floorMouseDown(face, block, e) {
 			this.face = face;
 			this.block = block;
+		},
+
+		floorMouseMove(face, block, e) {
+			if (!this.block) return;
+			this.rotateCube(this.face, this.block, face, block);
+			this.face = undefined;
+			this.block = undefined;
 		},
 
 		floorMouseUp(face, block, e) {

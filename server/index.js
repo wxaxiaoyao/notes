@@ -41,6 +41,11 @@ async function pushServerCode() {
 	shell.exec(cmd_str);
 }
 
+async function pushMagicCubeCode() {
+	const cmd_str = "cd ../magic-cube; git reset --hard HEAD; git pull origin master; npm install; npm run build; pm2 restart magic-cube";
+	shell.exec(cmd_str);
+}
+
 async function start () {
 	const app = new Koa();
 	
@@ -76,6 +81,12 @@ async function start () {
 			ctx.status = 200;
 			ctx.body = "OK";
 			pushServerCode();
+			return;
+		}
+		} else if (path == "/note/push_magic_cube_code") {
+			ctx.status = 200;
+			ctx.body = "OK";
+			pushMagicCubeCode();
 			return;
 		}
 		if (method.toUpperCase() != "GET" || _.startsWith(path, "/api/")) {
