@@ -82,7 +82,6 @@ async function start () {
 			ctx.body = "OK";
 			pushServerCode();
 			return;
-		}
 		} else if (path == "/note/push_magic_cube_code") {
 			ctx.status = 200;
 			ctx.body = "OK";
