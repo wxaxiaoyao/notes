@@ -30,6 +30,7 @@
 					</el-form-item>
 					<el-form-item label="">
 						<el-button @click="CtrlS">保存</el-button>
+						<el-button @click="clickNew">新增</el-button>
 						<el-button @click="clickDelete">删除</el-button>
 					</el-form-item>
 				</el-form>
@@ -89,6 +90,11 @@ export default {
 					this.switchDocument();
 				}
 			};
+		},
+
+		async clickNew() {
+			this.filename = "";
+			await this.selectDocument();
 		},
 
 		async editorInited(ref) {
@@ -195,6 +201,7 @@ export default {
 .main-container {
 	height: 100%;
 	display: flex;
+	overflow-y: hidden;
 }
 .left-container {
 	height: 100%;
