@@ -62,11 +62,20 @@ const columns = [
 		type: "text",
 		editable: true,
 	}, 
+	{
+		prop: "extra.imageUrl",
+		label: "项目封面",
+		editable: true,
+		type: "string",
+	}, 
 ];
 
 const projectApi = api.resource("projects", project => {
 	project.extra = project.extra || {};
+	project["extra.imageUrl"] = project.extra.imageUrl;
 }, project => {
+	project.extra = project.extra || {};
+	project.extra.imageUrl = project["extra.imageUrl"];
 }, {columns});
 
 export default {

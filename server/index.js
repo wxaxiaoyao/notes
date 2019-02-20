@@ -41,6 +41,11 @@ async function pushServerCode() {
 	shell.exec(cmd_str);
 }
 
+async function pushNotesMobileCode() {
+	const cmd_str = "cd ../notes-mobile; git reset --hard HEAD; git pull origin master";
+	shell.exec(cmd_str);
+}
+
 async function pushMagicCubeCode() {
 	const cmd_str = "cd ../magic-cube; git reset --hard HEAD; git pull origin master; npm install; npm run build; pm2 restart magic-cube";
 	shell.exec(cmd_str);
@@ -81,6 +86,11 @@ async function start () {
 			ctx.status = 200;
 			ctx.body = "OK";
 			pushServerCode();
+			return;
+		} else if (path == "/note/push_notes_mobile_code") {
+			ctx.status = 200;
+			ctx.body = "OK";
+			pushNotesMobileCode();
 			return;
 		} else if (path == "/note/push_magic_cube_code") {
 			ctx.status = 200;
