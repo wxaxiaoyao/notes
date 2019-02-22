@@ -18,7 +18,7 @@ const {mods} = components;
 vue.use(elementUI);
 
 api.options.baseURL = config.apiUrlPrefix;
-api.options.withCredentials = true;
+//api.options.withCredentials = true;
 //console.log(api.options.baseURL);
 
 function initServer() {
