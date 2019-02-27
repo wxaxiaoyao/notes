@@ -1,18 +1,17 @@
 <template>
 	<div class="note-container">
 		<dialogs __style__="confirm" :__default_data__="dialogsConfirmData"></dialogs>
-		<div class="main-container">
-			<div class="left-container">
-				<editors class="editor" __style__="codemirror" :__default_data__="editorData"></editors>
+
+		<div class="editor-container">
+			<editors class="editor" __style__="codemirror" :__default_data__="editorData"></editors>
+		</div>
+		<div class="toolbar-container">
+			<div>
+				<el-button size="small" @click="clickListBtn">列表</el-button>
+				<el-button size="small" @click="clickNew">新增</el-button>
 			</div>
-			<div class="right-container">
-				<div>
-					<el-button size="small" @click="clickListBtn">列表</el-button>
-					<el-button size="small" @click="clickNew">新增</el-button>
-				</div>
-				<div>
-					<tags __style__="classify" :__default_data__="tagsData"></tags>
-				</div>
+			<div>
+				<tags __style__="classify" :__default_data__="tagsData"></tags>
 			</div>
 		</div>
 	</div>
@@ -82,29 +81,15 @@ export default {
 	position: relative;
 	height: 100%;
 }
-.menu-container {
-	z-index:10000;
-	position: fixed;
+.editor-container {
+	position: absolute;
 	top: 0px;
-	left: 10px;
-	height: 60px;
-	display: flex;
-	align-items: center;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 10;
 }
-.main-container {
-	height: 100%;
-	display: flex;
-}
-.left-container {
-	flex:1;
-	height:100%;
-}
-.right-container {
-	height: 100%;
-	width: 300px;
-	padding:10px;
-}
-.tags-container {
-	padding:10px 0px;
+.toolbar-container {
+	display: none;
 }
 </style>
